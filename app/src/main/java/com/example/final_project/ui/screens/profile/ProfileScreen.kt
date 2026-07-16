@@ -149,7 +149,9 @@ fun ProfileScreen(
                 shape = MaterialTheme.shapes.small,
                 color = GoldPremium.copy(alpha = 0.15f),
                 border = BorderStroke(1.dp, GoldPremium),
-                modifier = Modifier.padding(bottom = MelodifySpacing.md)
+                modifier = Modifier
+                    .padding(bottom = MelodifySpacing.md)
+                    .clickable { viewModel.onDowngrade() }
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

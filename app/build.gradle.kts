@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)  // required by Supabase DTOs
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -112,6 +113,12 @@ dependencies {
 
     // ── DataStore (player state persistence) ──────────────────────────────────
     implementation(libs.androidx.datastore.preferences)
+
+    // ── Room & WorkManager (Phase 5: local downloads) ─────────────────────────
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.work.runtime.ktx)
 
     // ── Tests ─────────────────────────────────────────────────────────────────
     testImplementation(libs.junit)

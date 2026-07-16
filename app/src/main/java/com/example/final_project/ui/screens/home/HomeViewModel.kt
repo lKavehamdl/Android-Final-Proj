@@ -13,6 +13,8 @@ import com.example.final_project.domain.usecase.GetNewReleasesUseCase
 import com.example.final_project.domain.usecase.GetSongsUseCase
 import com.example.final_project.domain.usecase.GetTrendingSongsUseCase
 import com.example.final_project.player.PlayerController
+import com.example.final_project.core.datastore.SettingsDataStore
+import com.example.final_project.domain.repository.DownloadsRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
@@ -26,12 +28,15 @@ data class HomeUiState(
     val globalPlaylists: List<Song> = emptyList(),
     val localPlaylists: List<Song> = emptyList(),
     val errorMessage: String? = null,
+    val isPremium: Boolean = false,
+    val downloadedIds: Set<String> = emptySet(),
 ) : UiState
 
 sealed interface HomeUiEvent : UiEvent {
     data object Load : HomeUiEvent
     data object Retry : HomeUiEvent
     data class SongClick(val song: Song) : HomeUiEvent
+    data class DownloadClick(val song: Song) : HomeUiEvent
     data class QuickActionClick(val action: HomeQuickAction) : HomeUiEvent
 }
 
@@ -53,10 +58,23 @@ class HomeViewModel(
     private val getNewReleasesUseCase: GetNewReleasesUseCase,
     private val getLocalSongsUseCase: GetLocalSongsUseCase,
     private val playerController: PlayerController,
+    private val settingsDataStore: SettingsDataStore,
+    private val downloadsRepository: DownloadsRepository,
 ) : BaseViewModel<HomeUiState, HomeUiEvent, HomeUiEffect>(HomeUiState()) {
 
     init {
         onEvent(HomeUiEvent.Load)
+        
+        viewModelScope.launch {
+            settingsDataStore.isPremium.collect { isPrem ->
+                setState { copy(isPremium = isPrem) }
+            }
+        }
+        viewModelScope.launch {
+            downloadsRepository.downloadedSongs.collect { list ->
+                setState { copy(downloadedIds = list.map { it.song.id }.toSet()) }
+            }
+        }
     }
 
     override fun onEvent(event: HomeUiEvent) {
@@ -67,6 +85,14 @@ class HomeViewModel(
 
             is HomeUiEvent.SongClick -> {
                 playerController.play(event.song, buildQueue())
+            }
+            
+            is HomeUiEvent.DownloadClick -> {
+                if (currentState().isPremium) {
+                    downloadsRepository.startDownload(event.song)
+                } else {
+                    sendEffect(HomeUiEffect.ShowMessage(R.string.upgrade_needed_message))
+                }
             }
 
             is HomeUiEvent.QuickActionClick -> when (event.action) {

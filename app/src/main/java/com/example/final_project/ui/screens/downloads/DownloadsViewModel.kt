@@ -8,28 +8,27 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+import com.example.final_project.domain.repository.DownloadsRepository
+
 /**
  * ViewModel for [DownloadsScreen].
  *
- * Phase 2 hook: Replace the empty stub with a Flow from the Room
- * [DownloadsRepository] once the database module is wired up.
- *
- * Until then, [uiState] exposes an empty list so the screen renders
- * the correct empty state.
+ * Exposes a Flow from the Room [DownloadsRepository].
  */
-class DownloadsViewModel : ViewModel() {
+class DownloadsViewModel(
+    private val repository: DownloadsRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DownloadsUiState())
     val uiState: StateFlow<DownloadsUiState> = _uiState.asStateFlow()
 
-    // Phase 2: inject DownloadsRepository here and collect from Room
-    // init {
-    //     viewModelScope.launch {
-    //         repository.getDownloads().collect { list ->
-    //             _uiState.update { it.copy(songs = list) }
-    //         }
-    //     }
-    // }
+    init {
+        viewModelScope.launch {
+            repository.downloadedSongs.collect { list ->
+                _uiState.update { it.copy(songs = list) }
+            }
+        }
+    }
 
     // ── Intents ───────────────────────────────────────────────────────────────
 
@@ -43,9 +42,7 @@ class DownloadsViewModel : ViewModel() {
      */
     fun onDelete(songId: String) {
         viewModelScope.launch {
-            _uiState.update { state ->
-                state.copy(songs = state.songs.filter { it.id != songId })
-            }
+            repository.deleteDownload(songId)
         }
     }
 }

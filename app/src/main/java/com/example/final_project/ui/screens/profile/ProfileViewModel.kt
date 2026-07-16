@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.final_project.core.datastore.SettingsDataStore
 
 /**
  * ViewModel for [ProfileScreen].
@@ -19,10 +20,21 @@ import kotlinx.coroutines.launch
  * Phase 2 note: isPremium / avatar URI will be read from DataStore once
  * the DataStore module is wired. Until then, defaults are used.
  */
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    private val settingsDataStore: SettingsDataStore,
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
+
+    init {
+        // Observe premium status from DataStore
+        viewModelScope.launch {
+            settingsDataStore.isPremium.collect { isPremium ->
+                _uiState.update { it.copy(isPremium = isPremium) }
+            }
+        }
+    }
 
     // ── Intents ───────────────────────────────────────────────────────────────
 
@@ -34,8 +46,15 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isUpgrading = true) }
             // Simulate a brief "purchase" animation delay
-            delay(800)
-            _uiState.update { it.copy(isPremium = true, isUpgrading = false) }
+            delay(300)
+            settingsDataStore.setPremiumStatus(true)
+            _uiState.update { it.copy(isUpgrading = false) }
+        }
+    }
+
+    fun onDowngrade() {
+        viewModelScope.launch {
+            settingsDataStore.setPremiumStatus(false)
         }
     }
 

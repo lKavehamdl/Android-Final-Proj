@@ -18,10 +18,12 @@ import org.koin.dsl.module
 val appModule = module {
     single<DispatchersProvider> { DefaultDispatchersProvider() }
     single { CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) }
+    single { com.example.final_project.core.datastore.SettingsDataStore(androidContext()) }
     single {
         PlayerController(
             context = androidContext(),
             scope = get(),
+            downloadsRepository = get()
         )
     }
     viewModel { MainViewModel() }
@@ -32,9 +34,11 @@ val appModule = module {
             getNewReleasesUseCase = get(),
             getLocalSongsUseCase = get(),
             playerController = get(),
+            settingsDataStore = get(),
+            downloadsRepository = get(),
         )
     }
     viewModel { PlaylistsViewModel(get(), get()) }
-    viewModel { ProfileViewModel() }
-    viewModel { DownloadsViewModel() }
+    viewModel { ProfileViewModel(get()) }
+    viewModel { DownloadsViewModel(get()) }
 }
