@@ -44,6 +44,8 @@ import com.example.final_project.ui.components.ShimmerEffect
 import com.example.final_project.ui.components.SongRow
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
+import com.example.final_project.player.PlayerController
 
 @Composable
 fun DownloadsScreen(
@@ -51,6 +53,7 @@ fun DownloadsScreen(
     viewModel: DownloadsViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val playerController: PlayerController = koinInject()
 
     Column(modifier = modifier.fillMaxSize()) {
         Text(
@@ -88,7 +91,11 @@ fun DownloadsScreen(
                         ) { downloadedSong ->
                             SwipeableDownloadRow(
                                 downloadedSong = downloadedSong,
-                                onDelete = { viewModel.onDelete(downloadedSong.id) }
+                                onDelete = { viewModel.onDelete(downloadedSong.id) },
+                                onClick = {
+                                    val mappedSongs = state.sortedSongs.map { it.song }
+                                    playerController.play(downloadedSong.song, mappedSongs)
+                                }
                             )
                         }
                     }
@@ -134,7 +141,8 @@ private fun SortBar(
 @Composable
 private fun SwipeableDownloadRow(
     downloadedSong: DownloadedSong,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onClick: () -> Unit
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = { dismissValue ->
@@ -157,7 +165,8 @@ private fun SwipeableDownloadRow(
     ) {
         SongRow(
             song = downloadedSong.song,
-            onClick = { /* Will play the offline file in Phase 6 */ },
+            onClick = { onClick() },
+            isDownloaded = true,
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }

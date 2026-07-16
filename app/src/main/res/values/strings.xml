@@ -35,6 +35,9 @@
     <string name="home_see_all">See All</string>
     <string name="home_songs_loaded">%d songs loaded</string>
 
+    <!-- Phase 5 / Player -->
+    <string name="upgrade_needed_message">Upgrade to Premium to download songs</string>
+
     <!-- Shared components / empty states -->
     <string name="empty_state_generic_title">Nothing here yet</string>
     <string name="empty_state_generic_subtitle">Check back later</string>

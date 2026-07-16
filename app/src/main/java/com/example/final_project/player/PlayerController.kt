@@ -42,6 +42,7 @@ import kotlinx.coroutines.withContext
 class PlayerController(
     context: Context,
     private val scope: CoroutineScope,
+    private val downloadsRepository: com.example.final_project.domain.repository.DownloadsRepository? = null,
 ) {
     private val appContext = context.applicationContext
 
@@ -158,18 +159,22 @@ class PlayerController(
 
         val ctrl = controller ?: run { connectToService(); return }
 
-        ctrl.setMediaItems(
-            resolvedQueue.map { s ->
-                // Phase 2 hook: check Room for local download path first
-                // val localPath = downloadsRepo.getLocalPath(s.id)
-                // if (localPath != null) MediaItem.fromUri(localPath) else MediaItem.fromUri(s.audioUrl)
-                MediaItem.fromUri(s.audioUrl)
-            },
-            index,
-            0L,
-        )
-        ctrl.prepare()
-        ctrl.play()
+        scope.launch {
+            val mediaItems = resolvedQueue.map { s ->
+                val localPath = downloadsRepository?.getLocalPath(s.id)
+                if (localPath != null && java.io.File(localPath).exists()) {
+                    MediaItem.fromUri(java.io.File(localPath).toURI().toString())
+                } else {
+                    MediaItem.fromUri(s.audioUrl)
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                ctrl.setMediaItems(mediaItems, index, 0L)
+                ctrl.prepare()
+                ctrl.play()
+            }
+        }
     }
 
     fun togglePlayPause() {
