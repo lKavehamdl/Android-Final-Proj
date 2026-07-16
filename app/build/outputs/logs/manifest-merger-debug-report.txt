@@ -1,0 +1,611 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:2:1-35:12
+MERGED from [androidx.navigation:navigation-common:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f9f68451ace178f9dbcdc395d11de9b3\workspace\transformed\navigation-common-2.8.9\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f1d4c31d70dcc10651442e44947f1b71\workspace\transformed\navigation-runtime-2.8.9\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\03645e031358ab77333beb8b2d0253e6\workspace\transformed\navigation-common-ktx-2.8.9\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\097b177850f9d2ae463e48cbbafded9c\workspace\transformed\navigation-runtime-ktx-2.8.9\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7934e8ef5507b1ffde048c565804baf1\workspace\transformed\navigation-compose-2.8.9\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\068c832ca1249f809950fb94321423db\workspace\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.insert-koin:koin-androidx-compose:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\1b1ddde24832063909638bf19b0a8770\workspace\transformed\koin-androidx-compose-4.0.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.insert-koin:koin-android:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fae0b4684ef5c432ea74409dfc430185\workspace\transformed\koin-android-4.0.0\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.appcompat:appcompat:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\89881d12f2aad58c8e0adb32997547af\workspace\transformed\appcompat-1.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:2:1-20:12
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\aa50a56de2143030f9f8220cc34244e6\workspace\transformed\googleid-1.1.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.credentials:credentials:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\459c6a3b6735ad01d733a3b6fc0d00aa\workspace\transformed\credentials-1.3.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:17:1-44:12
+MERGED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:17:1-40:12
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a527475e018d8d621be3171fb5216138\workspace\transformed\play-services-fido-21.0.0\AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\1ccc27c395120c7d03730dbdbd9a015f\workspace\transformed\play-services-auth-api-phone-18.0.2\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\e97692379ebc0f89956b352740f2b7b6\workspace\transformed\play-services-auth-base-18.0.10\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff07fc821e646acefcc8ec59753a8336\workspace\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:16:1-26:12
+MERGED from [androidx.fragment:fragment:1.8.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a44711bc42a907563f9142d1d5d6bc35\workspace\transformed\fragment-1.8.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment-ktx:1.8.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ca472a1c36f95d701a58d7d78a6b304c\workspace\transformed\fragment-ktx-1.8.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigationevent:navigationevent-android:1.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\963f5023aa6a37d88a3e64213d8f82f7\workspace\transformed\navigationevent\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigationevent:navigationevent-compose-android:1.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\71603dc9ba12af2d894467e559226437\workspace\transformed\navigationevent-compose\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material3:material3-android:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a2f42584a902c47d48f7998d8aeabe1\workspace\transformed\material3-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a51a3b896a6666bbbdbebc44541113b0\workspace\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff10a0315f618b9904317f4f2a28eb2c\workspace\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\708b2e069290754fd78dde119e376a3b\workspace\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5098a26eae1dca49efcb8255dcb2ee24\workspace\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\42515caffcd455e070f4c22db4873a3a\workspace\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [io.github.jan-tennert.supabase:realtime-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\63fbfd540b7c3eec14bde4ad07779199\workspace\transformed\realtime-kt-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [io.github.jan-tennert.supabase:postgrest-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\70ddced0d1330861145508d5d6547f36\workspace\transformed\postgrest-kt-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:2:1-20:12
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:2:1-20:12
+MERGED from [androidx.browser:browser:1.8.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d33d6b5bc5870beb2820da4edb26db80\workspace\transformed\browser-1.8.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d2fcc596f464cf8d290cf2ef8e036eea\workspace\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d992bbfccb4a11b407cadc8ef35c169f\workspace\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f92ae3a5c1fd5b75e86ce030afcc4409\workspace\transformed\ui-tooling-data\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b97a610620334c94bd1ed94634a10cb3\workspace\transformed\ui-tooling-preview\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.material:material-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5eefe2009622146e437a49b014bdcb2b\workspace\transformed\material-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\18dcb96886d1a3df6e52865c14e089ba\workspace\transformed\material-ripple-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b6808dcb97945422048f87f452ec2ab1\workspace\transformed\foundation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b71a5c8c671158e9dd088c7d683c7748\workspace\transformed\foundation-layout\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b3e16ca5ae068b8693f7d9bad617c19e\workspace\transformed\animation-core\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ef904ed4119863f067a43c4de1148180\workspace\transformed\animation\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\be771b2db308aa65544ea53b656f9277\workspace\transformed\ui-util\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\09cbb05c69e40d2f9a64b500665e8dbe\workspace\transformed\ui-unit\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\872c43edf2ab25992faab3c97edacaca\workspace\transformed\ui-text\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\cbfdfec917d5083d17bf8b58b28e7d20\workspace\transformed\ui-geometry\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:17:1-29:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\6c421a63655ec2828ca9336d44a1d16d\workspace\transformed\ui-graphics-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c0aa0499e29dc4f7d2457715e48d0d7b\workspace\transformed\graphics-path-1.0.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\367573bb5b9e70800902f05ac519225f\workspace\transformed\emoji2-views-helper-1.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\4c4b178d0ef11e31f1c69401aced77ac\workspace\transformed\lifecycle-livedata-2.10.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\443606ccda8bb177208b4137be703a43\workspace\transformed\lifecycle-livedata-core-2.10.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\0f29050031f26c95ffb251349da487f7\workspace\transformed\lifecycle-livedata-core-ktx-2.10.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02ce6eaae4d58acd7ca1f67cfcf493dd\workspace\transformed\lifecycle-viewmodel-savedstate\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\12e9b06d543cfe93e07a01c66f5599ea\workspace\transformed\lifecycle-viewmodel-2.10.0\AndroidManifest.xml:2:1-5:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a20576817f2a7932c05c3f033316caa\workspace\transformed\lifecycle-viewmodel\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.runtime:runtime-annotation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\225712c2cf3916779b95a162c0887ba4\workspace\transformed\runtime-annotation\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fcbb166234a888469b43e2fa2f35593d\workspace\transformed\savedstate-ktx-1.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate-android:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ede0974058341293bfa46016ba9c62cf\workspace\transformed\savedstate\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-compose-android:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9b7002bda49b284712d86d9e1a9ee6f8\workspace\transformed\savedstate-compose\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\92b1baf9641e1cf45438866434f23d5c\workspace\transformed\runtime\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\04866bc56a693cfc681115706042f479\workspace\transformed\runtime-saveable\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\46eaaa669ee4c0f21037e0b0cc97045a\workspace\transformed\lifecycle-runtime-compose\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\e7f514d91eeddb208bc6791b1b4a9761\workspace\transformed\lifecycle-runtime\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\70acd9f172f3952c359d3e23a06846aa\workspace\transformed\lifecycle-viewmodel-ktx-2.10.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.github.jan-tennert.supabase:supabase-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\dfb2b662a83a4b6df107cbd3af35ae4c\workspace\transformed\supabase-kt-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9209f282f4720c9c1454811f36369ec4\workspace\transformed\lifecycle-runtime-ktx\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\92d93119d3fd27449170123606565488\workspace\transformed\lifecycle-viewmodel-compose\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\079a552b176060e6034d283615189f2f\workspace\transformed\material-icons-extended-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\cbf7a335a09192da1bb2c587b27fe7a3\workspace\transformed\material-icons-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f14013f8a53cf84a29c31d569d9c54a6\workspace\transformed\ui-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9c3f0ffb5ba1a4e5ee9f55fc57899735\workspace\transformed\activity-ktx-1.12.4\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d0e4697cc96aa99e133e871b58ff230a\workspace\transformed\activity-1.12.4\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-compose:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\6a4fe212191008532f4154746848ccff\workspace\transformed\activity-compose-1.12.4\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f9ef5dd37b6a99b19826aaec0a74eab7\workspace\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:17:1-23:12
+MERGED from [org.jetbrains.androidx.core:core-bundle-android-debug:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9e495cc4f3084040c25d544dcc89f1a5\workspace\transformed\core-bundle-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-ktx:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d35e87be2fe1bea2bf78a648ec788476\workspace\transformed\core-ktx-1.17.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.russhwolf:multiplatform-settings-coroutines-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\df5d974a561d3c73e714311aaa4cc38f\workspace\transformed\multiplatform-settings-coroutines-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\aeeb4457e90a3da4dcd0674a20a0210a\workspace\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-viewtree:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f71abc6d7930cb1e69970f9c8b752601\workspace\transformed\core-viewtree-1.0.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a06689e48bb4fc5144abe85e25506afd\workspace\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\428b0780d9ffe5e8369793e6085e1601\workspace\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:17:1-55:12
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2fe02cb78906677e50b306a27dcb1793\workspace\transformed\tracing-1.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\8ebfdebdf66949486c35b1176875f9fc\workspace\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a15e0eda0864f7754d96a0f707159e66\workspace\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.russhwolf:multiplatform-settings-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f43a3da9c83b25ad72336d0535c7e2ac\workspace\transformed\multiplatform-settings-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [co.touchlab:kermit-android-debug:2.0.5] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\0f134f7f5b008901dadcd28e7b7a92f9\workspace\transformed\kermit-debug\AndroidManifest.xml:2:1-7:12
+MERGED from [co.touchlab:kermit-core-android-debug:2.0.5] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a20f0dde46d1f0ce22a4599cc6d29ee7\workspace\transformed\kermit-core-debug\AndroidManifest.xml:2:1-7:12
+	package
+		INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:5:22-64
+application
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:7:5-33:19
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:7:5-33:19
+MERGED from [io.insert-koin:koin-android:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fae0b4684ef5c432ea74409dfc430185\workspace\transformed\koin-android-4.0.0\AndroidManifest.xml:7:5-20
+MERGED from [io.insert-koin:koin-android:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fae0b4684ef5c432ea74409dfc430185\workspace\transformed\koin-android-4.0.0\AndroidManifest.xml:7:5-20
+MERGED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:8:5-18:19
+MERGED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:8:5-18:19
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:23:5-42:19
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:23:5-42:19
+MERGED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a527475e018d8d621be3171fb5216138\workspace\transformed\play-services-fido-21.0.0\AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a527475e018d8d621be3171fb5216138\workspace\transformed\play-services-fido-21.0.0\AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff07fc821e646acefcc8ec59753a8336\workspace\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff07fc821e646acefcc8ec59753a8336\workspace\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:20:5-24:19
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:8:5-18:19
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:8:5-18:19
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:8:5-18:19
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:8:5-18:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:22:5-27:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:22:5-27:19
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:23:5-53:19
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:23:5-33:19
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\8ebfdebdf66949486c35b1176875f9fc\workspace\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\8ebfdebdf66949486c35b1176875f9fc\workspace\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+	android:extractNativeLibs
+		INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:16:9-35
+	android:label
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:15:9-41
+	android:fullBackupContent
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:12:9-54
+	android:roundIcon
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:14:9-54
+	tools:targetApi
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:18:9-29
+	android:icon
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:13:9-43
+	android:allowBackup
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:17:9-50
+	android:dataExtractionRules
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:11:9-65
+	android:usesCleartextTraffic
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:8:9-45
+	android:name
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:9:9-44
+activity#com.example.final_project.MainActivity
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:20:9-31:20
+	android:label
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:23:13-45
+	android:windowSoftInputMode
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:25:13-55
+	android:exported
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:22:13-36
+	android:theme
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:24:13-54
+	android:name
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:21:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:27:13-30:29
+action#android.intent.action.MAIN
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:28:17-69
+	android:name
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:28:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:29:17-77
+	android:name
+		ADDED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml:29:27-74
+uses-sdk
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+MERGED from [androidx.navigation:navigation-common:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f9f68451ace178f9dbcdc395d11de9b3\workspace\transformed\navigation-common-2.8.9\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f9f68451ace178f9dbcdc395d11de9b3\workspace\transformed\navigation-common-2.8.9\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f1d4c31d70dcc10651442e44947f1b71\workspace\transformed\navigation-runtime-2.8.9\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f1d4c31d70dcc10651442e44947f1b71\workspace\transformed\navigation-runtime-2.8.9\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\03645e031358ab77333beb8b2d0253e6\workspace\transformed\navigation-common-ktx-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\03645e031358ab77333beb8b2d0253e6\workspace\transformed\navigation-common-ktx-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\097b177850f9d2ae463e48cbbafded9c\workspace\transformed\navigation-runtime-ktx-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\097b177850f9d2ae463e48cbbafded9c\workspace\transformed\navigation-runtime-ktx-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7934e8ef5507b1ffde048c565804baf1\workspace\transformed\navigation-compose-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.9] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7934e8ef5507b1ffde048c565804baf1\workspace\transformed\navigation-compose-2.8.9\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\068c832ca1249f809950fb94321423db\workspace\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\068c832ca1249f809950fb94321423db\workspace\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [io.insert-koin:koin-androidx-compose:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\1b1ddde24832063909638bf19b0a8770\workspace\transformed\koin-androidx-compose-4.0.0\AndroidManifest.xml:5:5-44
+MERGED from [io.insert-koin:koin-androidx-compose:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\1b1ddde24832063909638bf19b0a8770\workspace\transformed\koin-androidx-compose-4.0.0\AndroidManifest.xml:5:5-44
+MERGED from [io.insert-koin:koin-android:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fae0b4684ef5c432ea74409dfc430185\workspace\transformed\koin-android-4.0.0\AndroidManifest.xml:5:5-44
+MERGED from [io.insert-koin:koin-android:4.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fae0b4684ef5c432ea74409dfc430185\workspace\transformed\koin-android-4.0.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\89881d12f2aad58c8e0adb32997547af\workspace\transformed\appcompat-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\89881d12f2aad58c8e0adb32997547af\workspace\transformed\appcompat-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:6:5-44
+MERGED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:6:5-44
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\aa50a56de2143030f9f8220cc34244e6\workspace\transformed\googleid-1.1.1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\aa50a56de2143030f9f8220cc34244e6\workspace\transformed\googleid-1.1.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\459c6a3b6735ad01d733a3b6fc0d00aa\workspace\transformed\credentials-1.3.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\459c6a3b6735ad01d733a3b6fc0d00aa\workspace\transformed\credentials-1.3.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:21:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a527475e018d8d621be3171fb5216138\workspace\transformed\play-services-fido-21.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-fido:21.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a527475e018d8d621be3171fb5216138\workspace\transformed\play-services-fido-21.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\1ccc27c395120c7d03730dbdbd9a015f\workspace\transformed\play-services-auth-api-phone-18.0.2\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\1ccc27c395120c7d03730dbdbd9a015f\workspace\transformed\play-services-auth-api-phone-18.0.2\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\e97692379ebc0f89956b352740f2b7b6\workspace\transformed\play-services-auth-base-18.0.10\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\e97692379ebc0f89956b352740f2b7b6\workspace\transformed\play-services-auth-base-18.0.10\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff07fc821e646acefcc8ec59753a8336\workspace\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff07fc821e646acefcc8ec59753a8336\workspace\transformed\play-services-tasks-18.1.0\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:18:5-43
+MERGED from [androidx.fragment:fragment:1.8.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a44711bc42a907563f9142d1d5d6bc35\workspace\transformed\fragment-1.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.8.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a44711bc42a907563f9142d1d5d6bc35\workspace\transformed\fragment-1.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.8.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ca472a1c36f95d701a58d7d78a6b304c\workspace\transformed\fragment-ktx-1.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.8.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ca472a1c36f95d701a58d7d78a6b304c\workspace\transformed\fragment-ktx-1.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigationevent:navigationevent-android:1.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\963f5023aa6a37d88a3e64213d8f82f7\workspace\transformed\navigationevent\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigationevent:navigationevent-android:1.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\963f5023aa6a37d88a3e64213d8f82f7\workspace\transformed\navigationevent\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigationevent:navigationevent-compose-android:1.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\71603dc9ba12af2d894467e559226437\workspace\transformed\navigationevent-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigationevent:navigationevent-compose-android:1.0.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\71603dc9ba12af2d894467e559226437\workspace\transformed\navigationevent-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a2f42584a902c47d48f7998d8aeabe1\workspace\transformed\material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a2f42584a902c47d48f7998d8aeabe1\workspace\transformed\material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a51a3b896a6666bbbdbebc44541113b0\workspace\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a51a3b896a6666bbbdbebc44541113b0\workspace\transformed\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff10a0315f618b9904317f4f2a28eb2c\workspace\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ff10a0315f618b9904317f4f2a28eb2c\workspace\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\708b2e069290754fd78dde119e376a3b\workspace\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\708b2e069290754fd78dde119e376a3b\workspace\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5098a26eae1dca49efcb8255dcb2ee24\workspace\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5098a26eae1dca49efcb8255dcb2ee24\workspace\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\42515caffcd455e070f4c22db4873a3a\workspace\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\42515caffcd455e070f4c22db4873a3a\workspace\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [io.github.jan-tennert.supabase:realtime-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\63fbfd540b7c3eec14bde4ad07779199\workspace\transformed\realtime-kt-debug\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:realtime-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\63fbfd540b7c3eec14bde4ad07779199\workspace\transformed\realtime-kt-debug\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:postgrest-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\70ddced0d1330861145508d5d6547f36\workspace\transformed\postgrest-kt-debug\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:postgrest-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\70ddced0d1330861145508d5d6547f36\workspace\transformed\postgrest-kt-debug\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:6:5-44
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:6:5-44
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:6:5-44
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:6:5-44
+MERGED from [androidx.browser:browser:1.8.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d33d6b5bc5870beb2820da4edb26db80\workspace\transformed\browser-1.8.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.browser:browser:1.8.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d33d6b5bc5870beb2820da4edb26db80\workspace\transformed\browser-1.8.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d2fcc596f464cf8d290cf2ef8e036eea\workspace\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d2fcc596f464cf8d290cf2ef8e036eea\workspace\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d992bbfccb4a11b407cadc8ef35c169f\workspace\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d992bbfccb4a11b407cadc8ef35c169f\workspace\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f92ae3a5c1fd5b75e86ce030afcc4409\workspace\transformed\ui-tooling-data\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f92ae3a5c1fd5b75e86ce030afcc4409\workspace\transformed\ui-tooling-data\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b97a610620334c94bd1ed94634a10cb3\workspace\transformed\ui-tooling-preview\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b97a610620334c94bd1ed94634a10cb3\workspace\transformed\ui-tooling-preview\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5eefe2009622146e437a49b014bdcb2b\workspace\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5eefe2009622146e437a49b014bdcb2b\workspace\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\18dcb96886d1a3df6e52865c14e089ba\workspace\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\18dcb96886d1a3df6e52865c14e089ba\workspace\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b6808dcb97945422048f87f452ec2ab1\workspace\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b6808dcb97945422048f87f452ec2ab1\workspace\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b71a5c8c671158e9dd088c7d683c7748\workspace\transformed\foundation-layout\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b71a5c8c671158e9dd088c7d683c7748\workspace\transformed\foundation-layout\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b3e16ca5ae068b8693f7d9bad617c19e\workspace\transformed\animation-core\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\b3e16ca5ae068b8693f7d9bad617c19e\workspace\transformed\animation-core\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ef904ed4119863f067a43c4de1148180\workspace\transformed\animation\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ef904ed4119863f067a43c4de1148180\workspace\transformed\animation\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\be771b2db308aa65544ea53b656f9277\workspace\transformed\ui-util\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\be771b2db308aa65544ea53b656f9277\workspace\transformed\ui-util\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\09cbb05c69e40d2f9a64b500665e8dbe\workspace\transformed\ui-unit\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\09cbb05c69e40d2f9a64b500665e8dbe\workspace\transformed\ui-unit\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\872c43edf2ab25992faab3c97edacaca\workspace\transformed\ui-text\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\872c43edf2ab25992faab3c97edacaca\workspace\transformed\ui-text\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\cbfdfec917d5083d17bf8b58b28e7d20\workspace\transformed\ui-geometry\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\cbfdfec917d5083d17bf8b58b28e7d20\workspace\transformed\ui-geometry\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\6c421a63655ec2828ca9336d44a1d16d\workspace\transformed\ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\6c421a63655ec2828ca9336d44a1d16d\workspace\transformed\ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c0aa0499e29dc4f7d2457715e48d0d7b\workspace\transformed\graphics-path-1.0.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c0aa0499e29dc4f7d2457715e48d0d7b\workspace\transformed\graphics-path-1.0.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\367573bb5b9e70800902f05ac519225f\workspace\transformed\emoji2-views-helper-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\367573bb5b9e70800902f05ac519225f\workspace\transformed\emoji2-views-helper-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\4c4b178d0ef11e31f1c69401aced77ac\workspace\transformed\lifecycle-livedata-2.10.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\4c4b178d0ef11e31f1c69401aced77ac\workspace\transformed\lifecycle-livedata-2.10.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\443606ccda8bb177208b4137be703a43\workspace\transformed\lifecycle-livedata-core-2.10.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\443606ccda8bb177208b4137be703a43\workspace\transformed\lifecycle-livedata-core-2.10.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\0f29050031f26c95ffb251349da487f7\workspace\transformed\lifecycle-livedata-core-ktx-2.10.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\0f29050031f26c95ffb251349da487f7\workspace\transformed\lifecycle-livedata-core-ktx-2.10.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02ce6eaae4d58acd7ca1f67cfcf493dd\workspace\transformed\lifecycle-viewmodel-savedstate\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02ce6eaae4d58acd7ca1f67cfcf493dd\workspace\transformed\lifecycle-viewmodel-savedstate\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\12e9b06d543cfe93e07a01c66f5599ea\workspace\transformed\lifecycle-viewmodel-2.10.0\AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\12e9b06d543cfe93e07a01c66f5599ea\workspace\transformed\lifecycle-viewmodel-2.10.0\AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a20576817f2a7932c05c3f033316caa\workspace\transformed\lifecycle-viewmodel\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a20576817f2a7932c05c3f033316caa\workspace\transformed\lifecycle-viewmodel\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime-annotation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\225712c2cf3916779b95a162c0887ba4\workspace\transformed\runtime-annotation\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-annotation-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\225712c2cf3916779b95a162c0887ba4\workspace\transformed\runtime-annotation\AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fcbb166234a888469b43e2fa2f35593d\workspace\transformed\savedstate-ktx-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fcbb166234a888469b43e2fa2f35593d\workspace\transformed\savedstate-ktx-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-android:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ede0974058341293bfa46016ba9c62cf\workspace\transformed\savedstate\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-android:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ede0974058341293bfa46016ba9c62cf\workspace\transformed\savedstate\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-compose-android:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9b7002bda49b284712d86d9e1a9ee6f8\workspace\transformed\savedstate-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate-compose-android:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9b7002bda49b284712d86d9e1a9ee6f8\workspace\transformed\savedstate-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\92b1baf9641e1cf45438866434f23d5c\workspace\transformed\runtime\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\92b1baf9641e1cf45438866434f23d5c\workspace\transformed\runtime\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\04866bc56a693cfc681115706042f479\workspace\transformed\runtime-saveable\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\04866bc56a693cfc681115706042f479\workspace\transformed\runtime-saveable\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\46eaaa669ee4c0f21037e0b0cc97045a\workspace\transformed\lifecycle-runtime-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\46eaaa669ee4c0f21037e0b0cc97045a\workspace\transformed\lifecycle-runtime-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\e7f514d91eeddb208bc6791b1b4a9761\workspace\transformed\lifecycle-runtime\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\e7f514d91eeddb208bc6791b1b4a9761\workspace\transformed\lifecycle-runtime\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\70acd9f172f3952c359d3e23a06846aa\workspace\transformed\lifecycle-viewmodel-ktx-2.10.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\70acd9f172f3952c359d3e23a06846aa\workspace\transformed\lifecycle-viewmodel-ktx-2.10.0\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:supabase-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\dfb2b662a83a4b6df107cbd3af35ae4c\workspace\transformed\supabase-kt-debug\AndroidManifest.xml:5:5-44
+MERGED from [io.github.jan-tennert.supabase:supabase-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\dfb2b662a83a4b6df107cbd3af35ae4c\workspace\transformed\supabase-kt-debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9209f282f4720c9c1454811f36369ec4\workspace\transformed\lifecycle-runtime-ktx\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9209f282f4720c9c1454811f36369ec4\workspace\transformed\lifecycle-runtime-ktx\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\92d93119d3fd27449170123606565488\workspace\transformed\lifecycle-viewmodel-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\92d93119d3fd27449170123606565488\workspace\transformed\lifecycle-viewmodel-compose\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\079a552b176060e6034d283615189f2f\workspace\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\079a552b176060e6034d283615189f2f\workspace\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\cbf7a335a09192da1bb2c587b27fe7a3\workspace\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\cbf7a335a09192da1bb2c587b27fe7a3\workspace\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f14013f8a53cf84a29c31d569d9c54a6\workspace\transformed\ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f14013f8a53cf84a29c31d569d9c54a6\workspace\transformed\ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9c3f0ffb5ba1a4e5ee9f55fc57899735\workspace\transformed\activity-ktx-1.12.4\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9c3f0ffb5ba1a4e5ee9f55fc57899735\workspace\transformed\activity-ktx-1.12.4\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d0e4697cc96aa99e133e871b58ff230a\workspace\transformed\activity-1.12.4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d0e4697cc96aa99e133e871b58ff230a\workspace\transformed\activity-1.12.4\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\6a4fe212191008532f4154746848ccff\workspace\transformed\activity-compose-1.12.4\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.12.4] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\6a4fe212191008532f4154746848ccff\workspace\transformed\activity-compose-1.12.4\AndroidManifest.xml:5:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f9ef5dd37b6a99b19826aaec0a74eab7\workspace\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f9ef5dd37b6a99b19826aaec0a74eab7\workspace\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [org.jetbrains.androidx.core:core-bundle-android-debug:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9e495cc4f3084040c25d544dcc89f1a5\workspace\transformed\core-bundle-debug\AndroidManifest.xml:5:5-44
+MERGED from [org.jetbrains.androidx.core:core-bundle-android-debug:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\9e495cc4f3084040c25d544dcc89f1a5\workspace\transformed\core-bundle-debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d35e87be2fe1bea2bf78a648ec788476\workspace\transformed\core-ktx-1.17.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d35e87be2fe1bea2bf78a648ec788476\workspace\transformed\core-ktx-1.17.0\AndroidManifest.xml:5:5-44
+MERGED from [com.russhwolf:multiplatform-settings-coroutines-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\df5d974a561d3c73e714311aaa4cc38f\workspace\transformed\multiplatform-settings-coroutines-debug\AndroidManifest.xml:5:5-44
+MERGED from [com.russhwolf:multiplatform-settings-coroutines-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\df5d974a561d3c73e714311aaa4cc38f\workspace\transformed\multiplatform-settings-coroutines-debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\aeeb4457e90a3da4dcd0674a20a0210a\workspace\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\aeeb4457e90a3da4dcd0674a20a0210a\workspace\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f71abc6d7930cb1e69970f9c8b752601\workspace\transformed\core-viewtree-1.0.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-viewtree:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f71abc6d7930cb1e69970f9c8b752601\workspace\transformed\core-viewtree-1.0.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a06689e48bb4fc5144abe85e25506afd\workspace\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a06689e48bb4fc5144abe85e25506afd\workspace\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\428b0780d9ffe5e8369793e6085e1601\workspace\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\428b0780d9ffe5e8369793e6085e1601\workspace\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:21:5-44
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2fe02cb78906677e50b306a27dcb1793\workspace\transformed\tracing-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2fe02cb78906677e50b306a27dcb1793\workspace\transformed\tracing-1.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\8ebfdebdf66949486c35b1176875f9fc\workspace\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\8ebfdebdf66949486c35b1176875f9fc\workspace\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a15e0eda0864f7754d96a0f707159e66\workspace\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a15e0eda0864f7754d96a0f707159e66\workspace\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.russhwolf:multiplatform-settings-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f43a3da9c83b25ad72336d0535c7e2ac\workspace\transformed\multiplatform-settings-debug\AndroidManifest.xml:5:5-44
+MERGED from [com.russhwolf:multiplatform-settings-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\f43a3da9c83b25ad72336d0535c7e2ac\workspace\transformed\multiplatform-settings-debug\AndroidManifest.xml:5:5-44
+MERGED from [co.touchlab:kermit-android-debug:2.0.5] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\0f134f7f5b008901dadcd28e7b7a92f9\workspace\transformed\kermit-debug\AndroidManifest.xml:5:5-44
+MERGED from [co.touchlab:kermit-android-debug:2.0.5] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\0f134f7f5b008901dadcd28e7b7a92f9\workspace\transformed\kermit-debug\AndroidManifest.xml:5:5-44
+MERGED from [co.touchlab:kermit-core-android-debug:2.0.5] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a20f0dde46d1f0ce22a4599cc6d29ee7\workspace\transformed\kermit-core-debug\AndroidManifest.xml:5:5-44
+MERGED from [co.touchlab:kermit-core-android-debug:2.0.5] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a20f0dde46d1f0ce22a4599cc6d29ee7\workspace\transformed\kermit-core-debug\AndroidManifest.xml:5:5-44
+	android:targetSdkVersion
+		INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\univer\term8\mobile\Android-Final-Proj\app\src\main\AndroidManifest.xml
+provider#androidx.startup.InitializationProvider
+ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:9:9-17:20
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:9:9-17:20
+MERGED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:9:9-17:20
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:9:9-17:20
+MERGED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:9:9-17:20
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:24:9-32:20
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:24:9-32:20
+MERGED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:24:9-28:34
+MERGED from [androidx.startup:startup-runtime:1.2.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\7a9c63070ff864539f6d92a5d830bd3c\workspace\transformed\startup-runtime-1.2.0\AndroidManifest.xml:24:9-28:34
+	tools:node
+		ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:13:13-31
+	android:authorities
+		ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:11:13-68
+	android:exported
+		ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:12:13-37
+	android:name
+		ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:10:13-67
+meta-data#io.github.jan.supabase.compose.auth.SupabaseInitializer
+ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:14:13-16:52
+	android:value
+		ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:16:17-49
+	android:name
+		ADDED from [io.github.jan-tennert.supabase:compose-auth-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\2b561c5f10e924dd30857be37b86f31c\workspace\transformed\compose-auth-debug\AndroidManifest.xml:15:17-87
+service#androidx.credentials.playservices.CredentialProviderMetadataHolder
+ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:24:9-32:19
+	android:enabled
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:26:13-35
+	android:exported
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:28:13-60
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:25:13-94
+meta-data#androidx.credentials.CREDENTIAL_PROVIDER_KEY
+ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:29:13-31:104
+	android:value
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:31:17-101
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:30:17-76
+activity#androidx.credentials.playservices.HiddenActivity
+ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:34:9-41:20
+	android:fitsSystemWindows
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:39:13-45
+	android:enabled
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:38:13-37
+	android:configChanges
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:36:13-87
+	android:theme
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:40:13-48
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fedc9b932496d128b0b726aefffb198d\workspace\transformed\credentials-play-services-auth-1.3.0\AndroidManifest.xml:35:13-76
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:23:9-27:75
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:25:13-46
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:26:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:27:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:24:13-93
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:33:9-37:51
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:35:13-36
+	android:visibleToInstantApps
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:37:13-48
+	android:permission
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:36:13-107
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.1.1] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a91a7c92e2a61410e8f1c50ead435b0d\workspace\transformed\play-services-auth-21.1.1\AndroidManifest.xml:34:13-89
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\ed91522bff5256999e853bcb4e476f6f\workspace\transformed\play-services-base-18.3.0\AndroidManifest.xml:20:19-85
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\68c37f1375ab819e1ed4944ff9e7911d\workspace\transformed\play-services-basement-18.3.0\AndroidManifest.xml:22:13-58
+meta-data#io.github.jan.supabase.storage.SupabaseInitializer
+ADDED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:14:13-16:52
+	android:value
+		ADDED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:16:17-49
+	android:name
+		ADDED from [io.github.jan-tennert.supabase:storage-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\33251032c8e02febd89a1b11852f3ae3\workspace\transformed\storage-kt-debug\AndroidManifest.xml:15:17-82
+meta-data#io.github.jan.supabase.auth.SupabaseInitializer
+ADDED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:14:13-16:52
+	android:value
+		ADDED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:16:17-49
+	android:name
+		ADDED from [io.github.jan-tennert.supabase:auth-kt-android-debug:3.0.3] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\069bbadde9895872a93c1f8a867d51af\workspace\transformed\auth-kt-debug\AndroidManifest.xml:15:17-79
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\fa7460ff788c7202655a7983164ea5f7\workspace\transformed\ui-tooling\AndroidManifest.xml:24:13-71
+activity#androidx.activity.ComponentActivity
+ADDED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:23:9-26:79
+	android:exported
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:25:13-36
+	android:theme
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:26:13-76
+	android:name
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.9.2] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\c8e0eb88d792e190d4732af7c0218837\workspace\transformed\ui-test-manifest-1.9.2\AndroidManifest.xml:24:13-63
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\37ac8906423b1116c25c18b0af485cab\workspace\transformed\emoji2-1.4.0\AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:23:9-81
+permission#com.example.final_project.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:26:22-94
+uses-permission#com.example.final_project.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.17.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\5abde21fd14345824f7165dfd073178d\workspace\transformed\core-1.17.0\AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\d3476b49b0700391891f8cd77a8c534f\workspace\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\a53c6b1b26e7ed57abf978c13123c183\workspace\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
+meta-data#com.russhwolf.settings.SettingsInitializer
+ADDED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [com.russhwolf:multiplatform-settings-no-arg-android-debug:1.3.0] C:\Users\ZenBook\.gradle\caches\9.2.1\transforms\02dbf47b7ee6ee0e24074efdb938820f\workspace\transformed\multiplatform-settings-no-arg-debug\AndroidManifest.xml:30:17-74

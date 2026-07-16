@@ -33,6 +33,7 @@
     <string name="home_quick_artists">Top Artists</string>
     <string name="home_carousel_featured">Featured</string>
     <string name="home_see_all">See All</string>
+    <string name="home_songs_loaded">%d songs loaded</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Search Screen

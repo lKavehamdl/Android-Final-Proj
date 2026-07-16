@@ -92,7 +92,10 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = stringResource(R.string.home_section_recommended),
+                        text = stringResource(
+                            R.string.home_songs_loaded,
+                            state.songs.size,
+                        ),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

@@ -4,6 +4,18 @@ plugins {
     alias(libs.plugins.kotlin.serialization)  // required by Supabase DTOs
 }
 
+import java.util.Properties
+
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
+
+fun localProp(key: String, default: String = ""): String =
+    localProperties.getProperty(key)?.trim().orEmpty().ifEmpty { default }
+
 android {
     namespace = "com.example.final_project"
     compileSdk {
@@ -21,16 +33,20 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // ── Supabase credentials (Task A) ─────────────────────────────────────
-        // Replace these placeholder values with your real Supabase project URL and anon key.
-        // Get them from: Supabase Dashboard → Project Settings → API
-        //
-        // ⚠️  NEVER commit real keys to version control.
-        //     Move them to a local.properties file in production.
-        buildConfigField("String",  "SUPABASE_URL",     "\"https://YOUR_PROJECT_ID.supabase.co/\"")
-        buildConfigField("String",  "SUPABASE_ANON_KEY","\"YOUR_ANON_KEY_HERE\"")
-        // Set to false once SUPABASE_URL and SUPABASE_ANON_KEY are filled in above.
-        buildConfigField("Boolean", "USE_FAKE_SONGS",   "true")
+        // Credentials live in local.properties (gitignored). See team notes for values.
+        val supabaseUrl = localProp(
+            "SUPABASE_URL",
+            "https://tumloddgamefuouqurww.supabase.co/",
+        ).let { if (it.endsWith("/")) it else "$it/" }
+        val supabaseKey = localProp(
+            "SUPABASE_ANON_KEY",
+            "sb_publishable_7lgBlUxzcU4on4W1Kx1fwg_OABvIy5A",
+        )
+        val useFake = localProp("USE_FAKE_SONGS", "false").toBoolean()
+
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseKey\"")
+        buildConfigField("boolean", "USE_FAKE_SONGS", "$useFake")
     }
 
     buildTypes {

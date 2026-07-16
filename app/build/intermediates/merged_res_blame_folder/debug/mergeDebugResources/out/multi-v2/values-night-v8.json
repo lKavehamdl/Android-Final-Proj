@@ -1,0 +1,45 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.final_project.app-mergeDebugResources-51:/values-night-v8/values-night-v8.xml",
+            "map": [
+                {
+                    "source": "D:\\univer\\term8\\mobile\\Android-Final-Proj\\app\\src\\main\\res\\values-night\\themes.xml",
+                    "from": {
+                        "startLines": "8",
+                        "startColumns": "4",
+                        "startOffsets": "370",
+                        "endLines": "13",
+                        "endColumns": "12",
+                        "endOffsets": "751"
+                    },
+                    "to": {
+                        "startLines": "9",
+                        "startColumns": "4",
+                        "startOffsets": "687",
+                        "endLines": "14",
+                        "endColumns": "12",
+                        "endOffsets": "1063"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ZenBook\\AppData\\Local\\Temp\\cursor-sandbox-cache\\4f4fecf9eee939ec1ff1d0d39bd587cd\\gradle\\caches\\9.2.1\\transforms\\89881d12f2aad58c8e0adb32997547af\\workspace\\transformed\\appcompat-1.7.0\\res\\values-night-v8\\values-night-v8.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,125,209,293,389,491,593,687",
+                        "endColumns": "69,83,83,95,101,101,93,88",
+                        "endOffsets": "120,204,288,384,486,588,682,771"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,15",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,125,209,293,389,491,593,1068",
+                        "endColumns": "69,83,83,95,101,101,93,88",
+                        "endOffsets": "120,204,288,384,486,588,682,1152"
+                    }
+                }
+            ]
+        }
+    ]
+}
