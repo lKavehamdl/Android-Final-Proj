@@ -101,9 +101,14 @@ dependencies {
     // ── Images ────────────────────────────────────────────────────────────────
     implementation(libs.coil.compose)
 
-    // ── Media (Step 2 UI player; Phase 4 expands MediaSession / cache) ────────
+    // ── Media (Phase 4: MediaSession service, smart cache, audio focus) ──────
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.datasource)
+
+    // ── Palette (dynamic background gradient from cover art) ──────────────────
+    implementation(libs.androidx.palette)
 
     // ── Tests ─────────────────────────────────────────────────────────────────
     testImplementation(libs.junit)

@@ -215,9 +215,6 @@
     <string name="notification_channel_social">اجتماعی</string>
 
     <string name="playlists_section_world">موسیقی جهان</string>
-    <string name="playlists_section_local">موسیقی داخلی</string>
     <string name="playlists_section_user">پلی‌لیست‌های من</string>
-    <string name="playlists_empty_title">هنوز پلی‌لیستی نیست</string>
-    <string name="playlists_empty_subtitle">پلی‌لیست‌های عمومی اینجا نمایش داده می‌شوند.</string>
 
 </resources>
