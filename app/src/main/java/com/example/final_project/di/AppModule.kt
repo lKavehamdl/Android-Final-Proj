@@ -31,4 +31,5 @@ val appModule = module {
             playerController = get(),
         )
     }
+    viewModel { PlaylistsViewModel(get(), get()) }
 }

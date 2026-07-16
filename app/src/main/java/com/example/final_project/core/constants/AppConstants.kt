@@ -32,4 +32,5 @@ object AppConstants {
     const val PREF_LANGUAGE = "language"
     const val PREF_FONT_SCALE = "font_scale"
     const val PREF_IS_PREMIUM = "is_premium"
+    const val PLAYLISTS_TABLE = "playlists"
 }
