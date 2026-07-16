@@ -131,15 +131,15 @@ Add new routes to `Screen` sealed class and register in `MelodifyApp` NavHost.
 
 ### Live backend (wired)
 
-Credentials are read from gitignored `local.properties`:
+Credentials are hardcoded in `app/build.gradle.kts` → `BuildConfig` so any clone builds and runs:
 
-```
-SUPABASE_URL=https://tumloddgamefuouqurww.supabase.co/
-SUPABASE_ANON_KEY=<publishable key from team notes>
-USE_FAKE_SONGS=false
+```kotlin
+buildConfigField("String", "SUPABASE_URL", "\"https://tumloddgamefuouqurww.supabase.co/\"")
+buildConfigField("String", "SUPABASE_ANON_KEY", "\"sb_publishable_...\"")
+buildConfigField("boolean", "USE_FAKE_SONGS", "false")
 ```
 
-Koin binds `SongRepositoryImpl` when `USE_FAKE_SONGS=false`.
+`AppConstants` reads them via `BuildConfig`. Koin binds `SongRepositoryImpl` when `USE_FAKE_SONGS=false`.
 
 ### Files
 

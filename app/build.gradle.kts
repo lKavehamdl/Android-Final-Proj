@@ -4,18 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)  // required by Supabase DTOs
 }
 
-import java.util.Properties
-
-val localProperties = Properties().apply {
-    val file = rootProject.file("local.properties")
-    if (file.exists()) {
-        file.inputStream().use { load(it) }
-    }
-}
-
-fun localProp(key: String, default: String = ""): String =
-    localProperties.getProperty(key)?.trim().orEmpty().ifEmpty { default }
-
 android {
     namespace = "com.example.final_project"
     compileSdk {
@@ -33,20 +21,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // Credentials live in local.properties (gitignored). See team notes for values.
-        val supabaseUrl = localProp(
+        // Task A Supabase project — committed so any teammate machine can run without extra setup.
+        buildConfigField(
+            "String",
             "SUPABASE_URL",
-            "https://tumloddgamefuouqurww.supabase.co/",
-        ).let { if (it.endsWith("/")) it else "$it/" }
-        val supabaseKey = localProp(
-            "SUPABASE_ANON_KEY",
-            "sb_publishable_7lgBlUxzcU4on4W1Kx1fwg_OABvIy5A",
+            "\"https://tumloddgamefuouqurww.supabase.co/\"",
         )
-        val useFake = localProp("USE_FAKE_SONGS", "false").toBoolean()
-
-        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
-        buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseKey\"")
-        buildConfigField("boolean", "USE_FAKE_SONGS", "$useFake")
+        buildConfigField(
+            "String",
+            "SUPABASE_ANON_KEY",
+            "\"sb_publishable_7lgBlUxzcU4on4W1Kx1fwg_OABvIy5A\"",
+        )
+        buildConfigField("boolean", "USE_FAKE_SONGS", "false")
     }
 
     buildTypes {
