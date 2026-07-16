@@ -20,6 +20,7 @@ sealed class Screen(
     data object Downloads : Screen("downloads", R.string.tab_downloads, Icons.Filled.Download)
     data object Playlists : Screen("playlists", R.string.tab_playlists, Icons.AutoMirrored.Filled.PlaylistPlay)
     data object Profile : Screen("profile", R.string.tab_profile, Icons.Filled.Person)
+    data object Settings : Screen("settings", R.string.settings_title, Icons.Filled.Person)
 
     companion object {
         val bottomNavItems = listOf(Home, Search, Downloads, Playlists, Profile)

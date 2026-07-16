@@ -37,6 +37,7 @@ import com.example.final_project.ui.screens.home.HomeScreen
 import com.example.final_project.ui.screens.playlists.PlaylistsScreen
 import com.example.final_project.ui.screens.profile.ProfileScreen
 import com.example.final_project.ui.screens.search.SearchScreen
+import com.example.final_project.ui.screens.settings.SettingsScreen
 import com.example.final_project.ui.theme.ThemeMode
 import org.koin.compose.koinInject
 
@@ -66,13 +67,22 @@ fun MelodifyApp(
                 NowPlayingScreen(
                     song = playerState.currentSong!!,
                     isPlaying = playerState.isPlaying,
+                    isBuffering = playerState.isBuffering,
                     positionMs = playerState.positionMs,
                     durationMs = playerState.durationMs,
+                    playbackSpeed = playerState.playbackSpeed,
+                    sleepTimerMinutesLeft = playerState.sleepTimerMinutesLeft,
+                    isShuffleOn = playerState.isShuffleOn,
+                    repeatMode = playerState.repeatMode,
                     onCollapse = { playerController.setExpanded(false) },
                     onPlayPause = playerController::togglePlayPause,
                     onSkipNext = playerController::skipNext,
                     onSkipPrevious = playerController::skipPrevious,
                     onSeek = playerController::seekTo,
+                    onSpeedChange = playerController::setPlaybackSpeed,
+                    onSleepTimerSet = playerController::setSleepTimer,
+                    onToggleShuffle = playerController::toggleShuffle,
+                    onCycleRepeat = playerController::cycleRepeatMode,
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this,
                 )
@@ -86,7 +96,7 @@ fun MelodifyApp(
                             },
                             onNotificationsClick = {},
                             onSettingsClick = {
-                                navController.navigateToTab(Screen.Profile.route)
+                                navController.navigate(Screen.Settings.route)
                             },
                         )
                     },
@@ -97,6 +107,8 @@ fun MelodifyApp(
                                 MiniPlayer(
                                     song = song,
                                     isPlaying = playerState.isPlaying,
+                                    positionMs = playerState.positionMs,
+                                    durationMs = playerState.durationMs,
                                     onExpand = { playerController.setExpanded(true) },
                                     onPlayPause = playerController::togglePlayPause,
                                     onSkipNext = playerController::skipNext,
@@ -184,11 +196,16 @@ private fun MelodifyNavHost(
             PlaylistsScreen()
         }
         composable(Screen.Profile.route) {
-            ProfileScreen(
+            ProfileScreen()
+        }
+        composable(Screen.Settings.route) {
+            SettingsScreen(
                 themeMode = themeMode,
                 language = language,
                 onThemeModeChange = onThemeModeChange,
                 onLanguageChange = onLanguageChange,
+                onBackClick = { navController.popBackStack() },
+                onLogoutClick = { /* Will be handled in Phase 7 */ }
             )
         }
     }

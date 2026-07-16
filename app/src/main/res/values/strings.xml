@@ -215,9 +215,6 @@
     <string name="notification_channel_social">Social</string>
 
     <string name="playlists_section_world">World Music</string>
-    <string name="playlists_section_local">Local Music</string>
     <string name="playlists_section_user">My Playlists</string>
-    <string name="playlists_empty_title">No playlists yet</string>
-    <string name="playlists_empty_subtitle">Public playlists will appear here.</string>
 
 </resources>

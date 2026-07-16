@@ -5,6 +5,9 @@ import com.example.final_project.core.dispatchers.DispatchersProvider
 import com.example.final_project.player.PlayerController
 import com.example.final_project.ui.MainViewModel
 import com.example.final_project.ui.screens.home.HomeViewModel
+import com.example.final_project.ui.screens.playlists.PlaylistsViewModel
+import com.example.final_project.ui.screens.profile.ProfileViewModel
+import com.example.final_project.ui.screens.downloads.DownloadsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,4 +35,6 @@ val appModule = module {
         )
     }
     viewModel { PlaylistsViewModel(get(), get()) }
+    viewModel { ProfileViewModel() }
+    viewModel { DownloadsViewModel() }
 }
