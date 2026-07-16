@@ -14,6 +14,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
+import com.example.final_project.data.remote.PlaylistApiService
 
 val networkModule = module {
     single {
@@ -46,4 +47,5 @@ val networkModule = module {
     }
 
     single { SongApiService(client = get()) }
+    single { PlaylistApiService(client = get()) }
 }
