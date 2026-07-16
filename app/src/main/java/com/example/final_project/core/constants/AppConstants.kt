@@ -16,7 +16,7 @@ object AppConstants {
     val USE_FAKE_SONGS: Boolean = BuildConfig.USE_FAKE_SONGS
 
     const val SONGS_TABLE = "songs"
-    const val WEB_SOCKET_URL = "wss://YOUR_PROJECT.supabase.co/realtime/v1"
+    val WEB_SOCKET_URL = BASE_URL.replace("https://", "wss://") + "realtime/v1"
 
     // Search
     const val SEARCH_DEBOUNCE_MS = 300L
