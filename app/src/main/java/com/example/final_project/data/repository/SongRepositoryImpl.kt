@@ -11,21 +11,63 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 /**
- * Live repository — talks to Supabase via [SongApiService].
- * Bound by Koin when [com.example.final_project.core.constants.AppConstants.USE_FAKE_SONGS] is false.
+ * Live Supabase-backed implementation of [SongRepository].
+ *
+ * Bound by Koin when [com.example.final_project.core.constants.AppConstants.USE_FAKE_SONGS]
+ * is **false** (set in build.gradle.kts once Task A keys are available).
+ *
+ * Thread safety: every Flow is switched to [DispatchersProvider.io] via [flowOn],
+ * so the network call never touches the Main thread.
  */
 class SongRepositoryImpl(
     private val api: SongApiService,
     private val dispatchers: DispatchersProvider,
 ) : SongRepository {
 
-    override fun getSongs(): Flow<Resource<List<Song>>> = flow {
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    /** Wraps a suspend [block] in Loading → Success | Error emissions. */
+    private fun <T> safeFlow(block: suspend () -> T): Flow<Resource<T>> = flow {
         emit(Resource.Loading)
         try {
-            val songs = api.fetchSongs().toDomain()
-            emit(Resource.Success(songs))
+            emit(Resource.Success(block()))
         } catch (e: Exception) {
             emit(Resource.Error(message = e.message, throwable = e))
         }
-    }.flowOn(dispatchers.io)
+    }
+
+    // ── SongRepository ────────────────────────────────────────────────────────
+
+    override fun getSongs(): Flow<Resource<List<Song>>> =
+        safeFlow { api.fetchSongs().toDomain() }
+            .flowOn(dispatchers.io)
+
+    override fun getTrendingSongs(limit: Int): Flow<Resource<List<Song>>> =
+        safeFlow { api.fetchTrendingSongs(limit).toDomain() }
+            .flowOn(dispatchers.io)
+
+    override fun getNewReleases(limit: Int): Flow<Resource<List<Song>>> =
+        safeFlow { api.fetchNewReleases(limit).toDomain() }
+            .flowOn(dispatchers.io)
+
+    override fun getLocalSongs(): Flow<Resource<List<Song>>> =
+        safeFlow { api.fetchLocalSongs().toDomain() }
+            .flowOn(dispatchers.io)
+
+    override fun searchSongs(query: String): Flow<Resource<List<Song>>> =
+        safeFlow { api.searchSongs(query).toDomain() }
+            .flowOn(dispatchers.io)
+
+    override suspend fun getSongById(id: String): Resource<Song> {
+        return try {
+            Resource.Success(api.fetchSongById(id).toDomain())
+        } catch (e: Exception) {
+            Resource.Error(message = e.message, throwable = e)
+        }
+    }
+
+    override suspend fun incrementPlayCount(songId: String) {
+        // Fire-and-forget: swallow exceptions so playback is never interrupted.
+        runCatching { api.incrementPlayCount(songId) }
+    }
 }
