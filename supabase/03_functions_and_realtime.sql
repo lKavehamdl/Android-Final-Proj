@@ -1,16 +1,10 @@
 -- =============================================================================
--- Melodify – Database Functions, Realtime & Helper View
+-- Melodify – Database Functions, Realtime & Helper View (FIXED)
 -- File: 03_functions_and_realtime.sql
--- Run after 02_policies.sql
 -- =============================================================================
 
 
--- =============================================================================
--- SECTION 1: get_conversation(user1_id, user2_id)
--- Returns all messages between two users ordered by created_at ASC.
--- Only participants should call this; RLS on messages enforces access.
--- =============================================================================
-
+-- SECTION 1: get_conversation
 CREATE OR REPLACE FUNCTION public.get_conversation(
     user1_id uuid,
     user2_id uuid
@@ -44,25 +38,20 @@ AS $$
 $$;
 
 
--- =============================================================================
--- SECTION 2: get_trending_songs(limit_count)
--- Returns the top N songs ordered by play_count DESC.
--- Accessible by any role (anon-safe because songs are public).
--- =============================================================================
-
+-- SECTION 2: get_trending_songs
 CREATE OR REPLACE FUNCTION public.get_trending_songs(
     limit_count integer DEFAULT 20
 )
 RETURNS TABLE (
-    id           uuid,
-    title        text,
-    artist_name  text,
-    album_name   text,
-    duration_sec integer,
-    cover_url    text,
-    audio_url    text,
-    play_count   bigint,
-    created_at   timestamptz
+    id               uuid,
+    title            text,
+    artist_name      text,
+    album_name       text,
+    duration_seconds integer,
+    cover_image_url  text,
+    audio_url        text,
+    play_count       bigint,
+    created_at       timestamptz
 )
 LANGUAGE sql
 STABLE
@@ -74,8 +63,8 @@ AS $$
         s.title,
         s.artist_name,
         s.album_name,
-        s.duration_sec,
-        s.cover_url,
+        s.duration_seconds,
+        s.cover_image_url,
         s.audio_url,
         s.play_count,
         s.created_at
