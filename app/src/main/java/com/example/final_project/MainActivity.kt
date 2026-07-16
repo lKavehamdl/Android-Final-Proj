@@ -4,57 +4,45 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.final_project.ui.MainUiEvent
+import com.example.final_project.ui.MainViewModel
+import com.example.final_project.ui.navigation.MelodifyApp
 import com.example.final_project.ui.theme.FinalProjectTheme
-import com.example.final_project.ui.theme.ThemeMode
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            // TODO (Phase 2): replace ThemeMode.SYSTEM with the value read
-            //  from DataStore via a ViewModel/StateFlow.
-            FinalProjectTheme(themeMode = ThemeMode.SYSTEM) {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MelodifyPlaceholder(modifier = Modifier.padding(innerPadding))
-                }
+            val state by mainViewModel.state.collectAsStateWithLifecycle()
+
+            LaunchedEffect(state.language) {
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(state.language.tag),
+                )
             }
-        }
-    }
-}
 
-/** Temporary placeholder shown until Phase 3 navigation is wired up. */
-@Composable
-private fun MelodifyPlaceholder(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.app_name),
-            style = MaterialTheme.typography.displaySmall,
-            color = MaterialTheme.colorScheme.primary,
-        )
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun MelodifyPreview() {
-    FinalProjectTheme(themeMode = ThemeMode.DARK) {
-        Scaffold { innerPadding ->
-            MelodifyPlaceholder(modifier = Modifier.padding(innerPadding))
+            FinalProjectTheme(themeMode = state.themeMode) {
+                MelodifyApp(
+                    themeMode = state.themeMode,
+                    language = state.language,
+                    onThemeModeChange = {
+                        mainViewModel.onEvent(MainUiEvent.ThemeModeChanged(it))
+                    },
+                    onLanguageChange = {
+                        mainViewModel.onEvent(MainUiEvent.LanguageChanged(it))
+                    },
+                )
+            }
         }
     }
 }
