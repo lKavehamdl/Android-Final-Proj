@@ -383,94 +383,20 @@ ALTER TABLE public.messages        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.downloads       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.search_history  ENABLE ROW LEVEL SECURITY;
 
--- ---------------------------------------------------------------------------
--- Basic RLS policies
--- ---------------------------------------------------------------------------
+-- =============================================================================
+-- STORAGE BUCKETS
+-- Create buckets for covers and audio
+-- =============================================================================
 
--- profiles: anyone authenticated can read all profiles (for social features)
-CREATE POLICY "profiles_select_authenticated"
-    ON public.profiles FOR SELECT
-    USING (auth.role() = 'authenticated');
+INSERT INTO storage.buckets (id, name, public)
+VALUES 
+    ('covers', 'covers', true),
+    ('audio', 'audio', true)
+ON CONFLICT (id) DO NOTHING;
 
--- profiles: users can only update their own profile
-CREATE POLICY "profiles_update_own"
-    ON public.profiles FOR UPDATE
-    USING (auth.uid() = id);
-
--- songs: all authenticated users can browse the catalogue
-CREATE POLICY "songs_select_authenticated"
-    ON public.songs FOR SELECT
-    USING (auth.role() = 'authenticated');
-
--- playlists: public playlists visible to all; private only to owner
-CREATE POLICY "playlists_select_public_or_own"
-    ON public.playlists FOR SELECT
-    USING (is_public = true OR auth.uid() = user_id);
-
-CREATE POLICY "playlists_insert_own"
-    ON public.playlists FOR INSERT
-    WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "playlists_update_own"
-    ON public.playlists FOR UPDATE
-    USING (auth.uid() = user_id);
-
-CREATE POLICY "playlists_delete_own"
-    ON public.playlists FOR DELETE
-    USING (auth.uid() = user_id);
-
--- playlist_songs: visible if the parent playlist is visible
-CREATE POLICY "playlist_songs_select"
-    ON public.playlist_songs FOR SELECT
-    USING (
-        EXISTS (
-            SELECT 1 FROM public.playlists p
-            WHERE p.id = playlist_id
-              AND (p.is_public = true OR p.user_id = auth.uid())
-        )
-    );
-
--- liked_songs: users manage only their own liked songs
-CREATE POLICY "liked_songs_own"
-    ON public.liked_songs FOR ALL
-    USING (auth.uid() = user_id);
-
--- recently_played: users see only their own history
-CREATE POLICY "recently_played_own"
-    ON public.recently_played FOR ALL
-    USING (auth.uid() = user_id);
-
--- follows: anyone can read follows (social graph); write own rows only
-CREATE POLICY "follows_select_authenticated"
-    ON public.follows FOR SELECT
-    USING (auth.role() = 'authenticated');
-
-CREATE POLICY "follows_insert_own"
-    ON public.follows FOR INSERT
-    WITH CHECK (auth.uid() = follower_id);
-
-CREATE POLICY "follows_delete_own"
-    ON public.follows FOR DELETE
-    USING (auth.uid() = follower_id);
-
--- messages: only sender or receiver can read a message
-CREATE POLICY "messages_select_own"
-    ON public.messages FOR SELECT
-    USING (auth.uid() = sender_id OR auth.uid() = receiver_id);
-
-CREATE POLICY "messages_insert_own"
-    ON public.messages FOR INSERT
-    WITH CHECK (auth.uid() = sender_id);
-
--- downloads: users manage only their own downloads
-CREATE POLICY "downloads_own"
-    ON public.downloads FOR ALL
-    USING (auth.uid() = user_id);
-
--- search_history: users see only their own history
-CREATE POLICY "search_history_own"
-    ON public.search_history FOR ALL
-    USING (auth.uid() = user_id);
+-- Also add basic public read policies for the storage buckets
+CREATE POLICY "public_read_covers" ON storage.objects FOR SELECT USING (bucket_id = 'covers');
+CREATE POLICY "public_read_audio" ON storage.objects FOR SELECT USING (bucket_id = 'audio');
 
 -- =============================================================================
 -- END OF SCHEMA

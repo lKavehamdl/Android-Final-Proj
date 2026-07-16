@@ -144,23 +144,23 @@ CREATE POLICY "playlists_read_public"
 CREATE POLICY "playlists_read_own_private"
     ON public.playlists FOR SELECT
     TO authenticated
-    USING (auth.uid() = owner_id);
+    USING (auth.uid() = user_id);
 
 CREATE POLICY "playlists_insert_own"
     ON public.playlists FOR INSERT
     TO authenticated
-    WITH CHECK (auth.uid() = owner_id);
+    WITH CHECK (auth.uid() = user_id);
 
 CREATE POLICY "playlists_update_own"
     ON public.playlists FOR UPDATE
     TO authenticated
-    USING      (auth.uid() = owner_id)
-    WITH CHECK (auth.uid() = owner_id);
+    USING      (auth.uid() = user_id)
+    WITH CHECK (auth.uid() = user_id);
 
 CREATE POLICY "playlists_delete_own"
     ON public.playlists FOR DELETE
     TO authenticated
-    USING (auth.uid() = owner_id);
+    USING (auth.uid() = user_id);
 
 
 -- =============================================================================
@@ -178,7 +178,7 @@ CREATE POLICY "playlist_songs_read"
             WHERE p.id = playlist_id
               AND (
                     p.is_public = true
-                    OR p.owner_id = auth.uid()
+                    OR p.user_id = auth.uid()
                   )
         )
     );
@@ -190,7 +190,7 @@ CREATE POLICY "playlist_songs_insert_by_owner"
         EXISTS (
             SELECT 1 FROM public.playlists p
             WHERE p.id = playlist_id
-              AND p.owner_id = auth.uid()
+              AND p.user_id = auth.uid()
         )
     );
 
@@ -201,7 +201,7 @@ CREATE POLICY "playlist_songs_delete_by_owner"
         EXISTS (
             SELECT 1 FROM public.playlists p
             WHERE p.id = playlist_id
-              AND p.owner_id = auth.uid()
+              AND p.user_id = auth.uid()
         )
     );
 
