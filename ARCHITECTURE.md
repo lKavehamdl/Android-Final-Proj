@@ -126,3 +126,48 @@ Add new routes to `Screen` sealed class and register in `MelodifyApp` NavHost.
 - [ ] Profile tab → theme chips switch dark/light/system
 - [ ] Profile tab → language chips flip RTL (فارسی) / LTR (English)
 - [ ] All text comes from `strings.xml` (no hardcoded strings)
+
+## Phase 1 — Data Layer (Task C)
+
+### Files
+
+| Layer | File | Role |
+|-------|------|------|
+| Domain | `domain/model/Song.kt` | Pure Kotlin model |
+| Domain | `domain/repository/SongRepository.kt` | Interface |
+| Domain | `domain/usecase/GetSongsUseCase.kt` | UseCase + `flowOn(IO)` |
+| Data | `data/remote/dto/SongDto.kt` | `@Serializable` Supabase DTO |
+| Data | `data/remote/SongApiService.kt` | Ktor GET `/rest/v1/songs` |
+| Data | `data/mapper/SongMapper.kt` | DTO → Domain |
+| Data | `data/repository/FakeSongRepository.kt` | 5 hardcoded songs (default) |
+| Data | `data/repository/SongRepositoryImpl.kt` | Live API repo |
+
+### Switch fake → real (when Task A is ready)
+
+In `app/build.gradle.kts` `defaultConfig`:
+
+```kotlin
+buildConfigField("boolean", "USE_FAKE_SONGS", "false")
+buildConfigField("String", "SUPABASE_URL", "\"https://xxxx.supabase.co/\"")
+buildConfigField("String", "SUPABASE_ANON_KEY", "\"eyJ...\"")
+```
+
+Then rebuild. Koin will bind `SongRepositoryImpl` instead of `FakeSongRepository`.
+
+### Expected Supabase schema (Task A)
+
+```sql
+songs (
+  id uuid primary key,
+  title text,
+  artist_name text,
+  cover_image_url text,
+  audio_url text
+)
+```
+
+### Phase 1 Verification
+
+- [ ] Home tab shows Loading → then 5 fake songs
+- [ ] Song titles/artists render from repository (not hardcoded in UI)
+- [ ] After Task A keys: set `USE_FAKE_SONGS=false` → Home shows live rows

@@ -1,12 +1,17 @@
 package com.example.final_project.data.remote.dto
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
- * Remote DTO — maps to [com.example.final_project.domain.model.Song] via mapper (Phase 1).
+ * Matches the Supabase `songs` table (Task A schema).
+ * Fields: id, title, artist_name, cover_image_url, audio_url
  */
+@Serializable
 data class SongDto(
     val id: String,
     val title: String,
-    val artist_name: String,
-    val cover_image_url: String,
-    val audio_url: String,
+    @SerialName("artist_name") val artistName: String,
+    @SerialName("cover_image_url") val coverImageUrl: String,
+    @SerialName("audio_url") val audioUrl: String,
 )

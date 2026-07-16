@@ -6,7 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 /**
  * Domain contract for song data.
- * Implementation lives in [com.example.final_project.data.repository] (Phase 1).
+ *
+ * Implementations:
+ * - [com.example.final_project.data.repository.FakeSongRepository] (default, Phase 1)
+ * - [com.example.final_project.data.repository.SongRepositoryImpl] (live Supabase)
  */
 interface SongRepository {
     fun getSongs(): Flow<Resource<List<Song>>>
