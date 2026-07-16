@@ -1,13 +1,19 @@
-git *.aut
+*.class
+*.aut
 *.log
 *.out
 *.iml
-.gradle
+.gradle/
 /local.properties
+local.properties
 /.idea
 .DS_Store
 /build
+app/build/
+**/build/
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+*.apk
+*.ap_
+*.dex

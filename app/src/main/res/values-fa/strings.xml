@@ -33,6 +33,7 @@
     <string name="home_quick_artists">هنرمندان برتر</string>
     <string name="home_carousel_featured">ویژه</string>
     <string name="home_see_all">مشاهده همه</string>
+    <string name="home_songs_loaded">%d آهنگ بارگذاری شد</string>
 
     <!-- کامپوننت‌های مشترک / حالت خالی -->
     <string name="empty_state_generic_title">هنوز چیزی اینجا نیست</string>

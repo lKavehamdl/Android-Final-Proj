@@ -175,5 +175,7 @@ songs (
 ### Phase 1 Verification
 
 - [x] Task A: REST `/rest/v1/songs` returns data with publishable key
-- [x] Task B: 50+ songs in DB
+- [x] Task B: 50+ songs in DB (verified 69)
 - [x] Task C: `USE_FAKE_SONGS=false` → Home loads live songs via Koin
+- [x] Trending / local filters / search RPCs respond
+- [x] Sample `audio_url` returns HTTP 200 (audio/mpeg)
