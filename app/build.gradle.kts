@@ -98,6 +98,9 @@ dependencies {
     implementation(libs.supabase.auth)        // Authentication
     implementation(libs.supabase.compose.auth)// Compose auth UI helpers
 
+    // ── Images ────────────────────────────────────────────────────────────────
+    implementation(libs.coil.compose)
+
     // ── Tests ─────────────────────────────────────────────────────────────────
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

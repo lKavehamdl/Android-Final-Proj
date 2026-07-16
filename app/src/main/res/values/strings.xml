@@ -35,6 +35,12 @@
     <string name="home_see_all">See All</string>
     <string name="home_songs_loaded">%d songs loaded</string>
 
+    <!-- Shared components / empty states -->
+    <string name="empty_state_generic_title">Nothing here yet</string>
+    <string name="empty_state_generic_subtitle">Check back later</string>
+    <string name="section_see_all">See All</string>
+    <string name="cd_logo">Melodify logo</string>
+
     <!-- ═══════════════════════════════════════════════════════════════════════
          Search Screen
     ═══════════════════════════════════════════════════════════════════════ -->

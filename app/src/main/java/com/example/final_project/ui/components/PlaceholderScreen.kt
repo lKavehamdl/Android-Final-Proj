@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.annotation.StringRes
 
 /**
- * Shared placeholder used until Phase 3 feature screens are implemented.
+ * Temporary centered title screen. Prefer [EmptyState] for empty tabs.
  */
 @Composable
 fun PlaceholderScreen(

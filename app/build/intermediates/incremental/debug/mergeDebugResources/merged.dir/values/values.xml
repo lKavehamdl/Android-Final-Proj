@@ -257,6 +257,7 @@
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
     <item name="androidx_compose_ui_view_composition_context" type="id"/>
+    <item name="coil_request_manager" type="id"/>
     <item name="compose_prefetch_scheduler" type="id"/>
     <item name="compose_view_saveable_id_tag" type="id"/>
     <item name="consume_window_insets_tag" type="id"/>
@@ -354,6 +355,7 @@
     <string name="call_notification_screening_text">Screening an incoming call</string>
     <string name="cancel">Cancel</string>
     <string name="cd_cover_art">Album cover art</string>
+    <string name="cd_logo">Melodify logo</string>
     <string name="cd_next_track">Next track</string>
     <string name="cd_notifications">Notifications</string>
     <string name="cd_play_pause">Play / Pause</string>
@@ -410,6 +412,8 @@
     <string name="downloads_title">Downloads</string>
     <string name="dropdown_menu">"Dropdown menu"</string>
     <string name="edit">Edit</string>
+    <string name="empty_state_generic_subtitle">Check back later</string>
+    <string name="empty_state_generic_title">Nothing here yet</string>
     <string name="empty_state_offline">You\'re offline</string>
     <string name="error_generic">Something went wrong</string>
     <string name="error_network">No internet connection</string>
@@ -569,6 +573,7 @@
     <string name="search_menu_title">Search</string>
     <string name="search_no_results">No results found</string>
     <string name="search_no_results_subtitle">Try a different keyword</string>
+    <string name="section_see_all">See All</string>
     <string name="selected">Selected</string>
     <string name="settings_about">About Melodify</string>
     <string name="settings_language">Language</string>

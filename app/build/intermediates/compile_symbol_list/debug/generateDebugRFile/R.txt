@@ -16,6 +16,7 @@ int string artists_title 0x0
 int string back 0x0
 int string cancel 0x0
 int string cd_cover_art 0x0
+int string cd_logo 0x0
 int string cd_next_track 0x0
 int string cd_notifications 0x0
 int string cd_play_pause 0x0
@@ -48,6 +49,8 @@ int string downloads_sort_name 0x0
 int string downloads_sort_size 0x0
 int string downloads_title 0x0
 int string edit 0x0
+int string empty_state_generic_subtitle 0x0
+int string empty_state_generic_title 0x0
 int string empty_state_offline 0x0
 int string error_generic 0x0
 int string error_network 0x0
@@ -136,6 +139,7 @@ int string search_history_clear 0x0
 int string search_history_title 0x0
 int string search_no_results 0x0
 int string search_no_results_subtitle 0x0
+int string section_see_all 0x0
 int string settings_about 0x0
 int string settings_language 0x0
 int string settings_language_en 0x0

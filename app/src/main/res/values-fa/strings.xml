@@ -35,6 +35,12 @@
     <string name="home_see_all">مشاهده همه</string>
     <string name="home_songs_loaded">%d آهنگ بارگذاری شد</string>
 
+    <!-- کامپوننت‌های مشترک / حالت خالی -->
+    <string name="empty_state_generic_title">هنوز چیزی اینجا نیست</string>
+    <string name="empty_state_generic_subtitle">بعداً دوباره سر بزنید</string>
+    <string name="section_see_all">مشاهده همه</string>
+    <string name="cd_logo">لوگوی ملودیفای</string>
+
     <!-- ═══════════════════════════════════════════════════════════════════════
          صفحه جستجو
     ═══════════════════════════════════════════════════════════════════════ -->

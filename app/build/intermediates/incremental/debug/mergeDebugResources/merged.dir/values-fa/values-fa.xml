@@ -44,6 +44,7 @@
     <string msgid="59049573811482460" name="call_notification_screening_text">"درحال غربال کردن تماس ورودی"</string>
     <string name="cancel">لغو</string>
     <string name="cd_cover_art">کاور آلبوم</string>
+    <string name="cd_logo">لوگوی ملودیفای</string>
     <string name="cd_next_track">آهنگ بعدی</string>
     <string name="cd_notifications">اعلان‌ها</string>
     <string name="cd_play_pause">پخش / توقف</string>
@@ -100,6 +101,8 @@
     <string name="downloads_title">دانلودها</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"منوی کرکره‌ای"</string>
     <string name="edit">ویرایش</string>
+    <string name="empty_state_generic_subtitle">بعداً دوباره سر بزنید</string>
+    <string name="empty_state_generic_title">هنوز چیزی اینجا نیست</string>
     <string name="empty_state_offline">شما آفلاین هستید</string>
     <string name="error_generic">مشکلی پیش آمد</string>
     <string name="error_network">اتصال اینترنت برقرار نیست</string>
@@ -255,6 +258,7 @@
     <string msgid="6264217191555673260" name="search_menu_title">"جستجو"</string>
     <string name="search_no_results">نتیجه‌ای یافت نشد</string>
     <string name="search_no_results_subtitle">کلمه دیگری را امتحان کنید</string>
+    <string name="section_see_all">مشاهده همه</string>
     <string msgid="6043586758067023" name="selected">"انتخاب شد"</string>
     <string name="settings_about">درباره ملودیفای</string>
     <string name="settings_language">زبان</string>

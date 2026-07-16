@@ -4,32 +4,31 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.final_project.R
-import com.example.final_project.domain.model.Song
+import com.example.final_project.ui.components.EmptyState
+import com.example.final_project.ui.components.SectionHeader
+import com.example.final_project.ui.components.ShimmerBox
+import com.example.final_project.ui.components.SongCard
+import com.example.final_project.ui.components.SongRow
+import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
 
 /**
- * Phase 1 verification UI — lists songs from the Koin-injected repository (fake or live).
- * Full Home UI (carousel, quick actions, LazyRows) lands in Phase 3.
+ * Home tab — Step 1 uses shared components against live song data.
+ * Step 2 adds carousel, quick actions, and full section layout.
  */
 @Composable
 fun HomeScreen(
@@ -39,69 +38,62 @@ fun HomeScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.effect.collect { /* snackbars wired in Phase 3 */ }
+        viewModel.effect.collect { /* snackbars in later phases */ }
     }
 
     when {
         state.isLoading && state.songs.isEmpty() -> {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                CircularProgressIndicator()
-            }
+            HomeShimmer(modifier = modifier)
         }
 
         state.errorMessage != null && state.songs.isEmpty() -> {
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.error_generic),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.error,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = state.errorMessage.orEmpty(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { viewModel.onEvent(HomeUiEvent.Retry) }) {
-                    Text(stringResource(R.string.retry))
-                }
-            }
+            EmptyState(
+                titleRes = R.string.error_network,
+                subtitleRes = R.string.error_network_subtitle,
+                modifier = modifier,
+                actionLabelRes = R.string.retry,
+                onActionClick = { viewModel.onEvent(HomeUiEvent.Retry) },
+            )
+        }
+
+        state.songs.isEmpty() -> {
+            EmptyState(
+                titleRes = R.string.empty_state_generic_title,
+                subtitleRes = R.string.empty_state_generic_subtitle,
+                modifier = modifier,
+            )
         }
 
         else -> {
             LazyColumn(
                 modifier = modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(bottom = MelodifySpacing.lg),
             ) {
                 item {
-                    Text(
-                        text = stringResource(R.string.tab_home),
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(
-                            R.string.home_songs_loaded,
-                            state.songs.size,
-                        ),
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    SectionHeader(titleRes = R.string.home_section_trending)
                 }
-                items(state.songs, key = { it.id }) { song ->
-                    SongListItem(song = song)
+                item {
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = MelodifySpacing.md),
+                        horizontalArrangement = Arrangement.spacedBy(MelodifySpacing.md),
+                    ) {
+                        items(state.songs.take(12), key = { "card-${it.id}" }) { song ->
+                            SongCard(
+                                song = song,
+                                onClick = { /* Step 2: play */ },
+                            )
+                        }
+                    }
+                }
+                item {
+                    SectionHeader(titleRes = R.string.home_section_recommended)
+                }
+                items(state.songs.take(20), key = { "row-${it.id}" }) { song ->
+                    SongRow(
+                        song = song,
+                        onClick = { /* Step 2: play */ },
+                        modifier = Modifier.padding(horizontal = MelodifySpacing.md),
+                    )
                 }
             }
         }
@@ -109,24 +101,32 @@ fun HomeScreen(
 }
 
 @Composable
-private fun SongListItem(
-    song: Song,
-    modifier: Modifier = Modifier,
-) {
+private fun HomeShimmer(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .fillMaxSize()
+            .padding(MelodifySpacing.md),
+        verticalArrangement = Arrangement.spacedBy(MelodifySpacing.md),
     ) {
-        Text(
-            text = song.title,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
+        ShimmerBox(
+            width = MelodifySpacing.xxl * 3,
+            height = MelodifySpacing.lg,
         )
-        Text(
-            text = song.artistName,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(MelodifySpacing.md)) {
+            items(4) {
+                ShimmerBox(
+                    width = MelodifySpacing.songCardCover,
+                    height = MelodifySpacing.songCardCover,
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = MelodifySpacing.lg),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator()
+        }
     }
 }

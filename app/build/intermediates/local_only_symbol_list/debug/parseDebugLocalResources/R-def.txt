@@ -18,6 +18,7 @@ string artists_title
 string back
 string cancel
 string cd_cover_art
+string cd_logo
 string cd_next_track
 string cd_notifications
 string cd_play_pause
@@ -50,6 +51,8 @@ string downloads_sort_name
 string downloads_sort_size
 string downloads_title
 string edit
+string empty_state_generic_subtitle
+string empty_state_generic_title
 string empty_state_offline
 string error_generic
 string error_network
@@ -138,6 +141,7 @@ string search_history_clear
 string search_history_title
 string search_no_results
 string search_no_results_subtitle
+string section_see_all
 string settings_about
 string settings_language
 string settings_language_en
