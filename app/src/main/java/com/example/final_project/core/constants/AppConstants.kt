@@ -1,10 +1,22 @@
 package com.example.final_project.core.constants
 
+import com.example.final_project.BuildConfig
+
 object AppConstants {
 
-    // Network — update in Phase 1 when backend is chosen
-    const val BASE_URL = "https://api.melodify.example/"
-    const val WEB_SOCKET_URL = "wss://api.melodify.example/ws"
+    /**
+     * Supabase project URL from Task A (BuildConfig — update in app/build.gradle.kts).
+     * Expected REST path: `{BASE_URL}rest/v1/songs`
+     */
+    val BASE_URL: String = BuildConfig.SUPABASE_URL
+
+    val SUPABASE_ANON_KEY: String = BuildConfig.SUPABASE_ANON_KEY
+
+    /** When true, Koin binds [FakeSongRepository]; set USE_FAKE_SONGS=false to use live API. */
+    val USE_FAKE_SONGS: Boolean = BuildConfig.USE_FAKE_SONGS
+
+    const val SONGS_TABLE = "songs"
+    const val WEB_SOCKET_URL = "wss://YOUR_PROJECT.supabase.co/realtime/v1"
 
     // Search
     const val SEARCH_DEBOUNCE_MS = 300L
