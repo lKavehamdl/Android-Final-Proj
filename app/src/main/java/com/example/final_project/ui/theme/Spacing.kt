@@ -24,4 +24,16 @@ object MelodifySpacing {
 
     /** Avatar in [com.example.final_project.ui.components.MelodifyTopBar]. */
     val topBarAvatar = 36.dp
+
+    /** Cover in [com.example.final_project.ui.player.MiniPlayer]. */
+    val miniPlayerCover = 48.dp
+
+    /** Spinning CD / cover on Now Playing. */
+    val nowPlayingCover = 260.dp
+
+    /** Featured carousel card height. */
+    val carouselHeight = 180.dp
+
+    /** Quick-action tile size. */
+    val quickActionSize = 72.dp
 }

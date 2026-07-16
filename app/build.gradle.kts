@@ -21,16 +21,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // ── Supabase credentials (Task A) ─────────────────────────────────────
-        // Replace these placeholder values with your real Supabase project URL and anon key.
-        // Get them from: Supabase Dashboard → Project Settings → API
-        //
-        // ⚠️  NEVER commit real keys to version control.
-        //     Move them to a local.properties file in production.
-        buildConfigField("String",  "SUPABASE_URL",     "\"https://YOUR_PROJECT_ID.supabase.co/\"")
-        buildConfigField("String",  "SUPABASE_ANON_KEY","\"YOUR_ANON_KEY_HERE\"")
-        // Set to false once SUPABASE_URL and SUPABASE_ANON_KEY are filled in above.
-        buildConfigField("Boolean", "USE_FAKE_SONGS",   "true")
+        // Task A Supabase project — committed so any teammate machine can run without extra setup.
+        buildConfigField(
+            "String",
+            "SUPABASE_URL",
+            "\"https://tumloddgamefuouqurww.supabase.co/\"",
+        )
+        buildConfigField(
+            "String",
+            "SUPABASE_ANON_KEY",
+            "\"sb_publishable_7lgBlUxzcU4on4W1Kx1fwg_OABvIy5A\"",
+        )
+        buildConfigField("boolean", "USE_FAKE_SONGS", "false")
     }
 
     buildTypes {
@@ -98,6 +100,10 @@ dependencies {
 
     // ── Images ────────────────────────────────────────────────────────────────
     implementation(libs.coil.compose)
+
+    // ── Media (Step 2 UI player; Phase 4 expands MediaSession / cache) ────────
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
 
     // ── Tests ─────────────────────────────────────────────────────────────────
     testImplementation(libs.junit)

@@ -129,6 +129,18 @@ Add new routes to `Screen` sealed class and register in `MelodifyApp` NavHost.
 
 ## Phase 1 — Data Layer (Task C)
 
+### Live backend (wired)
+
+Credentials are hardcoded in `app/build.gradle.kts` → `BuildConfig` so any clone builds and runs:
+
+```kotlin
+buildConfigField("String", "SUPABASE_URL", "\"https://tumloddgamefuouqurww.supabase.co/\"")
+buildConfigField("String", "SUPABASE_ANON_KEY", "\"sb_publishable_...\"")
+buildConfigField("boolean", "USE_FAKE_SONGS", "false")
+```
+
+`AppConstants` reads them via `BuildConfig`. Koin binds `SongRepositoryImpl` when `USE_FAKE_SONGS=false`.
+
 ### Files
 
 | Layer | File | Role |
@@ -137,22 +149,10 @@ Add new routes to `Screen` sealed class and register in `MelodifyApp` NavHost.
 | Domain | `domain/repository/SongRepository.kt` | Interface |
 | Domain | `domain/usecase/GetSongsUseCase.kt` | UseCase + `flowOn(IO)` |
 | Data | `data/remote/dto/SongDto.kt` | `@Serializable` Supabase DTO |
-| Data | `data/remote/SongApiService.kt` | Ktor GET `/rest/v1/songs` |
+| Data | `data/remote/SongApiService.kt` | Ktor GET `/rest/v1/songs` + RPCs |
 | Data | `data/mapper/SongMapper.kt` | DTO → Domain |
-| Data | `data/repository/FakeSongRepository.kt` | 5 hardcoded songs (default) |
+| Data | `data/repository/FakeSongRepository.kt` | 5 hardcoded songs (dev fallback) |
 | Data | `data/repository/SongRepositoryImpl.kt` | Live API repo |
-
-### Switch fake → real (when Task A is ready)
-
-In `app/build.gradle.kts` `defaultConfig`:
-
-```kotlin
-buildConfigField("boolean", "USE_FAKE_SONGS", "false")
-buildConfigField("String", "SUPABASE_URL", "\"https://xxxx.supabase.co/\"")
-buildConfigField("String", "SUPABASE_ANON_KEY", "\"eyJ...\"")
-```
-
-Then rebuild. Koin will bind `SongRepositoryImpl` instead of `FakeSongRepository`.
 
 ### Expected Supabase schema (Task A)
 
@@ -161,13 +161,19 @@ songs (
   id uuid primary key,
   title text,
   artist_name text,
+  album_name text,
   cover_image_url text,
-  audio_url text
+  audio_url text,
+  duration_seconds int,
+  genre text,
+  is_local boolean,
+  play_count bigint,
+  created_at timestamptz
 )
 ```
 
 ### Phase 1 Verification
 
-- [ ] Home tab shows Loading → then 5 fake songs
-- [ ] Song titles/artists render from repository (not hardcoded in UI)
-- [ ] After Task A keys: set `USE_FAKE_SONGS=false` → Home shows live rows
+- [x] Task A: REST `/rest/v1/songs` returns data with publishable key
+- [x] Task B: 50+ songs in DB
+- [x] Task C: `USE_FAKE_SONGS=false` → Home loads live songs via Koin

@@ -1,65 +1,151 @@
 package com.example.final_project.ui.screens.home
 
+import androidx.lifecycle.viewModelScope
+import com.example.final_project.R
 import com.example.final_project.core.mvi.BaseViewModel
 import com.example.final_project.core.mvi.UiEffect
 import com.example.final_project.core.mvi.UiEvent
 import com.example.final_project.core.mvi.UiState
 import com.example.final_project.core.result.Resource
 import com.example.final_project.domain.model.Song
+import com.example.final_project.domain.usecase.GetLocalSongsUseCase
+import com.example.final_project.domain.usecase.GetNewReleasesUseCase
 import com.example.final_project.domain.usecase.GetSongsUseCase
-import androidx.lifecycle.viewModelScope
+import com.example.final_project.domain.usecase.GetTrendingSongsUseCase
+import com.example.final_project.player.PlayerController
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 data class HomeUiState(
     val isLoading: Boolean = false,
-    val songs: List<Song> = emptyList(),
+    val carousel: List<Song> = emptyList(),
+    val trending: List<Song> = emptyList(),
+    val newReleases: List<Song> = emptyList(),
+    val globalPlaylists: List<Song> = emptyList(),
+    val localPlaylists: List<Song> = emptyList(),
     val errorMessage: String? = null,
 ) : UiState
 
 sealed interface HomeUiEvent : UiEvent {
-    data object LoadSongs : HomeUiEvent
+    data object Load : HomeUiEvent
     data object Retry : HomeUiEvent
+    data class SongClick(val song: Song) : HomeUiEvent
+    data class QuickActionClick(val action: HomeQuickAction) : HomeUiEvent
+}
+
+enum class HomeQuickAction {
+    LIKED,
+    RECENT,
+    PLAYLISTS,
+    ARTISTS,
 }
 
 sealed interface HomeUiEffect : UiEffect {
-    data class ShowError(val message: String) : HomeUiEffect
+    data class ShowMessage(@androidx.annotation.StringRes val messageRes: Int) : HomeUiEffect
+    data object OpenPlaylistsTab : HomeUiEffect
 }
 
 class HomeViewModel(
     private val getSongsUseCase: GetSongsUseCase,
+    private val getTrendingSongsUseCase: GetTrendingSongsUseCase,
+    private val getNewReleasesUseCase: GetNewReleasesUseCase,
+    private val getLocalSongsUseCase: GetLocalSongsUseCase,
+    private val playerController: PlayerController,
 ) : BaseViewModel<HomeUiState, HomeUiEvent, HomeUiEffect>(HomeUiState()) {
 
     init {
-        onEvent(HomeUiEvent.LoadSongs)
+        onEvent(HomeUiEvent.Load)
     }
 
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.LoadSongs,
+            HomeUiEvent.Load,
             HomeUiEvent.Retry,
-            -> loadSongs()
-        }
-    }
+            -> loadHome()
 
-    private fun loadSongs() {
-        viewModelScope.launch {
-            getSongsUseCase().collect { resource ->
-                when (resource) {
-                    is Resource.Loading -> setState {
-                        copy(isLoading = true, errorMessage = null)
-                    }
-                    is Resource.Success -> setState {
-                        copy(isLoading = false, songs = resource.data, errorMessage = null)
-                    }
-                    is Resource.Error -> {
-                        val message = resource.message.orEmpty()
-                        setState {
-                            copy(isLoading = false, errorMessage = message)
-                        }
-                        sendEffect(HomeUiEffect.ShowError(message))
-                    }
-                }
+            is HomeUiEvent.SongClick -> {
+                playerController.play(event.song, buildQueue())
+            }
+
+            is HomeUiEvent.QuickActionClick -> when (event.action) {
+                HomeQuickAction.PLAYLISTS -> sendEffect(HomeUiEffect.OpenPlaylistsTab)
+                HomeQuickAction.LIKED -> sendEffect(HomeUiEffect.ShowMessage(R.string.home_quick_liked))
+                HomeQuickAction.RECENT -> sendEffect(HomeUiEffect.ShowMessage(R.string.home_quick_recent))
+                HomeQuickAction.ARTISTS -> sendEffect(HomeUiEffect.ShowMessage(R.string.home_quick_artists))
             }
         }
     }
+
+    private fun buildQueue(): List<Song> {
+        val state = currentState()
+        return (state.trending + state.newReleases + state.globalPlaylists + state.localPlaylists)
+            .distinctBy { it.id }
+            .ifEmpty { state.carousel }
+    }
+
+    private fun loadHome() {
+        viewModelScope.launch {
+            setState { copy(isLoading = true, errorMessage = null) }
+            try {
+                coroutineScope {
+                    val trendingRes = async {
+                        getTrendingSongsUseCase(20).first { it !is Resource.Loading }
+                    }
+                    val newRes = async {
+                        getNewReleasesUseCase(20).first { it !is Resource.Loading }
+                    }
+                    val localRes = async {
+                        getLocalSongsUseCase().first { it !is Resource.Loading }
+                    }
+                    val allRes = async {
+                        getSongsUseCase().first { it !is Resource.Loading }
+                    }
+
+                    val trendingResult = trendingRes.await()
+                    val newResult = newRes.await()
+                    val localResult = localRes.await()
+                    val allResult = allRes.await()
+
+                    val trending = trendingResult.successOrEmpty()
+                    val newReleases = newResult.successOrEmpty()
+                    val local = localResult.successOrEmpty()
+                    val all = allResult.successOrEmpty()
+
+                    val firstError = listOf(trendingResult, newResult, localResult, allResult)
+                        .filterIsInstance<Resource.Error>()
+                        .firstOrNull()
+
+                    if (trending.isEmpty() && newReleases.isEmpty() && all.isEmpty()) {
+                        setState {
+                            copy(
+                                isLoading = false,
+                                errorMessage = firstError?.message
+                                    ?: "empty",
+                            )
+                        }
+                        return@coroutineScope
+                    }
+
+                    setState {
+                        copy(
+                            isLoading = false,
+                            carousel = (trending.ifEmpty { all }).take(6),
+                            trending = trending.ifEmpty { all.take(12) },
+                            newReleases = newReleases.ifEmpty { all.takeLast(12) },
+                            globalPlaylists = all.filter { !it.isLocal }.ifEmpty { all }.take(12),
+                            localPlaylists = local.ifEmpty { all.filter { it.isLocal } }.take(12),
+                            errorMessage = null,
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                setState { copy(isLoading = false, errorMessage = e.message) }
+            }
+        }
+    }
+
+    private fun Resource<List<Song>>.successOrEmpty(): List<Song> =
+        (this as? Resource.Success)?.data.orEmpty()
 }

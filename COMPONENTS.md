@@ -173,10 +173,14 @@ if (state.isLoading) {
 
 ---
 
-## Step 2 owners
+## Step 2 — Home + Mini / Now Playing
 
-| Owner | Builds on |
-|-------|-----------|
-| Home (carousel, quick actions, LazyRows) | `SectionHeader`, `SongCard`, `ShimmerBox`, `MelodifyTopBar` (already in shell) |
-| Mini Player | `MelodifyApp(miniPlayer = { … })` |
-| Now Playing + shared element | new screen route; wire after Mini Player |
+| Piece | Status |
+|-------|--------|
+| Home carousel + 4 quick actions + LazyRows | ✅ |
+| Mini Player above bottom nav | ✅ |
+| Now Playing (CD spin + Canvas visualizer) | ✅ |
+| Shared element Mini ↔ Full (`PlayerSharedKeys`) | ✅ |
+| ExoPlayer in-app (MediaSession/cache → Phase 4) | ✅ basic |
+
+Tap a song on Home → Mini Player appears → tap Mini Player to expand with shared cover transition.
