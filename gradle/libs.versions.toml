@@ -16,6 +16,7 @@ appcompat = "1.7.0"
 ktor = "3.0.3"
 coroutines = "1.9.0"
 serializationJson = "1.7.3"
+coil = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,6 +55,7 @@ supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime
 supabase-storage = { group = "io.github.jan-tennert.supabase", name = "storage-kt" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
 supabase-compose-auth = { group = "io.github.jan-tennert.supabase", name = "compose-auth" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
