@@ -4,44 +4,45 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.final_project.ui.MainUiEvent
+import com.example.final_project.ui.MainViewModel
+import com.example.final_project.ui.navigation.MelodifyApp
 import com.example.final_project.ui.theme.FinalProjectTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            FinalProjectTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            val state by mainViewModel.state.collectAsStateWithLifecycle()
+
+            LaunchedEffect(state.language) {
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(state.language.tag),
+                )
+            }
+
+            FinalProjectTheme(themeMode = state.themeMode) {
+                MelodifyApp(
+                    themeMode = state.themeMode,
+                    language = state.language,
+                    onThemeModeChange = {
+                        mainViewModel.onEvent(MainUiEvent.ThemeModeChanged(it))
+                    },
+                    onLanguageChange = {
+                        mainViewModel.onEvent(MainUiEvent.LanguageChanged(it))
+                    },
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FinalProjectTheme {
-        Greeting("Android")
     }
 }
