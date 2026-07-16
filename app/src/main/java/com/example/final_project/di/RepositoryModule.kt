@@ -4,7 +4,10 @@ import com.example.final_project.core.constants.AppConstants
 import com.example.final_project.data.repository.FakeSongRepository
 import com.example.final_project.data.repository.SongRepositoryImpl
 import com.example.final_project.domain.repository.SongRepository
+import com.example.final_project.domain.usecase.GetLocalSongsUseCase
+import com.example.final_project.domain.usecase.GetNewReleasesUseCase
 import com.example.final_project.domain.usecase.GetSongsUseCase
+import com.example.final_project.domain.usecase.GetTrendingSongsUseCase
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -17,4 +20,7 @@ val repositoryModule = module {
     }
 
     factory { GetSongsUseCase(songRepository = get(), dispatchers = get()) }
+    factory { GetTrendingSongsUseCase(songRepository = get(), dispatchers = get()) }
+    factory { GetNewReleasesUseCase(songRepository = get(), dispatchers = get()) }
+    factory { GetLocalSongsUseCase(songRepository = get(), dispatchers = get()) }
 }

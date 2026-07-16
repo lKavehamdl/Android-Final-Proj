@@ -98,6 +98,13 @@ dependencies {
     implementation(libs.supabase.auth)        // Authentication
     implementation(libs.supabase.compose.auth)// Compose auth UI helpers
 
+    // ── Images ────────────────────────────────────────────────────────────────
+    implementation(libs.coil.compose)
+
+    // ── Media (Step 2 UI player; Phase 4 expands MediaSession / cache) ────────
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+
     // ── Tests ─────────────────────────────────────────────────────────────────
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
