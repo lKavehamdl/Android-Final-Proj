@@ -110,6 +110,9 @@ dependencies {
     // ── Palette (dynamic background gradient from cover art) ──────────────────
     implementation(libs.androidx.palette)
 
+    // ── DataStore (player state persistence) ──────────────────────────────────
+    implementation(libs.androidx.datastore.preferences)
+
     // ── Tests ─────────────────────────────────────────────────────────────────
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

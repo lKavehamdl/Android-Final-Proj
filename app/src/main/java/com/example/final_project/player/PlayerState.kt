@@ -23,4 +23,9 @@ data class PlayerState(
     val isShuffleOn: Boolean = false,
     /** One of [Player.REPEAT_MODE_OFF], [Player.REPEAT_MODE_ONE], [Player.REPEAT_MODE_ALL]. */
     val repeatMode: Int = Player.REPEAT_MODE_OFF,
+    /**
+     * ExoPlayer audio session ID — non-zero once [MelodifyPlaybackService] starts.
+     * Task B's hardware audio visualizer uses this to hook into the audio pipeline.
+     */
+    val audioSessionId: Int = 0,
 )

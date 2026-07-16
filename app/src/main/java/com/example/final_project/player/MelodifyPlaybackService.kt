@@ -51,6 +51,9 @@ class MelodifyPlaybackService : MediaSessionService() {
             .setHandleAudioBecomingNoisy(true)   // pause on headphone unplug
             .build()
 
+        // Expose audio session ID so the Canvas visualizer (Task B) can hook in
+        AudioSessionIdHolder.set(exoPlayer.audioSessionId)
+
         player = exoPlayer
 
         // Build a session intent that re-opens MainActivity when user taps the notification
