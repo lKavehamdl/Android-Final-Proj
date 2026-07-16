@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.final_project.app-mergeDebugResources-51:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\ZenBook\\AppData\\Local\\Temp\\cursor-sandbox-cache\\4f4fecf9eee939ec1ff1d0d39bd587cd\\gradle\\caches\\9.2.1\\transforms\\7a2f42584a902c47d48f7998d8aeabe1\\workspace\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}
