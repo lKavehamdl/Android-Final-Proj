@@ -82,6 +82,12 @@
     <string name="playlists_create">Create Playlist</string>
     <string name="playlists_empty_title">No Playlists Yet</string>
     <string name="playlists_empty_subtitle">Create your first playlist</string>
+    <string name="playlist_create">Create Playlist</string>
+    <string name="playlist_name_hint">Playlist name</string>
+    <string name="playlist_created">Playlist created</string>
+    <string name="playlist_add_song_success">Added to playlist</string>
+    <string name="playlist_picker_title">Add to Playlist</string>
+    <string name="playlist_picker_empty">Create a playlist first</string>
     <string name="playlists_songs_count">%d songs</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════

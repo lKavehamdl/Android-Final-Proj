@@ -48,7 +48,7 @@ val appModule = module {
             downloadsRepository = get(),
         )
     }
-    viewModel { PlaylistsViewModel(get(), get()) }
+    viewModel { PlaylistsViewModel(get(), get(), get(), get()) }
     viewModel { PlaylistDetailViewModel(get(), get(), get()) }
     viewModel { LikedSongsViewModel(get(), get()) }
     viewModel { RecentlyPlayedViewModel(get(), get()) }

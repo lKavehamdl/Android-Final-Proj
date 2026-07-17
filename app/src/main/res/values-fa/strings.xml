@@ -79,6 +79,12 @@
     <string name="playlists_create">ایجاد پلی‌لیست</string>
     <string name="playlists_empty_title">هنوز پلی‌لیستی ندارید</string>
     <string name="playlists_empty_subtitle">اولین پلی‌لیست خود را بسازید</string>
+    <string name="playlist_create">ساخت پلی‌لیست</string>
+    <string name="playlist_name_hint">نام پلی‌لیست</string>
+    <string name="playlist_created">پلی‌لیست ساخته شد</string>
+    <string name="playlist_add_song_success">به پلی‌لیست اضافه شد</string>
+    <string name="playlist_picker_title">افزودن به پلی‌لیست</string>
+    <string name="playlist_picker_empty">ابتدا یک پلی‌لیست بسازید</string>
     <string name="playlists_songs_count">%d آهنگ</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
