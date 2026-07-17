@@ -65,30 +65,49 @@ class FakeSongRepository(
         delay(100)
     }
 
+    override suspend fun recordRecentlyPlayed(songId: String) {
+        delay(50)
+        recentIds.remove(songId)
+        recentIds.add(0, songId)
+        if (recentIds.size > 20) recentIds.removeAt(recentIds.lastIndex)
+    }
+
     override suspend fun getLikedSongs(): Flow<Resource<List<Song>>> = flow {
         emit(Resource.Loading)
         delay(FAKE_NETWORK_DELAY_MS)
-        emit(Resource.Success(FAKE_SONGS.take(2))) // just fake data
+        emit(Resource.Success(FAKE_SONGS.filter { it.id in likedIds }))
     }.flowOn(dispatchers.io)
 
     override suspend fun toggleLike(songId: String): Resource<Boolean> {
         delay(FAKE_NETWORK_DELAY_MS)
-        return Resource.Success(true)
+        val nowLiked = if (songId in likedIds) {
+            likedIds.remove(songId)
+            false
+        } else {
+            likedIds.add(songId)
+            true
+        }
+        return Resource.Success(nowLiked)
     }
 
     override suspend fun getRecentlyPlayed(): Flow<Resource<List<Song>>> = flow {
         emit(Resource.Loading)
         delay(FAKE_NETWORK_DELAY_MS)
-        emit(Resource.Success(FAKE_SONGS.takeLast(3)))
+        val songs = recentIds.mapNotNull { id -> FAKE_SONGS.find { it.id == id } }
+        emit(Resource.Success(songs))
     }.flowOn(dispatchers.io)
 
     override suspend fun removeRecentlyPlayed(songId: String): Resource<Unit> {
         delay(FAKE_NETWORK_DELAY_MS)
+        recentIds.remove(songId)
         return Resource.Success(Unit)
     }
 
     companion object {
         private const val FAKE_NETWORK_DELAY_MS = 400L
+
+        private val likedIds = mutableSetOf("fake-1", "fake-2")
+        private val recentIds = mutableListOf("fake-5", "fake-4", "fake-3")
 
         val FAKE_SONGS: List<Song> = listOf(
             Song(

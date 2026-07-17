@@ -31,6 +31,10 @@ class RecentlyPlayedViewModel(
         loadRecentlyPlayed()
     }
 
+    fun refresh() {
+        loadRecentlyPlayed()
+    }
+
     private fun loadRecentlyPlayed() {
         viewModelScope.launch {
             songRepository.getRecentlyPlayed().collectLatest { result ->

@@ -32,7 +32,8 @@ val appModule = module {
         PlayerController(
             context = androidContext(),
             scope = get(),
-            downloadsRepository = get()
+            downloadsRepository = get(),
+            songRepository = get(),
         )
     }
     viewModel { MainViewModel(settingsDataStore = get()) }

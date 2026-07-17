@@ -21,9 +21,17 @@ import kotlinx.coroutines.flow.flowOn
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.auth.auth
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import com.example.final_project.data.remote.dto.SongDto
+
+@Serializable
+private data class RecentlyPlayedInsertDto(
+    @SerialName("user_id") val userId: String,
+    @SerialName("song_id") val songId: String,
+)
 
 class SongRepositoryImpl(
     private val api: SongApiService,
@@ -76,6 +84,15 @@ class SongRepositoryImpl(
     override suspend fun incrementPlayCount(songId: String) {
         // Fire-and-forget: swallow exceptions so playback is never interrupted.
         runCatching { api.incrementPlayCount(songId) }
+    }
+
+    override suspend fun recordRecentlyPlayed(songId: String) {
+        runCatching {
+            val currentUserId = supabase.auth.currentUserOrNull()?.id ?: return
+            supabase.postgrest["recently_played"].insert(
+                RecentlyPlayedInsertDto(userId = currentUserId, songId = songId),
+            )
+        }
     }
 
     override suspend fun getLikedSongs(): Flow<Resource<List<Song>>> = safeFlow {

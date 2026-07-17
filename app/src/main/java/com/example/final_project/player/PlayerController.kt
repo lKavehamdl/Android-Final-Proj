@@ -45,6 +45,7 @@ class PlayerController(
     context: Context,
     private val scope: CoroutineScope,
     private val downloadsRepository: com.example.final_project.domain.repository.DownloadsRepository? = null,
+    private val songRepository: com.example.final_project.domain.repository.SongRepository? = null,
 ) {
     private val appContext = context.applicationContext
 
@@ -168,6 +169,11 @@ class PlayerController(
                 ctrl.setMediaItems(mediaItems, index, 0L)
                 ctrl.prepare()
                 ctrl.play()
+            }
+
+            withContext(Dispatchers.IO) {
+                runCatching { songRepository?.recordRecentlyPlayed(song.id) }
+                runCatching { songRepository?.incrementPlayCount(song.id) }
             }
         }
     }
