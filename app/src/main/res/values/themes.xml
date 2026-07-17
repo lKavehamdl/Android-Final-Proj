@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.FinalProject" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowBackground">#FFF5F3FF</item>
+        <item name="android:windowBackground">#FFF5F6F8</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">#FFE65100</item>
+        <item name="colorPrimaryDark">#FFE65100</item>
+        <item name="colorAccent">#FF00897B</item>
     </style>
 </resources>

@@ -4,8 +4,8 @@
     <!-- ═══════════════════════════════════════════════════════════════════════
          برنامه
     ═══════════════════════════════════════════════════════════════════════ -->
-    <string name="app_name">ملودیفای</string>
-    <string name="app_tagline">موسیقی برای همه</string>
+    <string name="app_name">تلی‌فای</string>
+    <string name="app_tagline">بشنو. کشف کن. ارتباط بگیر.</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          تب‌های پایین صفحه
@@ -39,7 +39,7 @@
     <string name="empty_state_generic_title">هنوز چیزی اینجا نیست</string>
     <string name="empty_state_generic_subtitle">بعداً دوباره سر بزنید</string>
     <string name="section_see_all">مشاهده همه</string>
-    <string name="cd_logo">لوگوی ملودیفای</string>
+    <string name="cd_logo">لوگوی تلی‌فای</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          صفحه جستجو
@@ -151,7 +151,7 @@
     <string name="settings_theme_dark">تاریک</string>
     <string name="settings_logout">خروج از حساب</string>
     <string name="settings_logout_confirm">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
-    <string name="settings_about">درباره ملودیفای</string>
+    <string name="settings_about">درباره تلی‌فای</string>
     <string name="settings_version">نسخه %s</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════

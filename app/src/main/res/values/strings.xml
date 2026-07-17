@@ -4,8 +4,8 @@
     <!-- ═══════════════════════════════════════════════════════════════════════
          App
     ═══════════════════════════════════════════════════════════════════════ -->
-    <string name="app_name">Melodify</string>
-    <string name="app_tagline">Music for everyone</string>
+    <string name="app_name">Telify</string>
+    <string name="app_tagline">Listen. Discover. Connect.</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Bottom Navigation Tabs
@@ -42,7 +42,7 @@
     <string name="empty_state_generic_title">Nothing here yet</string>
     <string name="empty_state_generic_subtitle">Check back later</string>
     <string name="section_see_all">See All</string>
-    <string name="cd_logo">Melodify logo</string>
+    <string name="cd_logo">Telify logo</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Search Screen
@@ -156,7 +156,7 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_logout">Log Out</string>
     <string name="settings_logout_confirm">Are you sure you want to log out?</string>
-    <string name="settings_about">About Melodify</string>
+    <string name="settings_about">About Telify</string>
     <string name="settings_version">Version %s</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
