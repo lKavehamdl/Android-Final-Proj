@@ -36,4 +36,10 @@ class FakePlaylistRepository(
         delay(400)
         emit(Resource.Success(emptyList<Playlist>()))
     }.flowOn(dispatchers.io)
+    
+    override fun getPlaylistSongs(playlistId: String): Flow<Resource<List<com.example.final_project.domain.model.Song>>> = flow {
+        emit(Resource.Loading)
+        delay(400)
+        emit(Resource.Success(emptyList<com.example.final_project.domain.model.Song>()))
+    }.flowOn(dispatchers.io)
 }

@@ -166,7 +166,6 @@ private fun SwipeableDownloadRow(
         SongRow(
             song = downloadedSong.song,
             onClick = { onClick() },
-            isDownloaded = true,
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
     }

@@ -11,13 +11,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,11 +44,22 @@ import com.example.final_project.ui.screens.home.HomeScreen
 import com.example.final_project.ui.screens.playlists.PlaylistsScreen
 import com.example.final_project.ui.screens.profile.ProfileScreen
 import com.example.final_project.ui.screens.search.SearchScreen
+import com.example.final_project.ui.screens.chat.ChatListScreen
+import com.example.final_project.ui.screens.home.liked.LikedSongsScreen
+import com.example.final_project.ui.screens.home.recent.RecentlyPlayedScreen
+import com.example.final_project.ui.screens.profile.follows.FollowsScreen
 import com.example.final_project.ui.screens.settings.SettingsScreen
+import com.example.final_project.ui.screens.auth.AuthScreen
 import com.example.final_project.ui.theme.ThemeMode
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.status.SessionStatus
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalSharedTransitionApi::class)
+val LocalShareSong = compositionLocalOf<(String) -> Unit> { error("No ShareSong provided") }
+
+@OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MelodifyApp(
     themeMode: ThemeMode,
@@ -50,13 +68,27 @@ fun MelodifyApp(
     onLanguageChange: (AppLanguage) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var songToShareId by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
+    
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val playerController: PlayerController = koinInject()
     val playerState by playerController.state.collectAsStateWithLifecycle()
+    
+    val supabaseClient: SupabaseClient = koinInject()
+    val sessionStatus by supabaseClient.auth.sessionStatus.collectAsStateWithLifecycle()
 
-    SharedTransitionLayout(modifier = modifier.fillMaxSize()) {
+    if (sessionStatus !is SessionStatus.Authenticated) {
+        AuthScreen()
+        return
+    }
+
+    CompositionLocalProvider(
+        LocalShareSong provides { songId -> songToShareId = songId }
+    ) {
+        SharedTransitionLayout(modifier = modifier.fillMaxSize()) {
         AnimatedContent(
             targetState = playerState.isExpanded && playerState.currentSong != null,
             transitionSpec = { fadeIn() togetherWith fadeOut() },
@@ -94,7 +126,9 @@ fun MelodifyApp(
                             onProfileClick = {
                                 navController.navigateToTab(Screen.Profile.route)
                             },
-                            onNotificationsClick = {},
+                            onNotificationsClick = {
+                                // TODO: Navigate to Notifications Screen
+                            },
                             onSettingsClick = {
                                 navController.navigate(Screen.Settings.route)
                             },
@@ -140,6 +174,14 @@ fun MelodifyApp(
             }
         }
     }
+    }
+    
+    if (songToShareId != null) {
+        com.example.final_project.ui.screens.social.ShareSongBottomSheet(
+            songId = songToShareId!!,
+            onDismissRequest = { songToShareId = null }
+        )
+    }
 }
 
 @Composable
@@ -174,6 +216,9 @@ private fun MelodifyNavHost(
     onLanguageChange: (AppLanguage) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val supabaseClient: io.github.jan.supabase.SupabaseClient = koinInject()
+    val scope = rememberCoroutineScope()
+    
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
@@ -184,6 +229,15 @@ private fun MelodifyNavHost(
                 onOpenPlaylistsTab = {
                     navController.navigateToTab(Screen.Playlists.route)
                 },
+                onNavigateToLiked = {
+                    navController.navigate(Screen.LikedSongs.route)
+                },
+                onNavigateToRecent = {
+                    navController.navigate(Screen.RecentlyPlayed.route)
+                },
+                onNavigateToArtists = {
+                    navController.navigate(Screen.Follows.route)
+                }
             )
         }
         composable(Screen.Search.route) {
@@ -193,10 +247,28 @@ private fun MelodifyNavHost(
             DownloadsScreen()
         }
         composable(Screen.Playlists.route) {
-            PlaylistsScreen()
+            PlaylistsScreen(
+                onOpenPlaylist = { playlistId ->
+                    navController.navigate(Screen.PlaylistDetail.createRoute(playlistId))
+                }
+            )
+        }
+        composable(
+            route = Screen.PlaylistDetail.route,
+            arguments = listOf(androidx.navigation.navArgument("playlistId") { type = androidx.navigation.NavType.StringType })
+        ) { backStackEntry ->
+            val playlistId = backStackEntry.arguments?.getString("playlistId") ?: return@composable
+            com.example.final_project.ui.screens.playlists.PlaylistDetailScreen(
+                playlistId = playlistId,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         composable(Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(
+                onNavigateToFollows = {
+                    navController.navigate(Screen.Follows.route)
+                }
+            )
         }
         composable(Screen.Settings.route) {
             SettingsScreen(
@@ -205,7 +277,69 @@ private fun MelodifyNavHost(
                 onThemeModeChange = onThemeModeChange,
                 onLanguageChange = onLanguageChange,
                 onBackClick = { navController.popBackStack() },
-                onLogoutClick = { /* Will be handled in Phase 7 */ }
+                onLogoutClick = {
+                    scope.launch {
+                        try {
+                            supabaseClient.auth.signOut()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            )
+        }
+        composable(Screen.LikedSongs.route) {
+            LikedSongsScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(Screen.RecentlyPlayed.route) {
+            RecentlyPlayedScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(Screen.Follows.route) {
+            FollowsScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onUserClick = { userId ->
+                    navController.navigate(Screen.ExternalProfile.createRoute(userId))
+                }
+            )
+        }
+        composable(Screen.ChatList.route) {
+            ChatListScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onChatClick = { userId ->
+                    navController.navigate(Screen.ChatConversation.createRoute(userId))
+                },
+                onSearchClick = {
+                    navController.navigate(Screen.UserSearch.route)
+                }
+            )
+        }
+        composable(
+            route = Screen.ChatConversation.route,
+            arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
+        ) { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
+            com.example.final_project.ui.screens.chat.ChatConversationScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(
+            route = Screen.ExternalProfile.route,
+            arguments = listOf(androidx.navigation.navArgument("userId") { type = androidx.navigation.NavType.StringType })
+        ) { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
+            com.example.final_project.ui.screens.social.ExternalProfileScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onMessageClick = {
+                    navController.navigate(Screen.ChatConversation.createRoute(userId))
+                }
+            )
+        }
+        composable(Screen.UserSearch.route) {
+            com.example.final_project.ui.screens.social.UserSearchScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onUserClick = { userId ->
+                    navController.navigate(Screen.ExternalProfile.createRoute(userId))
+                }
             )
         }
     }

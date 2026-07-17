@@ -50,6 +50,9 @@ enum class HomeQuickAction {
 sealed interface HomeUiEffect : UiEffect {
     data class ShowMessage(@androidx.annotation.StringRes val messageRes: Int) : HomeUiEffect
     data object OpenPlaylistsTab : HomeUiEffect
+    data object OpenLikedSongs : HomeUiEffect
+    data object OpenRecentSongs : HomeUiEffect
+    data object OpenArtists : HomeUiEffect
 }
 
 class HomeViewModel(
@@ -97,9 +100,9 @@ class HomeViewModel(
 
             is HomeUiEvent.QuickActionClick -> when (event.action) {
                 HomeQuickAction.PLAYLISTS -> sendEffect(HomeUiEffect.OpenPlaylistsTab)
-                HomeQuickAction.LIKED -> sendEffect(HomeUiEffect.ShowMessage(R.string.home_quick_liked))
-                HomeQuickAction.RECENT -> sendEffect(HomeUiEffect.ShowMessage(R.string.home_quick_recent))
-                HomeQuickAction.ARTISTS -> sendEffect(HomeUiEffect.ShowMessage(R.string.home_quick_artists))
+                HomeQuickAction.LIKED -> sendEffect(HomeUiEffect.OpenLikedSongs)
+                HomeQuickAction.RECENT -> sendEffect(HomeUiEffect.OpenRecentSongs)
+                HomeQuickAction.ARTISTS -> sendEffect(HomeUiEffect.OpenArtists)
             }
         }
     }

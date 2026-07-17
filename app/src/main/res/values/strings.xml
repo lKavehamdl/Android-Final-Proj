@@ -134,6 +134,8 @@
     <string name="chat_share_song">Shared a song</string>
     <string name="chat_play_shared">Play</string>
     <string name="chat_new_message">New message</string>
+    <string name="empty_chats_title">No active chats</string>
+    <string name="empty_chats_subtitle">Your conversations will appear here</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Settings
@@ -202,6 +204,7 @@
     <string name="done">Done</string>
     <string name="edit">Edit</string>
     <string name="share">Share</string>
+    <string name="coming_soon">Coming soon</string>
 
     <!-- Content descriptions (accessibility) -->
     <string name="cd_notifications">Notifications</string>

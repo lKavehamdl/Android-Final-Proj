@@ -22,6 +22,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import io.github.jan.supabase.realtime.decodeRecord
+import io.github.jan.supabase.realtime.broadcastFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 
 class ChatRepositoryImpl(
     private val supabaseClient: SupabaseClient,
@@ -184,5 +191,34 @@ class ChatRepositoryImpl(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override suspend fun setTypingStatus(receiverId: String, isTyping: Boolean) {
+        try {
+            val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return
+            channel.broadcast(
+                event = "typing",
+                message = buildJsonObject {
+                    put("senderId", currentUserId)
+                    put("receiverId", receiverId)
+                    put("isTyping", isTyping)
+                }
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun observeTypingStatus(userId: String): Flow<Boolean> {
+        val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return kotlinx.coroutines.flow.emptyFlow()
+        return channel.broadcastFlow<JsonObject>("typing")
+            .filter { payload ->
+                val senderId = payload["senderId"]?.jsonPrimitive?.content
+                val receiverId = payload["receiverId"]?.jsonPrimitive?.content
+                senderId == userId && receiverId == currentUserId
+            }
+            .map { payload ->
+                payload["isTyping"]?.jsonPrimitive?.booleanOrNull ?: false
+            }
     }
 }

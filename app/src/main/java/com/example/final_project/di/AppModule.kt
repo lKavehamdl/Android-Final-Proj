@@ -6,8 +6,17 @@ import com.example.final_project.player.PlayerController
 import com.example.final_project.ui.MainViewModel
 import com.example.final_project.ui.screens.home.HomeViewModel
 import com.example.final_project.ui.screens.playlists.PlaylistsViewModel
+import com.example.final_project.ui.screens.playlists.PlaylistDetailViewModel
 import com.example.final_project.ui.screens.profile.ProfileViewModel
+import com.example.final_project.ui.screens.profile.follows.FollowsViewModel
+import com.example.final_project.ui.screens.home.liked.LikedSongsViewModel
+import com.example.final_project.ui.screens.home.recent.RecentlyPlayedViewModel
 import com.example.final_project.ui.screens.downloads.DownloadsViewModel
+import com.example.final_project.ui.screens.social.ExternalProfileViewModel
+import com.example.final_project.ui.screens.social.UserSearchViewModel
+import com.example.final_project.ui.screens.chat.ChatListViewModel
+import com.example.final_project.ui.screens.chat.ChatConversationViewModel
+import com.example.final_project.ui.screens.auth.AuthViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -26,7 +35,7 @@ val appModule = module {
             downloadsRepository = get()
         )
     }
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(settingsDataStore = get()) }
     viewModel {
         HomeViewModel(
             getSongsUseCase = get(),
@@ -39,6 +48,16 @@ val appModule = module {
         )
     }
     viewModel { PlaylistsViewModel(get(), get()) }
+    viewModel { PlaylistDetailViewModel(get(), get(), get()) }
+    viewModel { LikedSongsViewModel(get(), get()) }
+    viewModel { RecentlyPlayedViewModel(get(), get()) }
     viewModel { ProfileViewModel(get()) }
+    viewModel { FollowsViewModel(get()) }
     viewModel { DownloadsViewModel(get()) }
+    
+    viewModel { ExternalProfileViewModel(get(), get()) }
+    viewModel { UserSearchViewModel(get()) }
+    viewModel { ChatListViewModel(get(), get(), get()) }
+    viewModel { ChatConversationViewModel(get(), get(), get(), get()) }
+    viewModel { AuthViewModel(get(), get()) }
 }

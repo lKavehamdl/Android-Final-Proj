@@ -53,10 +53,14 @@ import com.example.final_project.ui.components.ShimmerBox
 import com.example.final_project.ui.components.SongCard
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
+import com.example.final_project.ui.navigation.LocalShareSong
 
 @Composable
 fun HomeScreen(
     onOpenPlaylistsTab: () -> Unit = {},
+    onNavigateToLiked: () -> Unit = {},
+    onNavigateToRecent: () -> Unit = {},
+    onNavigateToArtists: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
@@ -71,6 +75,9 @@ fun HomeScreen(
                     snackbarHostState.showSnackbar(context.getString(effect.messageRes))
                 }
                 HomeUiEffect.OpenPlaylistsTab -> onOpenPlaylistsTab()
+                HomeUiEffect.OpenLikedSongs -> onNavigateToLiked()
+                HomeUiEffect.OpenRecentSongs -> onNavigateToRecent()
+                HomeUiEffect.OpenArtists -> onNavigateToArtists()
             }
         }
     }
@@ -90,7 +97,6 @@ fun HomeScreen(
                 HomeContent(
                     state = state,
                     onSongClick = { viewModel.onEvent(HomeUiEvent.SongClick(it)) },
-                    onDownloadClick = { viewModel.onEvent(HomeUiEvent.DownloadClick(it)) },
                     onQuickAction = { viewModel.onEvent(HomeUiEvent.QuickActionClick(it)) },
                 )
             }
@@ -106,7 +112,6 @@ fun HomeScreen(
 private fun HomeContent(
     state: HomeUiState,
     onSongClick: (Song) -> Unit,
-    onDownloadClick: (Song) -> Unit,
     onQuickAction: (HomeQuickAction) -> Unit,
 ) {
     LazyColumn(
@@ -124,36 +129,28 @@ private fun HomeContent(
             SongSection(
                 titleRes = R.string.home_section_trending,
                 songs = state.trending,
-                downloadedIds = state.downloadedIds,
                 onSongClick = onSongClick,
-                onDownloadClick = onDownloadClick,
             )
         }
         item {
             SongSection(
                 titleRes = R.string.home_section_new_releases,
                 songs = state.newReleases,
-                downloadedIds = state.downloadedIds,
                 onSongClick = onSongClick,
-                onDownloadClick = onDownloadClick,
             )
         }
         item {
             SongSection(
                 titleRes = R.string.home_section_global_playlists,
                 songs = state.globalPlaylists,
-                downloadedIds = state.downloadedIds,
                 onSongClick = onSongClick,
-                onDownloadClick = onDownloadClick,
             )
         }
         item {
             SongSection(
                 titleRes = R.string.home_section_local_playlists,
                 songs = state.localPlaylists,
-                downloadedIds = state.downloadedIds,
                 onSongClick = onSongClick,
-                onDownloadClick = onDownloadClick,
             )
         }
     }
@@ -297,9 +294,7 @@ private fun QuickAction(
 private fun SongSection(
     @StringRes titleRes: Int,
     songs: List<Song>,
-    downloadedIds: Set<String>,
     onSongClick: (Song) -> Unit,
-    onDownloadClick: (Song) -> Unit,
 ) {
     if (songs.isEmpty()) return
     Column {
@@ -312,8 +307,6 @@ private fun SongSection(
                 SongCard(
                     song = song,
                     onClick = onSongClick,
-                    isDownloaded = downloadedIds.contains(song.id),
-                    onDownloadClick = onDownloadClick,
                 )
             }
         }

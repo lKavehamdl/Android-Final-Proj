@@ -40,6 +40,9 @@ import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.DownloadDone
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
@@ -83,11 +86,15 @@ import com.example.final_project.R
 import com.example.final_project.domain.model.Song
 import com.example.final_project.player.PlayerSharedKeys
 import com.example.final_project.ui.components.CoverArt
+import com.example.final_project.ui.components.LikeButton
 import com.example.final_project.ui.theme.MelodifySpacing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.sin
-
+import org.koin.compose.koinInject
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.final_project.ui.navigation.LocalShareSong
+import com.example.final_project.domain.repository.DownloadsRepository
 private val SPEED_OPTIONS = listOf(1f, 1.5f, 2f)
 private val SLEEP_TIMER_OPTIONS = listOf(null, 15, 30, 45, 60) // null = off
 
@@ -307,27 +314,65 @@ fun NowPlayingScreen(
 
                 Spacer(modifier = Modifier.height(MelodifySpacing.xl))
 
-                // ── Song info ─────────────────────────────────────────────
-                Text(
-                    text = song.title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .sharedElement(
-                            state = rememberSharedContentState(key = PlayerSharedKeys.TITLE),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                        ),
-                )
-                Text(
-                    text = song.artistName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = song.title,
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                                .sharedElement(
+                                    state = rememberSharedContentState(key = PlayerSharedKeys.TITLE),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                ),
+                        )
+                        Text(
+                            text = song.artistName,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        val downloadsRepo: DownloadsRepository = koinInject()
+                        val downloadedSongs by downloadsRepo.downloadedSongs.collectAsStateWithLifecycle(initialValue = emptyList())
+                        val isDownloaded = downloadedSongs.any { it.song.id == song.id }
+                        
+                        val shareSong = LocalShareSong.current
+                        
+                        if (isDownloaded) {
+                            IconButton(onClick = {}, enabled = false) {
+                                Icon(Icons.Filled.DownloadDone, contentDescription = "Downloaded", tint = animatedPaletteColor)
+                            }
+                        } else {
+                            IconButton(onClick = { downloadsRepo.startDownload(song) }) {
+                                Icon(Icons.Filled.Download, contentDescription = "Download", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                        
+                        IconButton(onClick = { shareSong(song.id) }) {
+                            Icon(Icons.Filled.Share, contentDescription = "Share", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        
+                        LikeButton(
+                            songId = song.id,
+                            tint = animatedPaletteColor,
+                            unlikedTint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(MelodifySpacing.lg))
 

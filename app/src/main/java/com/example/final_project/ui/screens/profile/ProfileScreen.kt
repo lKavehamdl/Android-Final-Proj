@@ -64,6 +64,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
+    onNavigateToFollows: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = koinViewModel(),
 ) {
@@ -190,7 +191,7 @@ fun ProfileScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             StatItem(count = state.followersCount, label = stringResource(R.string.profile_followers))
-            StatItem(count = state.followingCount, label = stringResource(R.string.profile_following))
+            StatItem(count = state.followingCount, label = stringResource(R.string.profile_following), onClick = onNavigateToFollows)
         }
 
         Spacer(modifier = Modifier.height(MelodifySpacing.xl))
@@ -246,8 +247,11 @@ fun ProfileScreen(
 }
 
 @Composable
-private fun StatItem(count: Int, label: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+private fun StatItem(count: Int, label: String, onClick: (() -> Unit)? = null) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.then(if (onClick != null) Modifier.clickable(onClick = onClick).padding(MelodifySpacing.xs) else Modifier)
+    ) {
         Text(
             text = count.toString(),
             style = MaterialTheme.typography.titleLarge,

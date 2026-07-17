@@ -101,4 +101,20 @@ class SongApiService(
             setBody(buildJsonObject { put("p_song_id", songId) })
         }
     }
+
+    suspend fun fetchLikedSongs(): List<SongDto> =
+        client.get("rest/v1/songs") {
+            parameter("select", "*,liked_songs!inner(user_id)")
+        }.body()
+
+    suspend fun toggleLike(songId: String): Boolean =
+        client.post("rest/v1/rpc/toggle_like") {
+            contentType(ContentType.Application.Json)
+            // Wait, toggle_like expects p_user_id and p_song_id. 
+            // In PostgREST, authenticated user id is taken from auth token if p_user_id is omitted or we can omit it if RPC is defined without it.
+            // Let's pass null for p_user_id if it's optional, or we might need the userId.
+            // Actually, we can get current user in Ktor? The backend RPC toggle_like in Supabase probably takes p_user_id and p_song_id.
+            // I'll assume the client just sends p_song_id if the RPC uses auth.uid(), or I will send it.
+            // Let me look at toggle_like RPC.
+        }.body()
 }

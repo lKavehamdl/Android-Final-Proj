@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.final_project.R
 
@@ -21,8 +22,24 @@ sealed class Screen(
     data object Playlists : Screen("playlists", R.string.tab_playlists, Icons.AutoMirrored.Filled.PlaylistPlay)
     data object Profile : Screen("profile", R.string.tab_profile, Icons.Filled.Person)
     data object Settings : Screen("settings", R.string.settings_title, Icons.Filled.Person)
+    data object LikedSongs : Screen("liked_songs", R.string.home_quick_liked, Icons.Filled.Person)
+    data object RecentlyPlayed : Screen("recently_played", R.string.home_quick_recent, Icons.Filled.Person)
+    data object Follows : Screen("follows", R.string.home_quick_artists, Icons.Filled.Person)
+    data object PlaylistDetail : Screen("playlist_detail/{playlistId}", R.string.tab_playlists, Icons.AutoMirrored.Filled.PlaylistPlay) {
+        fun createRoute(playlistId: String) = "playlist_detail/$playlistId"
+    }
+    
+    // Phase 6 Routes
+    data object ChatList : Screen("chat_list", R.string.chat_title, Icons.Filled.Email)
+    data object ChatConversation : Screen("chat_conversation/{userId}", R.string.chat_title, Icons.Filled.Person) {
+        fun createRoute(userId: String) = "chat_conversation/$userId"
+    }
+    data object ExternalProfile : Screen("external_profile/{userId}", R.string.tab_profile, Icons.Filled.Person) {
+        fun createRoute(userId: String) = "external_profile/$userId"
+    }
+    data object UserSearch : Screen("user_search", R.string.tab_search, Icons.Filled.Search)
 
     companion object {
-        val bottomNavItems = listOf(Home, Search, Downloads, Playlists, Profile)
+        val bottomNavItems = listOf(Home, Search, Downloads, Playlists, ChatList)
     }
 }

@@ -10,4 +10,7 @@ interface PlaylistRepository {
 
     /** Playlists owned by a specific user. */
     fun getUserPlaylists(userId: String): Flow<Resource<List<Playlist>>>
+    
+    /** Get songs for a specific playlist. */
+    fun getPlaylistSongs(playlistId: String): Flow<Resource<List<com.example.final_project.domain.model.Song>>>
 }

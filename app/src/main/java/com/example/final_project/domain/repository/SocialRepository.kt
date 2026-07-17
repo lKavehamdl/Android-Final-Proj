@@ -23,6 +23,11 @@ interface SocialRepository {
     suspend fun toggleFollow(targetUserId: String): Resource<Boolean>
 
     /**
+     * Get a list of users that the target user follows.
+     */
+    suspend fun getFollowing(userId: String): Resource<List<UserProfile>>
+
+    /**
      * Get a list of public playlists for a specific user.
      */
     suspend fun getUserPublicPlaylists(userId: String): Resource<List<Playlist>>
