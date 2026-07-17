@@ -19,6 +19,17 @@ interface MessagesDao {
     """)
     fun getConversation(currentUserId: String, otherUserId: String): Flow<List<MessageEntity>>
 
+    @Query("""
+        SELECT * FROM messages 
+        WHERE (senderId = :currentUserId AND receiverId = :otherUserId)
+           OR (senderId = :otherUserId AND receiverId = :currentUserId)
+        ORDER BY createdAt ASC
+    """)
+    fun getConversationPaged(
+        currentUserId: String,
+        otherUserId: String,
+    ): androidx.paging.PagingSource<Int, MessageEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMessages(messages: List<MessageEntity>): LongArray
 

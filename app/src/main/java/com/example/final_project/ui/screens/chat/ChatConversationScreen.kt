@@ -3,7 +3,6 @@ package com.example.final_project.ui.screens.chat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,10 +20,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.example.final_project.R
 import com.example.final_project.domain.model.Message
-import com.example.final_project.domain.model.MessageStatus
 import com.example.final_project.domain.model.MessageType
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
@@ -44,12 +43,12 @@ fun ChatConversationScreen(
     viewModel: ChatConversationViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val pagingItems = viewModel.messages.collectAsLazyPagingItems()
     val listState = rememberLazyListState()
 
-    // Scroll to bottom on new message
-    LaunchedEffect(state.messages.size) {
-        if (state.messages.isNotEmpty()) {
-            listState.animateScrollToItem(state.messages.size - 1)
+    LaunchedEffect(pagingItems.itemCount) {
+        if (pagingItems.itemCount > 0) {
+            listState.animateScrollToItem(pagingItems.itemCount - 1)
         }
     }
 
@@ -114,7 +113,7 @@ fun ChatConversationScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            if (state.messages.isEmpty()) {
+            if (pagingItems.itemCount == 0) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
@@ -139,7 +138,11 @@ fun ChatConversationScreen(
                         .padding(horizontal = MelodifySpacing.md),
                     contentPadding = PaddingValues(vertical = MelodifySpacing.md)
                 ) {
-                    items(state.messages, key = { it.id }) { message ->
+                    items(
+                        count = pagingItems.itemCount,
+                        key = { index -> pagingItems.peek(index)?.id ?: index },
+                    ) { index ->
+                        val message = pagingItems[index] ?: return@items
                         MessageBubble(
                             message = message,
                             isMine = message.senderId == state.currentUserId

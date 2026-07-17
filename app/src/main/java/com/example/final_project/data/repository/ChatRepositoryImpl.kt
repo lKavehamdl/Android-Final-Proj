@@ -21,8 +21,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import io.github.jan.supabase.realtime.decodeRecord
 import io.github.jan.supabase.realtime.broadcastFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
@@ -41,14 +46,26 @@ class ChatRepositoryImpl(
     private val channel = supabaseClient.channel("public:messages")
 
     override fun getConversation(otherUserId: String): Flow<List<Message>> {
-        val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return kotlinx.coroutines.flow.emptyFlow()
+        val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return emptyFlow()
         return messagesDao.getConversation(currentUserId, otherUserId).map { entities ->
             entities.map { it.toDomain() }
         }
     }
 
+    override fun getConversationPaged(otherUserId: String): Flow<PagingData<Message>> {
+        val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return emptyFlow()
+        return Pager(
+            config = PagingConfig(pageSize = 40, enablePlaceholders = false),
+            pagingSourceFactory = {
+                messagesDao.getConversationPaged(currentUserId, otherUserId)
+            },
+        ).flow.map { pagingData ->
+            pagingData.map { it.toDomain() }
+        }
+    }
+
     override fun getRecentConversations(): Flow<List<Message>> {
-        val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return kotlinx.coroutines.flow.emptyFlow()
+        val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: return emptyFlow()
         return messagesDao.getRecentConversations(currentUserId).map { entities ->
             entities.map { it.toDomain() }
         }
