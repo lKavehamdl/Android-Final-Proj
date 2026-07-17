@@ -3,9 +3,11 @@ package com.example.final_project.player
 import android.content.ComponentName
 import android.content.Context
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
+import android.net.Uri
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.example.final_project.domain.model.Song
@@ -43,6 +45,7 @@ class PlayerController(
     context: Context,
     private val scope: CoroutineScope,
     private val downloadsRepository: com.example.final_project.domain.repository.DownloadsRepository? = null,
+    private val songRepository: com.example.final_project.domain.repository.SongRepository? = null,
 ) {
     private val appContext = context.applicationContext
 
@@ -87,6 +90,45 @@ class PlayerController(
             _state.update { it.copy(isBuffering = buffering) }
             if (playbackState == Player.STATE_READY) {
                 _state.update { it.copy(durationMs = controller?.duration?.coerceAtLeast(0L) ?: 0L) }
+            }
+            // Playlist exhausted (or single-item ended with repeat off).
+            if (playbackState == Player.STATE_ENDED) {
+                val ctrl = controller ?: return
+                when {
+                    ctrl.repeatMode == Player.REPEAT_MODE_ONE -> {
+                        ctrl.seekTo(0L)
+                        ctrl.play()
+                    }
+                    ctrl.hasNextMediaItem() -> {
+                        ctrl.seekToNextMediaItem()
+                        ctrl.play()
+                    }
+                    ctrl.repeatMode == Player.REPEAT_MODE_ALL && currentQueue.isNotEmpty() -> {
+                        ctrl.seekTo(0, 0L)
+                        ctrl.play()
+                    }
+                    else -> _state.update { it.copy(isPlaying = false) }
+                }
+            }
+        }
+
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            val mediaId = mediaItem?.mediaId ?: return
+            val song = currentQueue.find { it.id == mediaId } ?: return
+            controller?.volume = 1f
+            _state.update {
+                it.copy(
+                    currentSong = song,
+                    positionMs = 0L,
+                    durationMs = controller?.duration?.coerceAtLeast(0L) ?: 0L,
+                )
+            }
+            // Don't double-count the initial play() record for the same song.
+            if (reason != Player.MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED) {
+                scope.launch(Dispatchers.IO) {
+                    runCatching { songRepository?.recordRecentlyPlayed(song.id) }
+                    runCatching { songRepository?.incrementPlayCount(song.id) }
+                }
             }
         }
 
@@ -160,21 +202,42 @@ class PlayerController(
         val ctrl = controller ?: run { connectToService(); return }
 
         scope.launch {
-            val mediaItems = resolvedQueue.map { s ->
-                val localPath = downloadsRepository?.getLocalPath(s.id)
-                if (localPath != null && java.io.File(localPath).exists()) {
-                    MediaItem.fromUri(java.io.File(localPath).toURI().toString())
-                } else {
-                    MediaItem.fromUri(s.audioUrl)
-                }
-            }
+            val mediaItems = resolvedQueue.map { s -> toMediaItem(s) }
 
             withContext(Dispatchers.Main) {
+                // Keep shuffle/repeat in sync with UI state when loading a new queue.
+                ctrl.shuffleModeEnabled = _state.value.isShuffleOn
+                ctrl.repeatMode = _state.value.repeatMode
                 ctrl.setMediaItems(mediaItems, index, 0L)
                 ctrl.prepare()
                 ctrl.play()
             }
+
+            withContext(Dispatchers.IO) {
+                runCatching { songRepository?.recordRecentlyPlayed(song.id) }
+                runCatching { songRepository?.incrementPlayCount(song.id) }
+            }
         }
+    }
+
+    private suspend fun toMediaItem(song: Song): MediaItem {
+        val localPath = downloadsRepository?.getLocalPath(song.id)
+        val uri = if (localPath != null && java.io.File(localPath).exists()) {
+            Uri.fromFile(java.io.File(localPath))
+        } else {
+            Uri.parse(song.audioUrl)
+        }
+        val metadata = MediaMetadata.Builder()
+            .setTitle(song.title)
+            .setArtist(song.artistName)
+            .setAlbumTitle(song.albumName)
+            .setArtworkUri(song.coverImageUrl?.let { Uri.parse(it) })
+            .build()
+        return MediaItem.Builder()
+            .setMediaId(song.id)
+            .setUri(uri)
+            .setMediaMetadata(metadata)
+            .build()
     }
 
     fun togglePlayPause() {
@@ -183,19 +246,35 @@ class PlayerController(
     }
 
     fun skipNext() {
-        val current = _state.value
-        val index = current.queue.indexOfFirst { it.id == current.currentSong?.id }
-        val next = current.queue.getOrNull(index + 1) ?: return
-        play(next, current.queue)
+        val ctrl = controller ?: return
+        when {
+            ctrl.hasNextMediaItem() -> {
+                ctrl.seekToNextMediaItem()
+                ctrl.play()
+            }
+            ctrl.repeatMode == Player.REPEAT_MODE_ALL && currentQueue.isNotEmpty() -> {
+                ctrl.seekTo(0, 0L)
+                ctrl.play()
+            }
+        }
     }
 
     fun skipPrevious() {
         val ctrl = controller ?: return
-        val current = _state.value
-        if (ctrl.currentPosition > 3_000L) { ctrl.seekTo(0L); return }
-        val index = current.queue.indexOfFirst { it.id == current.currentSong?.id }
-        val previous = current.queue.getOrNull(index - 1) ?: return
-        play(previous, current.queue)
+        if (ctrl.currentPosition > 3_000L) {
+            ctrl.seekTo(0L)
+            return
+        }
+        when {
+            ctrl.hasPreviousMediaItem() -> {
+                ctrl.seekToPreviousMediaItem()
+                ctrl.play()
+            }
+            ctrl.repeatMode == Player.REPEAT_MODE_ALL && currentQueue.isNotEmpty() -> {
+                ctrl.seekTo(currentQueue.lastIndex, 0L)
+                ctrl.play()
+            }
+        }
     }
 
     fun seekTo(positionMs: Long) {
@@ -346,7 +425,7 @@ class PlayerController(
 
     /**
      * Volume-based crossfade: when < 3 s remain, fade out the current track.
-     * The next track starts from [skipNext] triggered by [playerListener.onPlaybackStateChanged].
+     * ExoPlayer advances automatically; [onMediaItemTransition] updates UI state.
      */
     private fun startCrossfadeWatch() {
         crossfadeJob?.cancel()
@@ -354,9 +433,10 @@ class PlayerController(
             while (isActive) {
                 delay(200L)
                 val ctrl = controller ?: continue
+                if (ctrl.duration <= 0L) continue
                 val remaining = ctrl.duration - ctrl.currentPosition
                 when {
-                    remaining in 1L..3_000L && ctrl.duration > 0 ->
+                    remaining in 1L..3_000L ->
                         ctrl.volume = (remaining / 3_000f).coerceIn(0f, 1f)
                     remaining > 3_000L && ctrl.volume < 1f ->
                         ctrl.volume = 1f

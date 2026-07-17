@@ -40,6 +40,9 @@ interface SongRepository {
     /** Increment server-side play_count. Fire-and-forget — errors are swallowed. */
     suspend fun incrementPlayCount(songId: String)
 
+    /** Insert a recently_played row for the current user. Fire-and-forget. */
+    suspend fun recordRecentlyPlayed(songId: String)
+
     suspend fun getLikedSongs(): Flow<Resource<List<Song>>>
     
     suspend fun toggleLike(songId: String): Resource<Boolean>

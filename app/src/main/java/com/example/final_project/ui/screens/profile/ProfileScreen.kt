@@ -58,7 +58,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.final_project.R
-import com.example.final_project.ui.theme.GoldPremium
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
 
@@ -146,10 +145,11 @@ fun ProfileScreen(
 
         // Premium Badge or Free status
         AnimatedVisibility(visible = state.isPremium) {
+            val premiumColor = MaterialTheme.colorScheme.tertiary
             Surface(
                 shape = MaterialTheme.shapes.small,
-                color = GoldPremium.copy(alpha = 0.15f),
-                border = BorderStroke(1.dp, GoldPremium),
+                color = premiumColor.copy(alpha = 0.15f),
+                border = BorderStroke(1.dp, premiumColor),
                 modifier = Modifier
                     .padding(bottom = MelodifySpacing.md)
                     .clickable { viewModel.onDowngrade() }
@@ -158,12 +158,12 @@ fun ProfileScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(horizontal = MelodifySpacing.md, vertical = MelodifySpacing.xs)
                 ) {
-                    Icon(Icons.Default.Star, contentDescription = null, tint = GoldPremium, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.Star, contentDescription = null, tint = premiumColor, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(MelodifySpacing.xs))
                     Text(
                         text = stringResource(R.string.profile_premium_badge),
                         style = MaterialTheme.typography.labelLarge,
-                        color = GoldPremium,
+                        color = premiumColor,
                         fontWeight = FontWeight.Bold
                     )
                 }

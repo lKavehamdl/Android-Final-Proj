@@ -4,8 +4,8 @@
     <!-- ═══════════════════════════════════════════════════════════════════════
          App
     ═══════════════════════════════════════════════════════════════════════ -->
-    <string name="app_name">Melodify</string>
-    <string name="app_tagline">Music for everyone</string>
+    <string name="app_name">Telify</string>
+    <string name="app_tagline">Listen. Discover. Connect.</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Bottom Navigation Tabs
@@ -42,7 +42,7 @@
     <string name="empty_state_generic_title">Nothing here yet</string>
     <string name="empty_state_generic_subtitle">Check back later</string>
     <string name="section_see_all">See All</string>
-    <string name="cd_logo">Melodify logo</string>
+    <string name="cd_logo">Telify logo</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Search Screen
@@ -82,6 +82,12 @@
     <string name="playlists_create">Create Playlist</string>
     <string name="playlists_empty_title">No Playlists Yet</string>
     <string name="playlists_empty_subtitle">Create your first playlist</string>
+    <string name="playlist_create">Create Playlist</string>
+    <string name="playlist_name_hint">Playlist name</string>
+    <string name="playlist_created">Playlist created</string>
+    <string name="playlist_add_song_success">Added to playlist</string>
+    <string name="playlist_picker_title">Add to Playlist</string>
+    <string name="playlist_picker_empty">Create a playlist first</string>
     <string name="playlists_songs_count">%d songs</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
@@ -107,6 +113,8 @@
     <string name="player_shuffle">Shuffle</string>
     <string name="player_repeat">Repeat</string>
     <string name="player_like">Like</string>
+    <string name="cd_like">Like song</string>
+    <string name="cd_unlike">Unlike song</string>
     <string name="player_download">Download</string>
     <string name="player_share">Share</string>
     <string name="player_sleep_timer">Sleep Timer</string>
@@ -150,7 +158,7 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_logout">Log Out</string>
     <string name="settings_logout_confirm">Are you sure you want to log out?</string>
-    <string name="settings_about">About Melodify</string>
+    <string name="settings_about">About Telify</string>
     <string name="settings_version">Version %s</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════

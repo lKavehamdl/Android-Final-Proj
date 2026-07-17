@@ -24,7 +24,8 @@ sealed class Screen(
     data object Settings : Screen("settings", R.string.settings_title, Icons.Filled.Person)
     data object LikedSongs : Screen("liked_songs", R.string.home_quick_liked, Icons.Filled.Person)
     data object RecentlyPlayed : Screen("recently_played", R.string.home_quick_recent, Icons.Filled.Person)
-    data object Follows : Screen("follows", R.string.home_quick_artists, Icons.Filled.Person)
+    data object Follows : Screen("follows", R.string.following_title, Icons.Filled.Person)
+    data object TopArtists : Screen("top_artists", R.string.artists_title, Icons.Filled.Person)
     data object PlaylistDetail : Screen("playlist_detail/{playlistId}", R.string.tab_playlists, Icons.AutoMirrored.Filled.PlaylistPlay) {
         fun createRoute(playlistId: String) = "playlist_detail/$playlistId"
     }

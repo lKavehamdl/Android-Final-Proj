@@ -1,21 +1,26 @@
 package com.example.final_project
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.final_project.core.notification.NotificationHelper
 import com.example.final_project.ui.MainUiEvent
 import com.example.final_project.ui.MainViewModel
 import com.example.final_project.ui.navigation.MelodifyApp
 import com.example.final_project.ui.theme.FinalProjectTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
 
@@ -25,7 +30,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             val state by mainViewModel.state.collectAsStateWithLifecycle()
 
-            LaunchedEffect(state.language) {
+            val permissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestPermission(),
+            ) { /* Media3 will show notifications once granted */ }
+
+            LaunchedEffect(Unit) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                    !NotificationHelper.hasPostNotificationsPermission(this@MainActivity)
+                ) {
+                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+
+            LaunchedEffect(state.languageReady, state.language) {
+                if (!state.languageReady) return@LaunchedEffect
                 AppCompatDelegate.setApplicationLocales(
                     LocaleListCompat.forLanguageTags(state.language.tag),
                 )

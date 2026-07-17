@@ -41,7 +41,7 @@ val repositoryModule = module {
         if (AppConstants.USE_FAKE_SONGS) {
             FakePlaylistRepository(dispatchers = get())
         } else {
-            PlaylistRepositoryImpl(api = get(), dispatchers = get())
+            PlaylistRepositoryImpl(api = get(), dispatchers = get(), supabase = get())
         }
     }
     factory { GetPublicPlaylistsUseCase(playlistRepository = get()) }

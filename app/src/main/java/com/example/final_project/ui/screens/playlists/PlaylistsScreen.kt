@@ -17,20 +17,26 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
@@ -38,7 +44,7 @@ import com.example.final_project.R
 import com.example.final_project.domain.model.Playlist
 import com.example.final_project.ui.components.EmptyState
 import com.example.final_project.ui.components.SectionHeader
-import com.example.final_project.ui.components.ShimmerEffect   
+import com.example.final_project.ui.components.ShimmerEffect
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
 
@@ -58,8 +64,20 @@ fun PlaylistsScreen(
                 is PlaylistsUiEffect.OpenPlaylist -> onOpenPlaylist(effect.playlistId)
                 is PlaylistsUiEffect.ShowMessage ->
                     snackbarHostState.showSnackbar(context.getString(effect.messageRes))
+                is PlaylistsUiEffect.ShowTextMessage ->
+                    snackbarHostState.showSnackbar(effect.message)
             }
         }
+    }
+
+    if (state.showCreateDialog) {
+        CreatePlaylistDialog(
+            isCreating = state.isCreating,
+            onDismiss = { viewModel.onEvent(PlaylistsUiEvent.DismissCreateDialog) },
+            onConfirm = { name ->
+                viewModel.onEvent(PlaylistsUiEvent.ConfirmCreatePlaylist(name))
+            },
+        )
     }
 
     androidx.compose.material3.Scaffold(
@@ -68,47 +86,83 @@ fun PlaylistsScreen(
             androidx.compose.material3.FloatingActionButton(
                 onClick = {
                     viewModel.onEvent(PlaylistsUiEvent.CreatePlaylistClick)
-                }
+                },
             ) {
                 androidx.compose.material3.Icon(
-                    imageVector = androidx.compose.material.icons.Icons.Default.Add,
-                    contentDescription = "Create Playlist"
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.playlist_create),
                 )
             }
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
-        }
+        },
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             when {
                 state.isLoading && state.isEmpty -> PlaylistsShimmer()
 
-            state.errorMessage != null && state.isEmpty -> {
-                EmptyState(
-                    titleRes = R.string.error_network,
-                    subtitleRes = R.string.error_network_subtitle,
-                    actionLabelRes = R.string.retry,
-                    onActionClick = { viewModel.onEvent(PlaylistsUiEvent.Retry) },
-                )
-            }
+                state.errorMessage != null && state.isEmpty -> {
+                    EmptyState(
+                        titleRes = R.string.error_network,
+                        subtitleRes = R.string.error_network_subtitle,
+                        actionLabelRes = R.string.retry,
+                        onActionClick = { viewModel.onEvent(PlaylistsUiEvent.Retry) },
+                    )
+                }
 
-            state.isEmpty -> {
-                EmptyState(
-                    titleRes = R.string.playlists_empty_title,
-                    subtitleRes = R.string.playlists_empty_subtitle,
-                )
-            }
+                state.isEmpty -> {
+                    EmptyState(
+                        titleRes = R.string.playlists_empty_title,
+                        subtitleRes = R.string.playlists_empty_subtitle,
+                    )
+                }
 
-            else -> {
-                PlaylistsContent(
-                    state = state,
-                    onPlaylistClick = { viewModel.onEvent(PlaylistsUiEvent.PlaylistClick(it)) },
-                )
+                else -> {
+                    PlaylistsContent(
+                        state = state,
+                        onPlaylistClick = { viewModel.onEvent(PlaylistsUiEvent.PlaylistClick(it)) },
+                    )
+                }
             }
-        }
         }
     }
+}
+
+@Composable
+private fun CreatePlaylistDialog(
+    isCreating: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: (String) -> Unit,
+) {
+    var name by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = { if (!isCreating) onDismiss() },
+        title = { Text(stringResource(R.string.playlist_create)) },
+        text = {
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text(stringResource(R.string.playlist_name_hint)) },
+                singleLine = true,
+                enabled = !isCreating,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onConfirm(name) },
+                enabled = !isCreating && name.isNotBlank(),
+            ) {
+                Text(stringResource(R.string.save))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss, enabled = !isCreating) {
+                Text(stringResource(R.string.cancel))
+            }
+        },
+    )
 }
 
 @Composable

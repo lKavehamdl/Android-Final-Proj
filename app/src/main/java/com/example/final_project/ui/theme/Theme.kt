@@ -26,7 +26,7 @@ val LocalThemeMode = staticCompositionLocalOf { ThemeMode.SYSTEM }
 
 // ── Color Schemes ─────────────────────────────────────────────────────────────
 
-private val MelodifyDarkColorScheme = darkColorScheme(
+private val TelifyDarkColorScheme = darkColorScheme(
     primary               = DarkPrimary,
     onPrimary             = DarkOnPrimary,
     primaryContainer      = DarkPrimaryContainer,
@@ -54,7 +54,7 @@ private val MelodifyDarkColorScheme = darkColorScheme(
     onErrorContainer      = DarkOnErrorContainer,
 )
 
-private val MelodifyLightColorScheme = lightColorScheme(
+private val TelifyLightColorScheme = lightColorScheme(
     primary               = LightPrimary,
     onPrimary             = LightOnPrimary,
     primaryContainer      = LightPrimaryContainer,
@@ -85,11 +85,10 @@ private val MelodifyLightColorScheme = lightColorScheme(
 // ── Composable Theme Entry Point ──────────────────────────────────────────────
 
 /**
- * Root theme composable for the Melodify app.
+ * Root theme composable for the Telify app.
  *
  * @param themeMode  Overrides the system dark/light setting.
  *                   Pass ThemeMode.SYSTEM to respect system preference.
- *                   In Phase 2, this will be driven by DataStore.
  * @param content    The composable content tree.
  */
 @Composable
@@ -104,7 +103,7 @@ fun FinalProjectTheme(
         ThemeMode.SYSTEM -> systemDark
     }
 
-    val colorScheme = if (isDark) MelodifyDarkColorScheme else MelodifyLightColorScheme
+    val colorScheme = if (isDark) TelifyDarkColorScheme else TelifyLightColorScheme
 
     CompositionLocalProvider(LocalThemeMode provides themeMode) {
         MaterialTheme(

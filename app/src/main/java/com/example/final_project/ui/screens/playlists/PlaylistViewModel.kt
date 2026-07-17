@@ -9,8 +9,11 @@ import com.example.final_project.core.mvi.UiEvent
 import com.example.final_project.core.mvi.UiState
 import com.example.final_project.core.result.Resource
 import com.example.final_project.domain.model.Playlist
+import com.example.final_project.domain.repository.PlaylistRepository
 import com.example.final_project.domain.usecase.GetPublicPlaylistsUseCase
 import com.example.final_project.domain.usecase.GetUserPlaylistsUseCase
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
@@ -18,6 +21,8 @@ import kotlinx.coroutines.launch
 
 data class PlaylistsUiState(
     val isLoading: Boolean = false,
+    val isCreating: Boolean = false,
+    val showCreateDialog: Boolean = false,
     val worldPlaylists: List<Playlist> = emptyList(),
     val localPlaylists: List<Playlist> = emptyList(),
     val userPlaylists: List<Playlist> = emptyList(),
@@ -34,20 +39,25 @@ sealed interface PlaylistsUiEvent : UiEvent {
     data object Retry : PlaylistsUiEvent
     data class PlaylistClick(val playlist: Playlist) : PlaylistsUiEvent
     data object CreatePlaylistClick : PlaylistsUiEvent
+    data object DismissCreateDialog : PlaylistsUiEvent
+    data class ConfirmCreatePlaylist(val name: String) : PlaylistsUiEvent
 }
 
 sealed interface PlaylistsUiEffect : UiEffect {
     data class OpenPlaylist(val playlistId: String) : PlaylistsUiEffect
     data class ShowMessage(@StringRes val messageRes: Int) : PlaylistsUiEffect
+    data class ShowTextMessage(val message: String) : PlaylistsUiEffect
 }
 
 class PlaylistsViewModel(
     private val getPublicPlaylistsUseCase: GetPublicPlaylistsUseCase,
     private val getUserPlaylistsUseCase: GetUserPlaylistsUseCase,
+    private val playlistRepository: PlaylistRepository,
+    private val supabase: SupabaseClient,
 ) : BaseViewModel<PlaylistsUiState, PlaylistsUiEvent, PlaylistsUiEffect>(PlaylistsUiState()) {
 
-    // TODO: replace with real logged-in user id once Auth (Task C) is wired.
-    private val currentUserId: String? = null
+    private val currentUserId: String?
+        get() = supabase.auth.currentUserOrNull()?.id
 
     init {
         onEvent(PlaylistsUiEvent.Load)
@@ -61,9 +71,42 @@ class PlaylistsViewModel(
 
             is PlaylistsUiEvent.PlaylistClick ->
                 sendEffect(PlaylistsUiEffect.OpenPlaylist(event.playlist.id))
-                
+
             PlaylistsUiEvent.CreatePlaylistClick ->
-                sendEffect(PlaylistsUiEffect.ShowMessage(R.string.coming_soon))
+                setState { copy(showCreateDialog = true) }
+
+            PlaylistsUiEvent.DismissCreateDialog ->
+                setState { copy(showCreateDialog = false) }
+
+            is PlaylistsUiEvent.ConfirmCreatePlaylist ->
+                createPlaylist(event.name)
+        }
+    }
+
+    private fun createPlaylist(name: String) {
+        val userId = currentUserId
+        if (userId == null) {
+            sendEffect(PlaylistsUiEffect.ShowMessage(R.string.error_generic))
+            return
+        }
+        viewModelScope.launch {
+            setState { copy(isCreating = true) }
+            when (val result = playlistRepository.createPlaylist(userId = userId, name = name)) {
+                is Resource.Success -> {
+                    setState { copy(isCreating = false, showCreateDialog = false) }
+                    sendEffect(PlaylistsUiEffect.ShowMessage(R.string.playlist_created))
+                    loadPlaylists()
+                }
+                is Resource.Error -> {
+                    setState { copy(isCreating = false) }
+                    sendEffect(
+                        PlaylistsUiEffect.ShowTextMessage(
+                            result.message ?: "error",
+                        ),
+                    )
+                }
+                Resource.Loading -> Unit
+            }
         }
     }
 

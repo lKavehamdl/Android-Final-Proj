@@ -122,17 +122,20 @@ fun MelodifyApp(
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-                        MelodifyTopBar(
-                            onProfileClick = {
-                                navController.navigateToTab(Screen.Profile.route)
-                            },
-                            onNotificationsClick = {
-                                // TODO: Navigate to Notifications Screen
-                            },
-                            onSettingsClick = {
-                                navController.navigate(Screen.Settings.route)
-                            },
-                        )
+                        val showAppTopBar = currentRoute in ROOT_TABS_WITH_APP_BAR
+                        if (showAppTopBar) {
+                            MelodifyTopBar(
+                                onProfileClick = {
+                                    navController.navigateToTab(Screen.Profile.route)
+                                },
+                                onNotificationsClick = {
+                                    // TODO: Navigate to Notifications Screen
+                                },
+                                onSettingsClick = {
+                                    navController.navigate(Screen.Settings.route)
+                                },
+                            )
+                        }
                     },
                     bottomBar = {
                         Column {
@@ -236,7 +239,7 @@ private fun MelodifyNavHost(
                     navController.navigate(Screen.RecentlyPlayed.route)
                 },
                 onNavigateToArtists = {
-                    navController.navigate(Screen.Follows.route)
+                    navController.navigate(Screen.TopArtists.route)
                 }
             )
         }
@@ -294,6 +297,11 @@ private fun MelodifyNavHost(
         composable(Screen.RecentlyPlayed.route) {
             RecentlyPlayedScreen(onNavigateBack = { navController.popBackStack() })
         }
+        composable(Screen.TopArtists.route) {
+            com.example.final_project.ui.screens.home.artists.TopArtistsScreen(
+                onNavigateBack = { navController.popBackStack() },
+            )
+        }
         composable(Screen.Follows.route) {
             FollowsScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -344,6 +352,14 @@ private fun MelodifyNavHost(
         }
     }
 }
+
+private val ROOT_TABS_WITH_APP_BAR = setOf(
+    Screen.Home.route,
+    Screen.Search.route,
+    Screen.Downloads.route,
+    Screen.Playlists.route,
+    Screen.Profile.route,
+)
 
 private fun NavHostController.navigateToTab(route: String) {
     navigate(route) {

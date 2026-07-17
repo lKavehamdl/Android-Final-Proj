@@ -21,9 +21,17 @@ import kotlinx.coroutines.flow.flowOn
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.auth.auth
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import com.example.final_project.data.remote.dto.SongDto
+
+@Serializable
+private data class RecentlyPlayedInsertDto(
+    @SerialName("user_id") val userId: String,
+    @SerialName("song_id") val songId: String,
+)
 
 class SongRepositoryImpl(
     private val api: SongApiService,
@@ -78,6 +86,15 @@ class SongRepositoryImpl(
         runCatching { api.incrementPlayCount(songId) }
     }
 
+    override suspend fun recordRecentlyPlayed(songId: String) {
+        runCatching {
+            val currentUserId = supabase.auth.currentUserOrNull()?.id ?: return
+            supabase.postgrest["recently_played"].insert(
+                RecentlyPlayedInsertDto(userId = currentUserId, songId = songId),
+            )
+        }
+    }
+
     override suspend fun getLikedSongs(): Flow<Resource<List<Song>>> = safeFlow {
         val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
         val likedSongs = supabase.postgrest["liked_songs"]
@@ -96,11 +113,16 @@ class SongRepositoryImpl(
 
     override suspend fun toggleLike(songId: String): Resource<Boolean> = try {
         val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
-        val result = supabase.postgrest.rpc("toggle_like", buildJsonObject { 
-            put("p_user_id", currentUserId)
-            put("p_song_id", songId) 
-        })
-        Resource.Success(result.data.toBoolean())
+        val result = supabase.postgrest.rpc(
+            "toggle_like",
+            buildJsonObject {
+                put("p_user_id", currentUserId)
+                put("p_song_id", songId)
+            },
+        )
+        val raw = result.data.trim().removeSurrounding("\"")
+        val liked = raw.equals("true", ignoreCase = true)
+        Resource.Success(liked)
     } catch (e: Exception) {
         Resource.Error(e.message, e)
     }
