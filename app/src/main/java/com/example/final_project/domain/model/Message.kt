@@ -19,6 +19,7 @@ enum class MessageType {
 enum class MessageStatus {
     SENDING,
     SENT,
+    DELIVERED,
     READ
 }
 
@@ -33,6 +34,7 @@ fun String.toMessageStatus(): MessageStatus {
     return when (this.lowercase()) {
         "sending" -> MessageStatus.SENDING
         "sent" -> MessageStatus.SENT
+        "delivered" -> MessageStatus.DELIVERED
         "read" -> MessageStatus.READ
         else -> MessageStatus.SENT
     }

@@ -24,6 +24,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.example.final_project.R
 import com.example.final_project.domain.model.Message
+import com.example.final_project.domain.model.MessageStatus
 import com.example.final_project.domain.model.MessageType
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
@@ -221,14 +222,19 @@ fun MessageBubble(message: Message, isMine: Boolean) {
                     
                     if (isMine) {
                         Spacer(modifier = Modifier.width(4.dp))
+                        val statusLabel = when (message.status) {
+                            MessageStatus.SENDING -> "🕒"
+                            MessageStatus.SENT -> "✓"
+                            MessageStatus.DELIVERED -> "✓✓"
+                            MessageStatus.READ -> "✓✓"
+                        }
                         Text(
-                            text = when(message.status.name.lowercase()) {
-                                "sending" -> "🕒"
-                                "sent" -> "✓"
-                                "read" -> "✓✓"
-                                else -> "✓"
+                            text = statusLabel,
+                            color = if (message.status == MessageStatus.READ) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                textColor.copy(alpha = 0.7f)
                             },
-                            color = if (message.status.name.lowercase() == "read") MaterialTheme.colorScheme.primary else textColor.copy(alpha = 0.7f),
                             style = MaterialTheme.typography.labelSmall
                         )
                     }

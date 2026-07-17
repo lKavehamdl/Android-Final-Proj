@@ -85,15 +85,17 @@ class ChatRepositoryImpl(
                     content = content,
                     messageType = type,
                     songId = songId,
-                    status = "sent",
+                    status = "sending",
                     createdAt = java.time.Instant.now().toString()
                 )
 
-                // Save locally first for offline support
+                // Optimistic local row while upload is in flight
                 messagesDao.insertMessage(dto.toEntity())
 
-                // Then send to Supabase
                 supabaseClient.postgrest["messages"].insert(dto)
+
+                // Mark delivered locally once the server accepted the insert
+                messagesDao.insertMessage(dto.copy(status = "delivered").toEntity())
                 
                 Resource.Success(Unit)
             } catch (e: Exception) {
