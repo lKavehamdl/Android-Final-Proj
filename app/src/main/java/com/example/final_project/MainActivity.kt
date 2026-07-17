@@ -49,15 +49,19 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-            FinalProjectTheme(themeMode = state.themeMode) {
+            FinalProjectTheme(themeMode = state.themeMode, fontScale = state.fontScale) {
                 MelodifyApp(
                     themeMode = state.themeMode,
                     language = state.language,
+                    fontScale = state.fontScale,
                     onThemeModeChange = {
                         mainViewModel.onEvent(MainUiEvent.ThemeModeChanged(it))
                     },
                     onLanguageChange = {
                         mainViewModel.onEvent(MainUiEvent.LanguageChanged(it))
+                    },
+                    onFontScaleChange = {
+                        mainViewModel.onEvent(MainUiEvent.FontScaleChanged(it))
                     },
                 )
             }

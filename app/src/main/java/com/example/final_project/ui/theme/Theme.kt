@@ -7,17 +7,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  Theme Mode
-//  SYSTEM  → follow system dark/light setting  (default)
-//  LIGHT   → always light
-//  DARK    → always dark
-//
-//  ThemeMode is persisted in DataStore and injected here via the composable
-//  parameter. ViewModels read DataStore and pass ThemeMode down to this call
-//  site in MainActivity (Phase 2 wires this up).
-// ─────────────────────────────────────────────────────────────────────────────
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
+import com.example.final_project.core.datastore.FontScale
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
@@ -94,6 +86,7 @@ private val TelifyLightColorScheme = lightColorScheme(
 @Composable
 fun FinalProjectTheme(
     themeMode: ThemeMode = ThemeMode.SYSTEM,
+    fontScale: FontScale = FontScale.MEDIUM,
     content: @Composable () -> Unit,
 ) {
     val systemDark = isSystemInDarkTheme()
@@ -104,8 +97,15 @@ fun FinalProjectTheme(
     }
 
     val colorScheme = if (isDark) TelifyDarkColorScheme else TelifyLightColorScheme
+    val density = LocalDensity.current
 
-    CompositionLocalProvider(LocalThemeMode provides themeMode) {
+    CompositionLocalProvider(
+        LocalThemeMode provides themeMode,
+        LocalDensity provides Density(
+            density = density.density,
+            fontScale = density.fontScale * fontScale.multiplier,
+        ),
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography  = MelodifyTypography,

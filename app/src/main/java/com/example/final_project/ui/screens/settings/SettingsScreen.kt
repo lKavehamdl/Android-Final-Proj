@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.final_project.BuildConfig
 import com.example.final_project.R
+import com.example.final_project.core.datastore.FontScale
 import com.example.final_project.core.locale.AppLanguage
 import com.example.final_project.ui.theme.MelodifySpacing
 import com.example.final_project.ui.theme.ThemeMode
@@ -49,8 +51,10 @@ import com.example.final_project.ui.theme.ThemeMode
 fun SettingsScreen(
     themeMode: ThemeMode,
     language: AppLanguage,
+    fontScale: FontScale,
     onThemeModeChange: (ThemeMode) -> Unit,
     onLanguageChange: (AppLanguage) -> Unit,
+    onFontScaleChange: (FontScale) -> Unit,
     onBackClick: () -> Unit,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -141,6 +145,28 @@ fun SettingsScreen(
                             selected = language == lang,
                             onClick = { onLanguageChange(lang) },
                             shape = SegmentedButtonDefaults.itemShape(index = index, count = AppLanguage.entries.size)
+                        ) {
+                            Text(label)
+                        }
+                    }
+                }
+            }
+
+            SettingsSection(
+                title = stringResource(R.string.settings_font_size),
+                icon = Icons.Default.FormatSize,
+            ) {
+                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                    FontScale.entries.forEachIndexed { index, scale ->
+                        val label = when (scale) {
+                            FontScale.SMALL -> stringResource(R.string.settings_font_small)
+                            FontScale.MEDIUM -> stringResource(R.string.settings_font_medium)
+                            FontScale.LARGE -> stringResource(R.string.settings_font_large)
+                        }
+                        SegmentedButton(
+                            selected = fontScale == scale,
+                            onClick = { onFontScaleChange(scale) },
+                            shape = SegmentedButtonDefaults.itemShape(index = index, count = FontScale.entries.size),
                         ) {
                             Text(label)
                         }

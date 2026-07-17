@@ -25,6 +25,7 @@ class SettingsDataStore(context: Context) {
         val KEY_IS_PREMIUM = booleanPreferencesKey(AppConstants.PREF_IS_PREMIUM)
         val KEY_THEME = stringPreferencesKey("theme_mode")
         val KEY_LANGUAGE = stringPreferencesKey("language")
+        val KEY_FONT_SCALE = stringPreferencesKey(AppConstants.PREF_FONT_SCALE)
     }
 
     // ── Read ──────────────────────────────────────────────────────────────────
@@ -39,6 +40,10 @@ class SettingsDataStore(context: Context) {
 
     val language: Flow<String> = store.data.map { prefs ->
         prefs[KEY_LANGUAGE] ?: "en"
+    }
+
+    val fontScale: Flow<String> = store.data.map { prefs ->
+        prefs[KEY_FONT_SCALE] ?: FontScale.MEDIUM.name
     }
 
     // ── Write ─────────────────────────────────────────────────────────────────
@@ -60,4 +65,16 @@ class SettingsDataStore(context: Context) {
             prefs[KEY_LANGUAGE] = language
         }
     }
+
+    suspend fun setFontScale(scale: String) {
+        store.edit { prefs ->
+            prefs[KEY_FONT_SCALE] = scale
+        }
+    }
+}
+
+enum class FontScale(val multiplier: Float) {
+    SMALL(0.90f),
+    MEDIUM(1.0f),
+    LARGE(1.15f),
 }

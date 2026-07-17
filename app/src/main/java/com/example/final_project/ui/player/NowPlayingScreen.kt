@@ -374,6 +374,8 @@ fun NowPlayingScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         val downloadsRepo: DownloadsRepository = koinInject()
+                        val settingsDataStore: com.example.final_project.core.datastore.SettingsDataStore = koinInject()
+                        val isPremium by settingsDataStore.isPremium.collectAsStateWithLifecycle(initialValue = false)
                         val downloadedSongs by downloadsRepo.downloadedSongs.collectAsStateWithLifecycle(initialValue = emptyList())
                         val isDownloaded = downloadedSongs.any { it.song.id == song.id }
                         
@@ -381,11 +383,21 @@ fun NowPlayingScreen(
                         
                         if (isDownloaded) {
                             IconButton(onClick = {}, enabled = false) {
-                                Icon(Icons.Filled.DownloadDone, contentDescription = "Downloaded", tint = animatedPaletteColor)
+                                Icon(Icons.Filled.DownloadDone, contentDescription = stringResource(R.string.player_download), tint = animatedPaletteColor)
                             }
                         } else {
-                            IconButton(onClick = { downloadsRepo.startDownload(song) }) {
-                                Icon(Icons.Filled.Download, contentDescription = "Download", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            IconButton(onClick = {
+                                if (isPremium) {
+                                    downloadsRepo.startDownload(song)
+                                } else {
+                                    scope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            context.getString(R.string.upgrade_needed_message),
+                                        )
+                                    }
+                                }
+                            }) {
+                                Icon(Icons.Filled.Download, contentDescription = stringResource(R.string.player_download), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                         

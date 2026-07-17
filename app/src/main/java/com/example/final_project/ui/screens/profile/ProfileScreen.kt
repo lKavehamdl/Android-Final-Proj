@@ -29,6 +29,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -38,9 +39,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +56,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -64,6 +69,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ProfileScreen(
     onNavigateToFollows: () -> Unit = {},
+    onNavigateToLiked: () -> Unit = {},
+    onNavigateToMessages: () -> Unit = {},
+    onNavigateToSettings: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = koinViewModel(),
 ) {
@@ -241,7 +249,17 @@ fun ProfileScreen(
         ProfileEntryRow(
             icon = Icons.Default.Favorite,
             title = stringResource(R.string.profile_liked_songs),
-            onClick = { /* Phase 7 */ }
+            onClick = onNavigateToLiked,
+        )
+        ProfileEntryRow(
+            icon = Icons.Default.Email,
+            title = stringResource(R.string.chat_title),
+            onClick = onNavigateToMessages,
+        )
+        ProfileEntryRow(
+            icon = Icons.Default.Settings,
+            title = stringResource(R.string.settings_title),
+            onClick = onNavigateToSettings,
         )
     }
 }
