@@ -1,14 +1,19 @@
 package com.example.final_project
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.final_project.core.notification.NotificationHelper
 import com.example.final_project.ui.MainUiEvent
 import com.example.final_project.ui.MainViewModel
 import com.example.final_project.ui.navigation.MelodifyApp
@@ -25,7 +30,18 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val state by mainViewModel.state.collectAsStateWithLifecycle()
 
-            // Only apply after DataStore has emitted so we don't overwrite FA with default EN.
+            val permissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestPermission(),
+            ) { /* Media3 will show notifications once granted */ }
+
+            LaunchedEffect(Unit) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                    !NotificationHelper.hasPostNotificationsPermission(this@MainActivity)
+                ) {
+                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+
             LaunchedEffect(state.languageReady, state.language) {
                 if (!state.languageReady) return@LaunchedEffect
                 AppCompatDelegate.setApplicationLocales(

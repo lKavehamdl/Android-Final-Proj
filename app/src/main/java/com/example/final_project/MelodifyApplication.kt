@@ -1,6 +1,7 @@
 package com.example.final_project
 
 import android.app.Application
+import com.example.final_project.core.notification.NotificationHelper
 import com.example.final_project.di.appModule
 import com.example.final_project.di.databaseModule
 import com.example.final_project.di.networkModule
@@ -13,6 +14,7 @@ import org.koin.core.logger.Level
 class MelodifyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        NotificationHelper.createChannels(this)
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@MelodifyApplication)

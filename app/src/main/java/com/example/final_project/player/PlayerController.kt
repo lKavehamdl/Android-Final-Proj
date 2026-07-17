@@ -3,9 +3,11 @@ package com.example.final_project.player
 import android.content.ComponentName
 import android.content.Context
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
+import android.net.Uri
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.example.final_project.domain.model.Song
@@ -160,14 +162,7 @@ class PlayerController(
         val ctrl = controller ?: run { connectToService(); return }
 
         scope.launch {
-            val mediaItems = resolvedQueue.map { s ->
-                val localPath = downloadsRepository?.getLocalPath(s.id)
-                if (localPath != null && java.io.File(localPath).exists()) {
-                    MediaItem.fromUri(java.io.File(localPath).toURI().toString())
-                } else {
-                    MediaItem.fromUri(s.audioUrl)
-                }
-            }
+            val mediaItems = resolvedQueue.map { s -> toMediaItem(s) }
 
             withContext(Dispatchers.Main) {
                 ctrl.setMediaItems(mediaItems, index, 0L)
@@ -175,6 +170,26 @@ class PlayerController(
                 ctrl.play()
             }
         }
+    }
+
+    private suspend fun toMediaItem(song: Song): MediaItem {
+        val localPath = downloadsRepository?.getLocalPath(song.id)
+        val uri = if (localPath != null && java.io.File(localPath).exists()) {
+            Uri.fromFile(java.io.File(localPath))
+        } else {
+            Uri.parse(song.audioUrl)
+        }
+        val metadata = MediaMetadata.Builder()
+            .setTitle(song.title)
+            .setArtist(song.artistName)
+            .setAlbumTitle(song.albumName)
+            .setArtworkUri(song.coverImageUrl?.let { Uri.parse(it) })
+            .build()
+        return MediaItem.Builder()
+            .setMediaId(song.id)
+            .setUri(uri)
+            .setMediaMetadata(metadata)
+            .build()
     }
 
     fun togglePlayPause() {

@@ -7,8 +7,11 @@ import androidx.media3.common.C
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.DefaultMediaNotificationProvider
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import com.example.final_project.R
+import com.example.final_project.core.notification.NotificationHelper
 
 /**
  * Background media playback service — the heart of Phase 4.
@@ -34,6 +37,14 @@ class MelodifyPlaybackService : MediaSessionService() {
     override fun onCreate() {
         super.onCreate()
 
+        NotificationHelper.createChannels(this)
+        setMediaNotificationProvider(
+            DefaultMediaNotificationProvider.Builder(this)
+                .setChannelId(NotificationHelper.CHANNEL_PLAYBACK)
+                .setChannelName(R.string.notification_channel_playback)
+                .build(),
+        )
+
         val cache = PlayerCache.get(applicationContext)
         val upstreamFactory = DefaultDataSource.Factory(applicationContext)
         val cacheDataSourceFactory = CacheDataSource.Factory()
@@ -49,6 +60,7 @@ class MelodifyPlaybackService : MediaSessionService() {
         val exoPlayer = ExoPlayer.Builder(applicationContext)
             .setAudioAttributes(audioAttributes, /* handleAudioFocus= */ true)
             .setHandleAudioBecomingNoisy(true)   // pause on headphone unplug
+            .setPauseAtEndOfMediaItems(false)
             .build()
 
         // Expose audio session ID so the Canvas visualizer (Task B) can hook in
