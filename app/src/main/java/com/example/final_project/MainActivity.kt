@@ -3,7 +3,7 @@ package com.example.final_project
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,7 +15,7 @@ import com.example.final_project.ui.navigation.MelodifyApp
 import com.example.final_project.ui.theme.FinalProjectTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
 
@@ -25,7 +25,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val state by mainViewModel.state.collectAsStateWithLifecycle()
 
-            LaunchedEffect(state.language) {
+            // Only apply after DataStore has emitted so we don't overwrite FA with default EN.
+            LaunchedEffect(state.languageReady, state.language) {
+                if (!state.languageReady) return@LaunchedEffect
                 AppCompatDelegate.setApplicationLocales(
                     LocaleListCompat.forLanguageTags(state.language.tag),
                 )
