@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.final_project.domain.model.DownloadedSong
 import com.example.final_project.domain.model.Song
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -18,6 +17,7 @@ data class DownloadedSongEntity(
     val coverImageUrl: String,
     val audioUrl: String,
     val localFilePath: String,
+    val fileSizeBytes: Long = 0L,
     val downloadedAt: Long = System.currentTimeMillis()
 )
 
@@ -42,18 +42,19 @@ fun DownloadedSongEntity.toDownloadedSong(): DownloadedSong {
         id = id,
         song = toDomainModel(),
         localPath = localFilePath,
-        fileSizeBytes = File(localFilePath).length(),
+        fileSizeBytes = fileSizeBytes,
         downloadedAt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(Date(downloadedAt))
     )
 }
 
-fun Song.toDownloadedEntity(localFilePath: String): DownloadedSongEntity {
+fun Song.toDownloadedEntity(localFilePath: String, fileSizeBytes: Long = 0L): DownloadedSongEntity {
     return DownloadedSongEntity(
         id = id,
         title = title,
         artistName = artistName,
         coverImageUrl = coverImageUrl ?: "",
         audioUrl = audioUrl,
-        localFilePath = localFilePath
+        localFilePath = localFilePath,
+        fileSizeBytes = fileSizeBytes,
     )
 }

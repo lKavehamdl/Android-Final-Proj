@@ -54,7 +54,8 @@ class DownloadWorker(
                 artistName = artistName,
                 coverImageUrl = coverImageUrl,
                 audioUrl = audioUrl,
-                localFilePath = outputFile.absolutePath
+                localFilePath = outputFile.absolutePath,
+                fileSizeBytes = outputFile.length(),
             )
             downloadsDao.insertDownload(entity)
 
