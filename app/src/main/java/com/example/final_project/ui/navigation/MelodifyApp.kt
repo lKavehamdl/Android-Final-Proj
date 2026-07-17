@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -25,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,6 +38,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.final_project.core.datastore.FontScale
 import com.example.final_project.core.locale.AppLanguage
+import com.example.final_project.domain.repository.AuthRepository
 import com.example.final_project.player.PlayerController
 import com.example.final_project.ui.components.MelodifyTopBar
 import com.example.final_project.ui.player.MiniPlayer
@@ -81,11 +84,27 @@ fun MelodifyApp(
     val playerState by playerController.state.collectAsStateWithLifecycle()
     
     val supabaseClient: SupabaseClient = koinInject()
-    val sessionStatus by supabaseClient.auth.sessionStatus.collectAsStateWithLifecycle()
+    val sessionStatus by supabaseClient.auth.sessionStatus.collectAsStateWithLifecycle(
+        initialValue = SessionStatus.Initializing,
+    )
 
-    if (sessionStatus !is SessionStatus.Authenticated) {
-        AuthScreen()
-        return
+    when (sessionStatus) {
+        SessionStatus.Initializing,
+        is SessionStatus.RefreshFailure,
+        -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+            return
+        }
+        is SessionStatus.NotAuthenticated -> {
+            AuthScreen()
+            return
+        }
+        is SessionStatus.Authenticated -> Unit
     }
 
     CompositionLocalProvider(
@@ -226,7 +245,7 @@ private fun MelodifyNavHost(
     onFontScaleChange: (FontScale) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val supabaseClient: io.github.jan.supabase.SupabaseClient = koinInject()
+    val authRepository: AuthRepository = koinInject()
     val scope = rememberCoroutineScope()
     
     NavHost(
@@ -300,11 +319,7 @@ private fun MelodifyNavHost(
                 onBackClick = { navController.popBackStack() },
                 onLogoutClick = {
                     scope.launch {
-                        try {
-                            supabaseClient.auth.signOut()
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                        authRepository.signOut()
                     }
                 }
             )

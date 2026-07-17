@@ -17,7 +17,9 @@ import com.example.final_project.data.repository.PlaylistRepositoryImpl
 import com.example.final_project.domain.repository.PlaylistRepository
 import com.example.final_project.domain.usecase.GetPublicPlaylistsUseCase
 import com.example.final_project.domain.usecase.GetUserPlaylistsUseCase
+import com.example.final_project.data.repository.AuthRepositoryImpl
 import com.example.final_project.data.repository.ChatRepositoryImpl
+import com.example.final_project.domain.repository.AuthRepository
 import com.example.final_project.domain.repository.ChatRepository
 import com.example.final_project.data.repository.SocialRepositoryImpl
 import com.example.final_project.domain.repository.SocialRepository
@@ -29,6 +31,10 @@ val repositoryModule = module {
         } else {
             SongRepositoryImpl(api = get(), dispatchers = get(), supabase = get())
         }
+    }
+
+    single<AuthRepository> {
+        AuthRepositoryImpl(supabase = get(), dispatchers = get())
     }
 
     factory { GetSongsUseCase(songRepository = get(), dispatchers = get()) }

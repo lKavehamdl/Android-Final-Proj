@@ -232,4 +232,29 @@
     <string name="playlists_section_world">موسیقی جهان</string>
     <string name="playlists_section_user">پلی‌لیست‌های من</string>
 
+    <!-- احراز هویت -->
+    <string name="auth_subtitle_signin">برای ادامه وارد شوید</string>
+    <string name="auth_subtitle_signup">حساب کاربری بسازید</string>
+    <string name="auth_email">ایمیل</string>
+    <string name="auth_password">رمز عبور</string>
+    <string name="auth_confirm_password">تأیید رمز عبور</string>
+    <string name="auth_action_signin">ورود</string>
+    <string name="auth_action_signup">ثبت‌نام</string>
+    <string name="auth_need_account">حساب ندارید؟ ثبت‌نام کنید</string>
+    <string name="auth_have_account">قبلاً ثبت‌نام کرده‌اید؟ وارد شوید</string>
+    <string name="auth_verify_email">حساب ساخته شد. لطفاً ایمیل را تأیید کنید و سپس وارد شوید.</string>
+    <string name="auth_error_empty_email">ایمیل الزامی است.</string>
+    <string name="auth_error_empty_password">رمز عبور الزامی است.</string>
+    <string name="auth_error_empty_confirm_password">لطفاً رمز عبور را تأیید کنید.</string>
+    <string name="auth_error_invalid_email">یک ایمیل معتبر وارد کنید.</string>
+    <string name="auth_error_weak_password">رمز عبور باید حداقل ۶ کاراکتر باشد.</string>
+    <string name="auth_error_password_mismatch">رمزهای عبور یکسان نیستند.</string>
+    <string name="auth_error_invalid_credentials">ایمیل یا رمز عبور نادرست است.</string>
+    <string name="auth_error_user_not_found">این حساب وجود ندارد.</string>
+    <string name="auth_error_email_exists">این ایمیل قبلاً ثبت شده است.</string>
+    <string name="auth_error_email_not_confirmed">قبل از ورود، ایمیل خود را تأیید کنید.</string>
+    <string name="auth_error_network">اتصال اینترنت خود را بررسی کنید.</string>
+    <string name="auth_error_timeout">سرور پاسخ نداد. دوباره تلاش کنید.</string>
+    <string name="auth_error_unknown">مشکلی پیش آمد. دوباره تلاش کنید.</string>
+
 </resources>

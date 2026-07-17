@@ -1,7 +1,16 @@
 package com.example.final_project.di
 
+import android.content.Context
 import com.example.final_project.core.constants.AppConstants
+import com.example.final_project.data.remote.PlaylistApiService
 import com.example.final_project.data.remote.SongApiService
+import com.russhwolf.settings.SharedPreferencesSettings
+import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.auth.SettingsSessionManager
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.realtime.Realtime
+import io.github.jan.supabase.storage.Storage
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -13,8 +22,8 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import com.example.final_project.data.remote.PlaylistApiService
 
 val networkModule = module {
     single {
@@ -26,14 +35,25 @@ val networkModule = module {
     }
 
     single {
-        io.github.jan.supabase.createSupabaseClient(
-            supabaseUrl = AppConstants.BASE_URL,
-            supabaseKey = AppConstants.SUPABASE_ANON_KEY
+        val context: Context = androidContext()
+        val supabaseUrl = AppConstants.BASE_URL.trimEnd('/')
+        // Explicit SharedPreferences-backed session store.
+        // Avoids Settings() no-arg NPE (appContext!!) when androidx.startup hasn't run yet.
+        val authSettings = SharedPreferencesSettings(
+            context.getSharedPreferences("telify_supabase_auth", Context.MODE_PRIVATE),
+        )
+        createSupabaseClient(
+            supabaseUrl = supabaseUrl,
+            supabaseKey = AppConstants.SUPABASE_ANON_KEY,
         ) {
-            install(io.github.jan.supabase.auth.Auth)
-            install(io.github.jan.supabase.postgrest.Postgrest)
-            install(io.github.jan.supabase.realtime.Realtime)
-            install(io.github.jan.supabase.storage.Storage)
+            install(Auth) {
+                sessionManager = SettingsSessionManager(settings = authSettings)
+                autoLoadFromStorage = true
+                autoSaveToStorage = true
+            }
+            install(Postgrest)
+            install(Realtime)
+            install(Storage)
         }
     }
 
@@ -50,7 +70,7 @@ val networkModule = module {
             }
 
             defaultRequest {
-                url(AppConstants.BASE_URL)
+                url(AppConstants.BASE_URL.trimEnd('/') + "/")
                 contentType(ContentType.Application.Json)
                 header("apikey", AppConstants.SUPABASE_ANON_KEY)
                 header("Authorization", "Bearer ${AppConstants.SUPABASE_ANON_KEY}")

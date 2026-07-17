@@ -238,4 +238,29 @@
     <string name="playlists_section_world">World Music</string>
     <string name="playlists_section_user">My Playlists</string>
 
+    <!-- Authentication -->
+    <string name="auth_subtitle_signin">Sign in to continue</string>
+    <string name="auth_subtitle_signup">Create your account</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_confirm_password">Confirm password</string>
+    <string name="auth_action_signin">Sign In</string>
+    <string name="auth_action_signup">Sign Up</string>
+    <string name="auth_need_account">Don\'t have an account? Sign up</string>
+    <string name="auth_have_account">Already have an account? Sign in</string>
+    <string name="auth_verify_email">Account created. Please verify your email, then sign in.</string>
+    <string name="auth_error_empty_email">Email is required.</string>
+    <string name="auth_error_empty_password">Password is required.</string>
+    <string name="auth_error_empty_confirm_password">Please confirm your password.</string>
+    <string name="auth_error_invalid_email">Enter a valid email address.</string>
+    <string name="auth_error_weak_password">Password must be at least 6 characters.</string>
+    <string name="auth_error_password_mismatch">Passwords do not match.</string>
+    <string name="auth_error_invalid_credentials">Incorrect email or password.</string>
+    <string name="auth_error_user_not_found">This account does not exist.</string>
+    <string name="auth_error_email_exists">This email is already registered.</string>
+    <string name="auth_error_email_not_confirmed">Please verify your email before signing in.</string>
+    <string name="auth_error_network">Please check your internet connection.</string>
+    <string name="auth_error_timeout">Server did not respond. Please try again.</string>
+    <string name="auth_error_unknown">Something went wrong. Please try again.</string>
+
 </resources>
