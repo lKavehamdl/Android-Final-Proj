@@ -43,6 +43,7 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.DownloadDone
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
@@ -50,8 +51,11 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -60,7 +64,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -170,6 +176,22 @@ fun NowPlayingScreen(
     // ── Dialogs state ────────────────────────────────────────────────────────
     var showSpeedDialog by remember { mutableStateOf(false) }
     var showSleepDialog by remember { mutableStateOf(false) }
+    var showAddToPlaylist by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    if (showAddToPlaylist) {
+        AddToPlaylistSheet(
+            songId = song.id,
+            onDismiss = { showAddToPlaylist = false },
+            onResult = { success, messageRes, messageText ->
+                scope.launch {
+                    val msg = messageRes?.let { context.getString(it) } ?: messageText
+                    if (msg != null) snackbarHostState.showSnackbar(msg)
+                }
+            },
+        )
+    }
 
     if (showSpeedDialog) {
         AlertDialog(
@@ -235,9 +257,14 @@ fun NowPlayingScreen(
     }
 
     with(sharedTransitionScope) {
+        Scaffold(
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            containerColor = Color.Transparent,
+        ) { scaffoldPadding ->
         Box(
             modifier = modifier
                 .fillMaxSize()
+                .padding(scaffoldPadding)
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
@@ -362,8 +389,16 @@ fun NowPlayingScreen(
                             }
                         }
                         
+                        IconButton(onClick = { showAddToPlaylist = true }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.PlaylistAdd,
+                                contentDescription = stringResource(R.string.player_add_to_playlist),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+
                         IconButton(onClick = { shareSong(song.id) }) {
-                            Icon(Icons.Filled.Share, contentDescription = "Share", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.player_share), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         
                         LikeButton(
@@ -512,6 +547,7 @@ fun NowPlayingScreen(
                     )
                 }
             }
+        }
         }
     }
 }
