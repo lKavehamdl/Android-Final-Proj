@@ -376,7 +376,10 @@ private fun MelodifyNavHost(
                 onNavigateBack = { navController.popBackStack() },
                 onMessageClick = {
                     navController.navigate(Screen.ChatConversation.createRoute(userId))
-                }
+                },
+                onPlaylistClick = { playlistId ->
+                    navController.navigate(Screen.PlaylistDetail.createRoute(playlistId))
+                },
             )
         }
         composable(Screen.UserSearch.route) {
