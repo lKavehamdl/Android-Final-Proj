@@ -42,6 +42,12 @@ sealed class Screen(
     data object Notifications : Screen("notifications", R.string.notifications_title, Icons.Filled.Notifications)
 
     companion object {
-        val bottomNavItems = listOf(Home, Search, Downloads, Playlists, Profile)
+        // Lazy so this list is built on first use, not during Screen's static init.
+        // If it were a plain val, initializing any subclass (e.g. Screen.Home) first
+        // would run Screen's <clinit> while the subclass INSTANCE is still null,
+        // permanently capturing nulls in the list and crashing the bottom bar (NPE).
+        val bottomNavItems: List<Screen> by lazy {
+            listOf(Home, Search, Downloads, Playlists, Profile)
+        }
     }
 }
