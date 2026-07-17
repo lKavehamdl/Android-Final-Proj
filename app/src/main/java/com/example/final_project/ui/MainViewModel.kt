@@ -3,6 +3,7 @@ package com.example.final_project.ui
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.viewModelScope
+import com.example.final_project.core.datastore.FontScale
 import com.example.final_project.core.datastore.SettingsDataStore
 import com.example.final_project.core.locale.AppLanguage
 import com.example.final_project.core.mvi.BaseViewModel
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 data class MainUiState(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val language: AppLanguage = AppLanguage.ENGLISH,
+    val fontScale: FontScale = FontScale.MEDIUM,
     /** False until the first DataStore language value is read. */
     val languageReady: Boolean = false,
 ) : UiState
@@ -24,6 +26,7 @@ data class MainUiState(
 sealed interface MainUiEvent : UiEvent {
     data class ThemeModeChanged(val themeMode: ThemeMode) : MainUiEvent
     data class LanguageChanged(val language: AppLanguage) : MainUiEvent
+    data class FontScaleChanged(val fontScale: FontScale) : MainUiEvent
 }
 
 sealed interface MainUiEffect : UiEffect
@@ -47,6 +50,13 @@ class MainViewModel(
                 setState { copy(language = lang, languageReady = true) }
             }
             .launchIn(viewModelScope)
+
+        settingsDataStore.fontScale
+            .onEach { scaleStr ->
+                val scale = runCatching { FontScale.valueOf(scaleStr) }.getOrDefault(FontScale.MEDIUM)
+                setState { copy(fontScale = scale) }
+            }
+            .launchIn(viewModelScope)
     }
 
     override fun onEvent(event: MainUiEvent) {
@@ -57,13 +67,18 @@ class MainViewModel(
                 }
             }
             is MainUiEvent.LanguageChanged -> {
-                // Apply immediately so Compose resources refresh without waiting for Flow round-trip.
                 AppCompatDelegate.setApplicationLocales(
                     LocaleListCompat.forLanguageTags(event.language.tag),
                 )
                 setState { copy(language = event.language, languageReady = true) }
                 viewModelScope.launch {
                     settingsDataStore.setLanguage(event.language.tag)
+                }
+            }
+            is MainUiEvent.FontScaleChanged -> {
+                setState { copy(fontScale = event.fontScale) }
+                viewModelScope.launch {
+                    settingsDataStore.setFontScale(event.fontScale.name)
                 }
             }
         }

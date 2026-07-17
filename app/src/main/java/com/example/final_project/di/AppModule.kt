@@ -5,6 +5,7 @@ import com.example.final_project.core.dispatchers.DispatchersProvider
 import com.example.final_project.player.PlayerController
 import com.example.final_project.ui.MainViewModel
 import com.example.final_project.ui.screens.home.HomeViewModel
+import com.example.final_project.ui.screens.search.SearchViewModel
 import com.example.final_project.ui.screens.playlists.PlaylistsViewModel
 import com.example.final_project.ui.screens.playlists.PlaylistDetailViewModel
 import com.example.final_project.ui.screens.profile.ProfileViewModel
@@ -48,6 +49,7 @@ val appModule = module {
             downloadsRepository = get(),
         )
     }
+    viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { PlaylistsViewModel(get(), get(), get(), get()) }
     viewModel { PlaylistDetailViewModel(get(), get(), get()) }
     single {

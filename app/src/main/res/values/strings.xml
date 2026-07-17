@@ -156,6 +156,13 @@
     <string name="settings_theme_system">System Default</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
+    <string name="settings_font_size">Font size</string>
+    <string name="settings_font_small">Small</string>
+    <string name="settings_font_medium">Medium</string>
+    <string name="settings_font_large">Large</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_empty_title">No notifications yet</string>
+    <string name="notifications_empty_subtitle">Activity from friends and downloads will appear here</string>
     <string name="settings_logout">Log Out</string>
     <string name="settings_logout_confirm">Are you sure you want to log out?</string>
     <string name="settings_about">About Telify</string>

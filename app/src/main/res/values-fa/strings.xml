@@ -151,6 +151,13 @@
     <string name="settings_theme_system">پیش‌فرض سیستم</string>
     <string name="settings_theme_light">روشن</string>
     <string name="settings_theme_dark">تاریک</string>
+    <string name="settings_font_size">اندازه قلم</string>
+    <string name="settings_font_small">کوچک</string>
+    <string name="settings_font_medium">متوسط</string>
+    <string name="settings_font_large">بزرگ</string>
+    <string name="notifications_title">اعلان‌ها</string>
+    <string name="notifications_empty_title">اعلانی نیست</string>
+    <string name="notifications_empty_subtitle">فعالیت دوستان و دانلودها اینجا نمایش داده می‌شود</string>
     <string name="settings_logout">خروج از حساب</string>
     <string name="settings_logout_confirm">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
     <string name="settings_about">درباره تلی‌فای</string>

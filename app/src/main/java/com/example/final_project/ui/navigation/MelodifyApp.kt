@@ -34,6 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.final_project.core.datastore.FontScale
 import com.example.final_project.core.locale.AppLanguage
 import com.example.final_project.player.PlayerController
 import com.example.final_project.ui.components.MelodifyTopBar
@@ -64,8 +65,10 @@ val LocalShareSong = compositionLocalOf<(String) -> Unit> { error("No ShareSong 
 fun MelodifyApp(
     themeMode: ThemeMode,
     language: AppLanguage,
+    fontScale: FontScale,
     onThemeModeChange: (ThemeMode) -> Unit,
     onLanguageChange: (AppLanguage) -> Unit,
+    onFontScaleChange: (FontScale) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var songToShareId by remember { mutableStateOf<String?>(null) }
@@ -129,7 +132,7 @@ fun MelodifyApp(
                                     navController.navigateToTab(Screen.Profile.route)
                                 },
                                 onNotificationsClick = {
-                                    // TODO: Navigate to Notifications Screen
+                                    navController.navigate(Screen.Notifications.route)
                                 },
                                 onSettingsClick = {
                                     navController.navigate(Screen.Settings.route)
@@ -169,8 +172,10 @@ fun MelodifyApp(
                             navController = navController,
                             themeMode = themeMode,
                             language = language,
+                            fontScale = fontScale,
                             onThemeModeChange = onThemeModeChange,
                             onLanguageChange = onLanguageChange,
+                            onFontScaleChange = onFontScaleChange,
                         )
                     }
                 }
@@ -215,8 +220,10 @@ private fun MelodifyNavHost(
     navController: NavHostController,
     themeMode: ThemeMode,
     language: AppLanguage,
+    fontScale: FontScale,
     onThemeModeChange: (ThemeMode) -> Unit,
     onLanguageChange: (AppLanguage) -> Unit,
+    onFontScaleChange: (FontScale) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val supabaseClient: io.github.jan.supabase.SupabaseClient = koinInject()
@@ -270,15 +277,26 @@ private fun MelodifyNavHost(
             ProfileScreen(
                 onNavigateToFollows = {
                     navController.navigate(Screen.Follows.route)
-                }
+                },
+                onNavigateToLiked = {
+                    navController.navigate(Screen.LikedSongs.route)
+                },
+                onNavigateToMessages = {
+                    navController.navigate(Screen.ChatList.route)
+                },
+                onNavigateToSettings = {
+                    navController.navigate(Screen.Settings.route)
+                },
             )
         }
         composable(Screen.Settings.route) {
             SettingsScreen(
                 themeMode = themeMode,
                 language = language,
+                fontScale = fontScale,
                 onThemeModeChange = onThemeModeChange,
                 onLanguageChange = onLanguageChange,
+                onFontScaleChange = onFontScaleChange,
                 onBackClick = { navController.popBackStack() },
                 onLogoutClick = {
                     scope.launch {
@@ -312,13 +330,17 @@ private fun MelodifyNavHost(
         }
         composable(Screen.ChatList.route) {
             ChatListScreen(
-                onNavigateBack = { navController.popBackStack() },
                 onChatClick = { userId ->
                     navController.navigate(Screen.ChatConversation.createRoute(userId))
                 },
                 onSearchClick = {
                     navController.navigate(Screen.UserSearch.route)
-                }
+                },
+            )
+        }
+        composable(Screen.Notifications.route) {
+            com.example.final_project.ui.screens.notifications.NotificationsScreen(
+                onNavigateBack = { navController.popBackStack() },
             )
         }
         composable(

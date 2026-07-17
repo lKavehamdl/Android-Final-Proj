@@ -24,4 +24,5 @@ val databaseModule = module {
     
     single { get<MelodifyDatabase>().downloadsDao() }
     single { get<MelodifyDatabase>().messagesDao() }
+    single { get<MelodifyDatabase>().searchHistoryDao() }
 }

@@ -66,7 +66,7 @@ fun MelodifyTopBar(
             IconButton(onClick = onNotificationsClick) {
                 Icon(
                     imageVector = Icons.Filled.Notifications,
-                    contentDescription = "Notifications",
+                    contentDescription = stringResource(R.string.notifications_title),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
             }

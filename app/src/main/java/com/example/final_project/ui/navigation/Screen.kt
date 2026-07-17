@@ -4,10 +4,11 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.PlaylistPlay
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.final_project.R
 
@@ -29,8 +30,7 @@ sealed class Screen(
     data object PlaylistDetail : Screen("playlist_detail/{playlistId}", R.string.tab_playlists, Icons.AutoMirrored.Filled.PlaylistPlay) {
         fun createRoute(playlistId: String) = "playlist_detail/$playlistId"
     }
-    
-    // Phase 6 Routes
+
     data object ChatList : Screen("chat_list", R.string.chat_title, Icons.Filled.Email)
     data object ChatConversation : Screen("chat_conversation/{userId}", R.string.chat_title, Icons.Filled.Person) {
         fun createRoute(userId: String) = "chat_conversation/$userId"
@@ -39,8 +39,9 @@ sealed class Screen(
         fun createRoute(userId: String) = "external_profile/$userId"
     }
     data object UserSearch : Screen("user_search", R.string.tab_search, Icons.Filled.Search)
+    data object Notifications : Screen("notifications", R.string.notifications_title, Icons.Filled.Notifications)
 
     companion object {
-        val bottomNavItems = listOf(Home, Search, Downloads, Playlists, ChatList)
+        val bottomNavItems = listOf(Home, Search, Downloads, Playlists, Profile)
     }
 }
