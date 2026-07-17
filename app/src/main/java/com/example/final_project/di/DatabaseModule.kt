@@ -17,8 +17,11 @@ val databaseModule = module {
             androidContext(),
             MelodifyDatabase::class.java,
             "melodify_database.db"
-        ).build()
+        )
+        .fallbackToDestructiveMigration()
+        .build()
     }
     
     single { get<MelodifyDatabase>().downloadsDao() }
+    single { get<MelodifyDatabase>().messagesDao() }
 }

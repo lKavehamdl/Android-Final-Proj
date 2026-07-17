@@ -33,6 +33,7 @@ sealed interface PlaylistsUiEvent : UiEvent {
     data object Load : PlaylistsUiEvent
     data object Retry : PlaylistsUiEvent
     data class PlaylistClick(val playlist: Playlist) : PlaylistsUiEvent
+    data object CreatePlaylistClick : PlaylistsUiEvent
 }
 
 sealed interface PlaylistsUiEffect : UiEffect {
@@ -60,6 +61,9 @@ class PlaylistsViewModel(
 
             is PlaylistsUiEvent.PlaylistClick ->
                 sendEffect(PlaylistsUiEffect.OpenPlaylist(event.playlist.id))
+                
+            PlaylistsUiEvent.CreatePlaylistClick ->
+                sendEffect(PlaylistsUiEffect.ShowMessage(R.string.coming_soon))
         }
     }
 

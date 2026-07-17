@@ -79,7 +79,11 @@ fun ChatConversationScreen(
                             }
                         }
                         Spacer(modifier = Modifier.width(MelodifySpacing.sm))
-                        Text(state.otherUser?.displayName ?: state.otherUser?.username ?: "Chat")
+                        Text(
+                            text = state.otherUser?.displayName ?: state.otherUser?.username ?: "Chat",
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                        )
                     }
                 },
                 navigationIcon = {
@@ -98,20 +102,62 @@ fun ChatConversationScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            state = listState,
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = MelodifySpacing.md),
-            contentPadding = PaddingValues(vertical = MelodifySpacing.md)
         ) {
-            items(state.messages, key = { it.id }) { message ->
-                MessageBubble(
-                    message = message,
-                    isMine = message.senderId == state.currentUserId
-                )
-                Spacer(modifier = Modifier.height(MelodifySpacing.sm))
+            if (state.messages.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.Send,
+                            contentDescription = null,
+                            modifier = Modifier.size(64.dp),
+                            tint = MaterialTheme.colorScheme.surfaceVariant
+                        )
+                        Spacer(modifier = Modifier.height(MelodifySpacing.md))
+                        Text(
+                            "Say hello!",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            } else {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = MelodifySpacing.md),
+                    contentPadding = PaddingValues(vertical = MelodifySpacing.md)
+                ) {
+                    items(state.messages, key = { it.id }) { message ->
+                        MessageBubble(
+                            message = message,
+                            isMine = message.senderId == state.currentUserId
+                        )
+                        Spacer(modifier = Modifier.height(MelodifySpacing.sm))
+                    }
+                }
+            }
+            
+            if (state.isOtherUserTyping) {
+                Surface(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = MelodifySpacing.md, bottom = MelodifySpacing.sm),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    tonalElevation = 2.dp
+                ) {
+                    Text(
+                        text = "typing...",
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(horizontal = MelodifySpacing.sm, vertical = 4.dp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
     }
@@ -166,12 +212,13 @@ fun MessageBubble(message: Message, isMine: Boolean) {
                     if (isMine) {
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = when(message.status) {
-                                MessageStatus.SENDING -> "🕒"
-                                MessageStatus.SENT -> "✓"
-                                MessageStatus.READ -> "✓✓"
+                            text = when(message.status.name.lowercase()) {
+                                "sending" -> "🕒"
+                                "sent" -> "✓"
+                                "read" -> "✓✓"
+                                else -> "✓"
                             },
-                            color = if (message.status == MessageStatus.READ) MaterialTheme.colorScheme.primary else textColor.copy(alpha = 0.7f),
+                            color = if (message.status.name.lowercase() == "read") MaterialTheme.colorScheme.primary else textColor.copy(alpha = 0.7f),
                             style = MaterialTheme.typography.labelSmall
                         )
                     }

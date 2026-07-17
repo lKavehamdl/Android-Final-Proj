@@ -16,12 +16,19 @@ import kotlinx.coroutines.flow.flowOn
  * Bound by Koin when [com.example.final_project.core.constants.AppConstants.USE_FAKE_SONGS]
  * is **false** (set in build.gradle.kts once Task A keys are available).
  *
- * Thread safety: every Flow is switched to [DispatchersProvider.io] via [flowOn],
  * so the network call never touches the Main thread.
  */
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.auth.auth
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import com.example.final_project.data.remote.dto.SongDto
+
 class SongRepositoryImpl(
     private val api: SongApiService,
     private val dispatchers: DispatchersProvider,
+    private val supabase: SupabaseClient
 ) : SongRepository {
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -69,5 +76,66 @@ class SongRepositoryImpl(
     override suspend fun incrementPlayCount(songId: String) {
         // Fire-and-forget: swallow exceptions so playback is never interrupted.
         runCatching { api.incrementPlayCount(songId) }
+    }
+
+    override suspend fun getLikedSongs(): Flow<Resource<List<Song>>> = safeFlow {
+        val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
+        val likedSongs = supabase.postgrest["liked_songs"]
+            .select { filter { eq("user_id", currentUserId) } }
+            .decodeList<Map<String, String>>()
+            
+        if (likedSongs.isEmpty()) return@safeFlow emptyList<Song>()
+        
+        val songIds = likedSongs.mapNotNull { it["song_id"] }
+        val songsDto = supabase.postgrest["songs"]
+            .select { filter { isIn("id", songIds) } }
+            .decodeList<SongDto>()
+            
+        songsDto.toDomain()
+    }.flowOn(dispatchers.io)
+
+    override suspend fun toggleLike(songId: String): Resource<Boolean> = try {
+        val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
+        val result = supabase.postgrest.rpc("toggle_like", buildJsonObject { 
+            put("p_user_id", currentUserId)
+            put("p_song_id", songId) 
+        })
+        Resource.Success(result.data.toBoolean())
+    } catch (e: Exception) {
+        Resource.Error(e.message, e)
+    }
+
+    override suspend fun getRecentlyPlayed(): Flow<Resource<List<Song>>> = safeFlow {
+        val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
+        val recentRows = supabase.postgrest["recently_played"]
+            .select { 
+                filter { eq("user_id", currentUserId) }
+                order("played_at", io.github.jan.supabase.postgrest.query.Order.DESCENDING)
+            }
+            .decodeList<Map<String, String>>()
+            
+        if (recentRows.isEmpty()) return@safeFlow emptyList<Song>()
+        
+        val songIds = recentRows.mapNotNull { it["song_id"] }
+        val songsDto = supabase.postgrest["songs"]
+            .select { filter { isIn("id", songIds) } }
+            .decodeList<SongDto>()
+            
+        // Maintain the recent order
+        val songMap = songsDto.toDomain().associateBy { it.id }
+        songIds.mapNotNull { songMap[it] }.distinct()
+    }.flowOn(dispatchers.io)
+
+    override suspend fun removeRecentlyPlayed(songId: String): Resource<Unit> = try {
+        val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
+        supabase.postgrest["recently_played"].delete {
+            filter {
+                eq("user_id", currentUserId)
+                eq("song_id", songId)
+            }
+        }
+        Resource.Success(Unit)
+    } catch (e: Exception) {
+        Resource.Error(e.message, e)
     }
 }

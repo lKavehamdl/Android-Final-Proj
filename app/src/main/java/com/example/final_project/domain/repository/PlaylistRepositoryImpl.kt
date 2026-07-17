@@ -35,4 +35,8 @@ class PlaylistRepositoryImpl(
     override fun getUserPlaylists(userId: String): Flow<Resource<List<Playlist>>> =
         safeFlow { api.fetchUserPlaylists(userId).toDomain() }
             .flowOn(dispatchers.io)
+            
+    override fun getPlaylistSongs(playlistId: String): Flow<Resource<List<com.example.final_project.domain.model.Song>>> =
+        safeFlow { api.fetchPlaylistSongs(playlistId).map { it.toDomain() } }
+            .flowOn(dispatchers.io)
 }

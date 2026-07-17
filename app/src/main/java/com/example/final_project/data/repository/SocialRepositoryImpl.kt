@@ -127,6 +127,30 @@ class SocialRepositoryImpl(
         }
     }
 
+    override suspend fun getFollowing(userId: String): Resource<List<UserProfile>> = withContext(Dispatchers.IO) {
+        try {
+            // Get follow entries where follower is userId
+            val follows = supabase.postgrest["follows"]
+                .select { filter { eq("follower_id", userId) } }
+                .decodeList<FollowDto>()
+
+            if (follows.isEmpty()) {
+                return@withContext Resource.Success(emptyList())
+            }
+
+            // Get profile details for those we are following
+            val followingIds = follows.map { it.followingId }
+            val profilesDto = supabase.postgrest["profiles"]
+                .select { filter { isIn("id", followingIds) } }
+                .decodeList<ProfileDto>()
+
+            val profiles = profilesDto.map { mapToUserProfile(it, true, 0, 0) }
+            Resource.Success(profiles)
+        } catch (e: Exception) {
+            Resource.Error(e.message, e)
+        }
+    }
+
     override suspend fun getUserPublicPlaylists(userId: String): Resource<List<Playlist>> = withContext(Dispatchers.IO) {
         try {
             val playlistsDto = supabase.postgrest["playlists"]

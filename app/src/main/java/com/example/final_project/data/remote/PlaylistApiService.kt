@@ -31,4 +31,13 @@ class PlaylistApiService(
             parameter("select", "*")
             parameter("order", "created_at.desc")
         }.body()
+        
+    /** Fetch songs for a playlist. */
+    suspend fun fetchPlaylistSongs(playlistId: String): List<com.example.final_project.data.remote.dto.SongDto> {
+        val result: List<com.example.final_project.data.remote.dto.PlaylistSongDto> = client.get("rest/v1/playlist_songs") {
+            parameter("playlist_id", "eq.$playlistId")
+            parameter("select", "songs(*)")
+        }.body()
+        return result.map { it.songs }
+    }
 }

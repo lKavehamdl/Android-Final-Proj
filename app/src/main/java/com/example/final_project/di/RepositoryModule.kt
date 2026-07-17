@@ -17,13 +17,17 @@ import com.example.final_project.data.repository.PlaylistRepositoryImpl
 import com.example.final_project.domain.repository.PlaylistRepository
 import com.example.final_project.domain.usecase.GetPublicPlaylistsUseCase
 import com.example.final_project.domain.usecase.GetUserPlaylistsUseCase
+import com.example.final_project.data.repository.ChatRepositoryImpl
+import com.example.final_project.domain.repository.ChatRepository
+import com.example.final_project.data.repository.SocialRepositoryImpl
+import com.example.final_project.domain.repository.SocialRepository
 
 val repositoryModule = module {
     single<SongRepository> {
         if (AppConstants.USE_FAKE_SONGS) {
             FakeSongRepository(dispatchers = get())
         } else {
-            SongRepositoryImpl(api = get(), dispatchers = get())
+            SongRepositoryImpl(api = get(), dispatchers = get(), supabase = get())
         }
     }
 
@@ -47,6 +51,21 @@ val repositoryModule = module {
         com.example.final_project.domain.repository.DownloadsRepository(
             context = androidContext(),
             downloadsDao = get()
+        )
+    }
+
+    single<ChatRepository> {
+        ChatRepositoryImpl(
+            supabaseClient = get(),
+            messagesDao = get(),
+            dispatchers = get(),
+            appScope = get()
+        )
+    }
+
+    single<SocialRepository> {
+        SocialRepositoryImpl(
+            supabase = get()
         )
     }
 }

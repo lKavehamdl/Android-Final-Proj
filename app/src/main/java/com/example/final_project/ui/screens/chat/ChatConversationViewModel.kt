@@ -21,7 +21,8 @@ data class ChatConversationUiState(
     val messages: List<Message> = emptyList(),
     val currentUserId: String = "",
     val inputText: String = "",
-    val isSending: Boolean = false
+    val isSending: Boolean = false,
+    val isOtherUserTyping: Boolean = false
 )
 
 class ChatConversationViewModel(
@@ -51,6 +52,12 @@ class ChatConversationViewModel(
                 }
             }
         }
+        
+        viewModelScope.launch {
+            chatRepository.observeTypingStatus(otherUserId).collect { isTyping ->
+                _uiState.update { it.copy(isOtherUserTyping = isTyping) }
+            }
+        }
     }
 
     private fun loadProfile() {
@@ -66,7 +73,15 @@ class ChatConversationViewModel(
     }
 
     fun onInputTextChanged(text: String) {
+        val wasEmpty = _uiState.value.inputText.isEmpty()
+        val isEmpty = text.isEmpty()
         _uiState.update { it.copy(inputText = text) }
+        
+        if (wasEmpty != isEmpty) {
+            viewModelScope.launch {
+                chatRepository.setTypingStatus(receiverId = otherUserId, isTyping = !isEmpty)
+            }
+        }
     }
 
     fun onSendMessage() {
@@ -75,6 +90,7 @@ class ChatConversationViewModel(
         
         viewModelScope.launch {
             _uiState.update { it.copy(isSending = true, inputText = "") }
+            chatRepository.setTypingStatus(receiverId = otherUserId, isTyping = false)
             chatRepository.sendMessage(receiverId = otherUserId, content = text)
             _uiState.update { it.copy(isSending = false) }
         }

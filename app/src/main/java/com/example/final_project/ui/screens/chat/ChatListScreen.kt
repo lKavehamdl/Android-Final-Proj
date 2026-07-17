@@ -7,7 +7,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,8 +22,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.example.final_project.R
 import com.example.final_project.domain.model.MessageType
 import com.example.final_project.ui.theme.MelodifySpacing
+import com.example.final_project.ui.components.EmptyState
+import com.example.final_project.ui.components.ShimmerBox
 import org.koin.androidx.compose.koinViewModel
 import java.time.Instant
 import java.time.ZoneId
@@ -32,6 +37,7 @@ import java.time.format.DateTimeFormatter
 fun ChatListScreen(
     onNavigateBack: () -> Unit,
     onChatClick: (String) -> Unit, // userId
+    onSearchClick: () -> Unit,
     viewModel: ChatListViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -40,25 +46,48 @@ fun ChatListScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Messages") }, // TODO string resource
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+
+                actions = {
+                    IconButton(onClick = onSearchClick) {
+                        Icon(Icons.Default.Search, contentDescription = "Search users")
                     }
                 }
             )
         }
     ) { innerPadding ->
         if (state.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(MelodifySpacing.md),
+                verticalArrangement = Arrangement.spacedBy(MelodifySpacing.md)
+            ) {
+                repeat(6) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        ShimmerBox(
+                            width = 56.dp,
+                            height = 56.dp,
+                            shape = CircleShape
+                        )
+                        Spacer(modifier = Modifier.width(MelodifySpacing.md))
+                        Column(modifier = Modifier.weight(1f)) {
+                            ShimmerBox(width = 120.dp, height = 16.dp)
+                            Spacer(modifier = Modifier.height(MelodifySpacing.xs))
+                            ShimmerBox(width = 200.dp, height = 14.dp)
+                        }
+                    }
+                }
             }
         } else if (state.conversations.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(
-                    text = "No messages yet.\nFind friends to start chatting!",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                EmptyState(
+                    titleRes = R.string.empty_chats_title,
+                    subtitleRes = R.string.empty_chats_subtitle,
+                    icon = Icons.Default.Message
                 )
             }
         } else {

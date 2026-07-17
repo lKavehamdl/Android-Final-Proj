@@ -5,7 +5,13 @@ import com.example.final_project.core.mvi.BaseViewModel
 import com.example.final_project.core.mvi.UiEffect
 import com.example.final_project.core.mvi.UiEvent
 import com.example.final_project.core.mvi.UiState
+import com.example.final_project.core.datastore.SettingsDataStore
 import com.example.final_project.ui.theme.ThemeMode
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 data class MainUiState(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
@@ -19,13 +25,38 @@ sealed interface MainUiEvent : UiEvent {
 
 sealed interface MainUiEffect : UiEffect
 
-class MainViewModel : BaseViewModel<MainUiState, MainUiEvent, MainUiEffect>(
+class MainViewModel(
+    private val settingsDataStore: SettingsDataStore,
+) : BaseViewModel<MainUiState, MainUiEvent, MainUiEffect>(
     initialState = MainUiState(),
 ) {
+    init {
+        settingsDataStore.themeMode
+            .onEach { themeStr ->
+                val theme = runCatching { ThemeMode.valueOf(themeStr) }.getOrDefault(ThemeMode.SYSTEM)
+                setState { copy(themeMode = theme) }
+            }
+            .launchIn(viewModelScope)
+
+        settingsDataStore.language
+            .onEach { langStr ->
+                val lang = AppLanguage.fromTag(langStr)
+                setState { copy(language = lang) }
+            }
+            .launchIn(viewModelScope)
+    }
     override fun onEvent(event: MainUiEvent) {
         when (event) {
-            is MainUiEvent.ThemeModeChanged -> setState { copy(themeMode = event.themeMode) }
-            is MainUiEvent.LanguageChanged -> setState { copy(language = event.language) }
+            is MainUiEvent.ThemeModeChanged -> {
+                viewModelScope.launch {
+                    settingsDataStore.setThemeMode(event.themeMode.name)
+                }
+            }
+            is MainUiEvent.LanguageChanged -> {
+                viewModelScope.launch {
+                    settingsDataStore.setLanguage(event.language.tag)
+                }
+            }
         }
     }
 }

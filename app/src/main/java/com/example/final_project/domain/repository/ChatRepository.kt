@@ -14,4 +14,7 @@ interface ChatRepository {
     // Realtime connection lifecycle
     suspend fun startListeningForMessages()
     suspend fun stopListeningForMessages()
+    
+    suspend fun setTypingStatus(receiverId: String, isTyping: Boolean)
+    fun observeTypingStatus(userId: String): Flow<Boolean>
 }

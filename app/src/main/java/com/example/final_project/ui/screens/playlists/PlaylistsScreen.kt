@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -60,9 +62,27 @@ fun PlaylistsScreen(
         }
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
-        when {
-            state.isLoading && state.isEmpty -> PlaylistsShimmer()
+    androidx.compose.material3.Scaffold(
+        modifier = modifier.fillMaxSize(),
+        floatingActionButton = {
+            androidx.compose.material3.FloatingActionButton(
+                onClick = {
+                    viewModel.onEvent(PlaylistsUiEvent.CreatePlaylistClick)
+                }
+            ) {
+                androidx.compose.material3.Icon(
+                    imageVector = androidx.compose.material.icons.Icons.Default.Add,
+                    contentDescription = "Create Playlist"
+                )
+            }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }
+    ) { padding ->
+        Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            when {
+                state.isLoading && state.isEmpty -> PlaylistsShimmer()
 
             state.errorMessage != null && state.isEmpty -> {
                 EmptyState(
@@ -87,10 +107,7 @@ fun PlaylistsScreen(
                 )
             }
         }
-        SnackbarHost(
-            hostState = snackbarHostState,
-            modifier = Modifier.align(Alignment.BottomCenter),
-        )
+        }
     }
 }
 

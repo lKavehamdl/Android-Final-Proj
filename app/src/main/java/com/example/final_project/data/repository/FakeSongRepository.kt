@@ -65,6 +65,28 @@ class FakeSongRepository(
         delay(100)
     }
 
+    override suspend fun getLikedSongs(): Flow<Resource<List<Song>>> = flow {
+        emit(Resource.Loading)
+        delay(FAKE_NETWORK_DELAY_MS)
+        emit(Resource.Success(FAKE_SONGS.take(2))) // just fake data
+    }.flowOn(dispatchers.io)
+
+    override suspend fun toggleLike(songId: String): Resource<Boolean> {
+        delay(FAKE_NETWORK_DELAY_MS)
+        return Resource.Success(true)
+    }
+
+    override suspend fun getRecentlyPlayed(): Flow<Resource<List<Song>>> = flow {
+        emit(Resource.Loading)
+        delay(FAKE_NETWORK_DELAY_MS)
+        emit(Resource.Success(FAKE_SONGS.takeLast(3)))
+    }.flowOn(dispatchers.io)
+
+    override suspend fun removeRecentlyPlayed(songId: String): Resource<Unit> {
+        delay(FAKE_NETWORK_DELAY_MS)
+        return Resource.Success(Unit)
+    }
+
     companion object {
         private const val FAKE_NETWORK_DELAY_MS = 400L
 

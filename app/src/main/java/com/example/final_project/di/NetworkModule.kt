@@ -26,6 +26,18 @@ val networkModule = module {
     }
 
     single {
+        io.github.jan.supabase.createSupabaseClient(
+            supabaseUrl = AppConstants.BASE_URL,
+            supabaseKey = AppConstants.SUPABASE_ANON_KEY
+        ) {
+            install(io.github.jan.supabase.auth.Auth)
+            install(io.github.jan.supabase.postgrest.Postgrest)
+            install(io.github.jan.supabase.realtime.Realtime)
+            install(io.github.jan.supabase.storage.Storage)
+        }
+    }
+
+    single {
         HttpClient(Android) {
             expectSuccess = true
 

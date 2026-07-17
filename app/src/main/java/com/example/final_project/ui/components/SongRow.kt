@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.DownloadDone
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,8 +35,6 @@ fun SongRow(
     onClick: (Song) -> Unit,
     modifier: Modifier = Modifier,
     onMoreClick: ((Song) -> Unit)? = null,
-    isDownloaded: Boolean = false,
-    onDownloadClick: ((Song) -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -68,18 +67,6 @@ fun SongRow(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-        }
-        if (onDownloadClick != null || isDownloaded) {
-            IconButton(
-                onClick = { if (!isDownloaded) onDownloadClick?.invoke(song) },
-                enabled = !isDownloaded
-            ) {
-                Icon(
-                    imageVector = if (isDownloaded) Icons.Filled.DownloadDone else Icons.Filled.Download,
-                    contentDescription = if (isDownloaded) "Downloaded" else "Download",
-                    tint = if (isDownloaded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
         }
         if (onMoreClick != null) {
             IconButton(onClick = { onMoreClick(song) }) {
