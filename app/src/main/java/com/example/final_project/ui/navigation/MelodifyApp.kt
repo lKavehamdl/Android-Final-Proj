@@ -236,7 +236,7 @@ private fun MelodifyNavHost(
                     navController.navigate(Screen.RecentlyPlayed.route)
                 },
                 onNavigateToArtists = {
-                    navController.navigate(Screen.Follows.route)
+                    navController.navigate(Screen.TopArtists.route)
                 }
             )
         }
@@ -293,6 +293,11 @@ private fun MelodifyNavHost(
         }
         composable(Screen.RecentlyPlayed.route) {
             RecentlyPlayedScreen(onNavigateBack = { navController.popBackStack() })
+        }
+        composable(Screen.TopArtists.route) {
+            com.example.final_project.ui.screens.home.artists.TopArtistsScreen(
+                onNavigateBack = { navController.popBackStack() },
+            )
         }
         composable(Screen.Follows.route) {
             FollowsScreen(
