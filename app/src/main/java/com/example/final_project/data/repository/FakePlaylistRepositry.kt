@@ -45,7 +45,7 @@ class FakePlaylistRepository(
     override fun getPlaylistSongs(playlistId: String): Flow<Resource<List<Song>>> = flow {
         emit(Resource.Loading)
         delay(400)
-        emit(Resource.Success(emptyList()))
+        emit(Resource.Success(emptyList<Song>()))
     }.flowOn(dispatchers.io)
 
     override suspend fun createPlaylist(
