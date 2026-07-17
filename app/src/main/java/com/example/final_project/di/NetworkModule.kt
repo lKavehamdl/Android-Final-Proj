@@ -5,8 +5,10 @@ import com.example.final_project.core.constants.AppConstants
 import com.example.final_project.data.remote.PlaylistApiService
 import com.example.final_project.data.remote.SongApiService
 import com.russhwolf.settings.SharedPreferencesSettings
+import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.auth.SettingsSessionManager
+import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.realtime.Realtime
@@ -58,6 +60,7 @@ val networkModule = module {
     }
 
     single {
+        val supabase: SupabaseClient = get()
         HttpClient(Android) {
             expectSuccess = true
 
@@ -73,7 +76,11 @@ val networkModule = module {
                 url(AppConstants.BASE_URL.trimEnd('/') + "/")
                 contentType(ContentType.Application.Json)
                 header("apikey", AppConstants.SUPABASE_ANON_KEY)
-                header("Authorization", "Bearer ${AppConstants.SUPABASE_ANON_KEY}")
+                // Use the signed-in user's JWT so RLS-protected rows (e.g. private
+                // playlists) are visible; fall back to anon before login.
+                val token = supabase.auth.currentAccessTokenOrNull()
+                    ?: AppConstants.SUPABASE_ANON_KEY
+                header("Authorization", "Bearer $token")
             }
         }
     }
