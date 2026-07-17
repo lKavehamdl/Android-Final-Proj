@@ -224,6 +224,7 @@
     <string name="cd_play_pause">پخش / توقف</string>
     <string name="cd_next_track">آهنگ بعدی</string>
     <string name="cd_previous_track">آهنگ قبلی</string>
+    <string name="cd_remove">حذف</string>
 
     <!-- کانال‌های نوتیفیکیشن -->
     <string name="notification_channel_playback">پخش موسیقی</string>

@@ -243,6 +243,7 @@
     <string name="cd_play_pause">Play / Pause</string>
     <string name="cd_next_track">Next track</string>
     <string name="cd_previous_track">Previous track</string>
+    <string name="cd_remove">Remove</string>
 
     <!-- Notification channels -->
     <string name="notification_channel_playback">Music Playback</string>
