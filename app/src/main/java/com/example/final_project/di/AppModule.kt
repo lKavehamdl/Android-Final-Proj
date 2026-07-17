@@ -70,5 +70,5 @@ val appModule = module {
     viewModel { UserSearchViewModel(get()) }
     viewModel { ChatListViewModel(get(), get(), get()) }
     viewModel { ChatConversationViewModel(get(), get(), get(), get()) }
-    viewModel { AuthViewModel(get(), get()) }
+    viewModel { AuthViewModel(authRepository = get()) }
 }
