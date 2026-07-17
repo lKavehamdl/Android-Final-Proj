@@ -113,11 +113,16 @@ class SongRepositoryImpl(
 
     override suspend fun toggleLike(songId: String): Resource<Boolean> = try {
         val currentUserId = supabase.auth.currentUserOrNull()?.id ?: throw Exception("Not logged in")
-        val result = supabase.postgrest.rpc("toggle_like", buildJsonObject { 
-            put("p_user_id", currentUserId)
-            put("p_song_id", songId) 
-        })
-        Resource.Success(result.data.toBoolean())
+        val result = supabase.postgrest.rpc(
+            "toggle_like",
+            buildJsonObject {
+                put("p_user_id", currentUserId)
+                put("p_song_id", songId)
+            },
+        )
+        val raw = result.data.trim().removeSurrounding("\"")
+        val liked = raw.equals("true", ignoreCase = true)
+        Resource.Success(liked)
     } catch (e: Exception) {
         Resource.Error(e.message, e)
     }

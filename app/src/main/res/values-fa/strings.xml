@@ -110,6 +110,8 @@
     <string name="player_shuffle">تصادفی</string>
     <string name="player_repeat">تکرار</string>
     <string name="player_like">پسندیدن</string>
+    <string name="cd_like">پسندیدن آهنگ</string>
+    <string name="cd_unlike">لغو پسند آهنگ</string>
     <string name="player_download">دانلود</string>
     <string name="player_share">اشتراک‌گذاری</string>
     <string name="player_sleep_timer">تایمر خواب</string>

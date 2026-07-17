@@ -50,6 +50,13 @@ val appModule = module {
     }
     viewModel { PlaylistsViewModel(get(), get(), get(), get()) }
     viewModel { PlaylistDetailViewModel(get(), get(), get()) }
+    single {
+        com.example.final_project.domain.favorites.FavoritesStore(
+            songRepository = get(),
+            dispatchers = get(),
+            appScope = get(),
+        )
+    }
     viewModel { LikedSongsViewModel(get(), get()) }
     viewModel { RecentlyPlayedViewModel(get(), get()) }
     viewModel { com.example.final_project.ui.screens.home.artists.TopArtistsViewModel(get()) }
