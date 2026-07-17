@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.example.final_project.R
 import com.example.final_project.domain.model.Message
 import com.example.final_project.domain.model.MessageStatus
 import com.example.final_project.domain.model.MessageType
@@ -80,7 +82,9 @@ fun ChatConversationScreen(
                         }
                         Spacer(modifier = Modifier.width(MelodifySpacing.sm))
                         Text(
-                            text = state.otherUser?.displayName ?: state.otherUser?.username ?: "Chat",
+                            text = state.otherUser?.displayName
+                                ?: state.otherUser?.username
+                                ?: stringResource(R.string.chat_title),
                             maxLines = 1,
                             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
@@ -88,7 +92,10 @@ fun ChatConversationScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 }
             )
@@ -118,7 +125,7 @@ fun ChatConversationScreen(
                         )
                         Spacer(modifier = Modifier.height(MelodifySpacing.md))
                         Text(
-                            "Say hello!",
+                            stringResource(R.string.chat_say_hello),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -152,7 +159,7 @@ fun ChatConversationScreen(
                     tonalElevation = 2.dp
                 ) {
                     Text(
-                        text = "typing...",
+                        text = stringResource(R.string.chat_typing_short),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(horizontal = MelodifySpacing.sm, vertical = 4.dp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -250,7 +257,7 @@ fun ChatInputBar(
                 value = inputText,
                 onValueChange = onInputTextChanged,
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Type a message...") },
+                placeholder = { Text(stringResource(R.string.chat_type_hint)) },
                 shape = RoundedCornerShape(24.dp),
                 maxLines = 4
             )
@@ -265,7 +272,10 @@ fun ChatInputBar(
                 if (isSending) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp))
                 } else {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Send")
+                    Icon(
+                        Icons.AutoMirrored.Filled.Send,
+                        contentDescription = stringResource(R.string.chat_send),
+                    )
                 }
             }
         }
@@ -333,6 +343,6 @@ fun SharedSongCard(
             }
         }
     } else {
-        Text("Song unavailable", color = textColor)
+        Text(stringResource(R.string.chat_song_unavailable), color = textColor)
     }
 }

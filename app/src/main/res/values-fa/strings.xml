@@ -130,6 +130,7 @@
     ═══════════════════════════════════════════════════════════════════════ -->
     <string name="chat_title">پیام‌ها</string>
     <string name="chat_no_messages">هنوز پیامی ندارید</string>
+    <string name="chat_say_hello">سلام بفرستید!</string>
     <string name="chat_type_hint">پیام بنویسید…</string>
     <string name="chat_send">ارسال</string>
     <string name="chat_typing">%s در حال نوشتن است…</string>
