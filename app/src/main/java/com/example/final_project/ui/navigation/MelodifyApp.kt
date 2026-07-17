@@ -128,6 +128,7 @@ fun MelodifyApp(
                     sleepTimerMinutesLeft = playerState.sleepTimerMinutesLeft,
                     isShuffleOn = playerState.isShuffleOn,
                     repeatMode = playerState.repeatMode,
+                    audioSessionId = playerState.audioSessionId,
                     onCollapse = { playerController.setExpanded(false) },
                     onPlayPause = playerController::togglePlayPause,
                     onSkipNext = playerController::skipNext,
