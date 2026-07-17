@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -17,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatListScreen(
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit = {},
     onChatClick: (String) -> Unit, // userId
     onSearchClick: () -> Unit,
     viewModel: ChatListViewModel = koinViewModel()
@@ -45,11 +45,10 @@ fun ChatListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Messages") }, // TODO string resource
-
+                title = { Text(stringResource(R.string.chat_title)) },
                 actions = {
                     IconButton(onClick = onSearchClick) {
-                        Icon(Icons.Default.Search, contentDescription = "Search users")
+                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.tab_search))
                     }
                 }
             )
