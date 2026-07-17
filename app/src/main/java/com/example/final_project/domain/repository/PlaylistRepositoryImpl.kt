@@ -10,6 +10,7 @@ import com.example.final_project.domain.model.Song
 import com.example.final_project.domain.repository.PlaylistRepository
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -27,13 +28,19 @@ class PlaylistRepositoryImpl(
     private val supabase: SupabaseClient,
 ) : PlaylistRepository {
 
+    // Only block() goes in the try: emit() itself throws AbortFlowException
+    // when a collector (e.g. .first{}) finishes early, and catching that and
+    // emitting again violates flow exception transparency (fatal crash).
     private fun <T> safeFlow(block: suspend () -> T): Flow<Resource<T>> = flow {
         emit(Resource.Loading)
-        try {
-            emit(Resource.Success(block()))
+        val result = try {
+            Resource.Success(block())
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
-            emit(Resource.Error(message = e.message, throwable = e))
+            Resource.Error(message = e.message, throwable = e)
         }
+        emit(result)
     }
 
     override fun getPublicPlaylists(): Flow<Resource<List<Playlist>>> =
