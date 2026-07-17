@@ -59,9 +59,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -116,6 +118,7 @@ fun NowPlayingScreen(
     sleepTimerMinutesLeft: Int? = null,
     isShuffleOn: Boolean = false,
     repeatMode: Int = Player.REPEAT_MODE_OFF,
+    audioSessionId: Int = 0,
     onCollapse: () -> Unit,
     onPlayPause: () -> Unit,
     onSkipNext: () -> Unit,
@@ -426,6 +429,7 @@ fun NowPlayingScreen(
                 // ── Audio Visualizer (Canvas) ──────────────────────────────
                 AudioVisualizer(
                     isPlaying = isPlaying,
+                    audioSessionId = audioSessionId,
                     accentColor = animatedPaletteColor,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -569,9 +573,67 @@ fun NowPlayingScreen(
 @Composable
 private fun AudioVisualizer(
     isPlaying: Boolean,
+    audioSessionId: Int,
     accentColor: Color,
     modifier: Modifier = Modifier,
 ) {
+    val bars = 32
+    val magnitudes = remember { mutableFloatStateArray(bars) }
+    val frameTick = remember { mutableIntStateOf(0) }
+
+    DisposableEffect(audioSessionId, isPlaying) {
+        if (audioSessionId <= 0 || !isPlaying) {
+            onDispose { }
+        } else {
+            var visualizer: android.media.audiofx.Visualizer? = null
+            try {
+                visualizer = android.media.audiofx.Visualizer(audioSessionId).apply {
+                    captureSize = android.media.audiofx.Visualizer.getCaptureSizeRange()[1]
+                    setDataCaptureListener(
+                        object : android.media.audiofx.Visualizer.OnDataCaptureListener {
+                            override fun onWaveFormDataCapture(
+                                visualizer: android.media.audiofx.Visualizer?,
+                                waveform: ByteArray?,
+                                samplingRate: Int,
+                            ) = Unit
+
+                            override fun onFftDataCapture(
+                                visualizer: android.media.audiofx.Visualizer?,
+                                fft: ByteArray?,
+                                samplingRate: Int,
+                            ) {
+                                if (fft == null || fft.size < 4) return
+                                val n = bars.coerceAtMost(fft.size / 2)
+                                for (i in 0 until n) {
+                                    val re = fft.getOrNull(i * 2)?.toInt() ?: 0
+                                    val im = fft.getOrNull(i * 2 + 1)?.toInt() ?: 0
+                                    val mag = kotlin.math.sqrt((re * re + im * im).toDouble()).toFloat()
+                                    magnitudes[i] = (mag / 128f).coerceIn(0.05f, 1f)
+                                }
+                                frameTick.intValue = frameTick.intValue + 1
+                            }
+                        },
+                        android.media.audiofx.Visualizer.getMaxCaptureRate() / 2,
+                        false,
+                        true,
+                    )
+                    enabled = true
+                }
+            } catch (_: Exception) {
+                visualizer?.release()
+                visualizer = null
+            }
+            onDispose {
+                try {
+                    visualizer?.enabled = false
+                    visualizer?.release()
+                } catch (_: Exception) {
+                }
+            }
+        }
+    }
+
+    // Fallback sine animation when Visualizer is unavailable
     val transition = rememberInfiniteTransition(label = "viz")
     val phase by transition.animateFloat(
         initialValue = 0f,
@@ -582,13 +644,17 @@ private fun AudioVisualizer(
         ),
         label = "vizPhase",
     )
+    val useFft = audioSessionId > 0 && isPlaying
+    // Read tick so Canvas recomposes when FFT updates
+    val tick = frameTick.intValue
 
     Canvas(modifier = modifier) {
-        val bars = 32
         val gap = size.width / bars
         val barWidth = gap * 0.55f
         for (i in 0 until bars) {
-            val wave = if (isPlaying) {
+            val wave = if (useFft && tick >= 0) {
+                magnitudes[i].coerceIn(0.08f, 1f)
+            } else if (isPlaying) {
                 0.2f + 0.8f * ((sin(phase.toDouble() + i * 0.45).toFloat() + 1f) / 2f)
             } else {
                 0.15f
@@ -603,6 +669,8 @@ private fun AudioVisualizer(
         }
     }
 }
+
+private fun mutableFloatStateArray(size: Int): FloatArray = FloatArray(size) { 0.15f }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

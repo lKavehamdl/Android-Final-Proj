@@ -15,7 +15,7 @@ import com.example.final_project.data.local.entity.SearchHistoryEntity
         MessageEntity::class,
         SearchHistoryEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = false,
 )
 abstract class MelodifyDatabase : RoomDatabase() {

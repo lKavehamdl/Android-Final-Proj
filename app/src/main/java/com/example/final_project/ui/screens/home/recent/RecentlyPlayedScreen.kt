@@ -50,7 +50,7 @@ fun RecentlyPlayedScreen(
         floatingActionButton = {
             if (state.songs.isNotEmpty()) {
                 FloatingActionButton(onClick = { viewModel.playAll() }) {
-                    Icon(Icons.Default.PlayArrow, contentDescription = "Play All")
+                    Icon(Icons.Default.PlayArrow, contentDescription = stringResource(R.string.play_all))
                 }
             }
         },
@@ -110,7 +110,7 @@ fun RecentlyPlayedScreen(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Delete,
-                                            contentDescription = "Remove",
+                                            contentDescription = stringResource(R.string.cd_remove),
                                             tint = MaterialTheme.colorScheme.error
                                         )
                                     }

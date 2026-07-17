@@ -38,10 +38,10 @@ fun UserSearchScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Search Users") }, // TODO: strings.xml
+                title = { Text(stringResource(R.string.user_search_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -58,7 +58,7 @@ fun UserSearchScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = MelodifySpacing.md, vertical = MelodifySpacing.sm),
-                placeholder = { Text("Search by username...") },
+                placeholder = { Text(stringResource(R.string.user_search_hint)) },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 singleLine = true,
                 shape = MaterialTheme.shapes.medium
@@ -70,11 +70,17 @@ fun UserSearchScreen(
                 }
             } else if (state.error != null) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "Error: ${state.error}", color = MaterialTheme.colorScheme.error)
+                    Text(
+                        text = stringResource(R.string.error_with_message, state.error ?: ""),
+                        color = MaterialTheme.colorScheme.error,
+                    )
                 }
             } else if (state.results.isEmpty() && state.query.isNotBlank() && !state.isLoading) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No users found", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        text = stringResource(R.string.user_search_no_results),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
             } else {
                 LazyColumn(

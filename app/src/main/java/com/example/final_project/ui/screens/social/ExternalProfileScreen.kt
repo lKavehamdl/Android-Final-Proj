@@ -1,6 +1,7 @@
 package com.example.final_project.ui.screens.social
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,10 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material.icons.automirrored.filled.PlaylistPlay
 import coil.compose.AsyncImage
+import com.example.final_project.R
 import com.example.final_project.domain.model.Playlist
 import com.example.final_project.ui.theme.MelodifySpacing
 import org.koin.androidx.compose.koinViewModel
@@ -31,6 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ExternalProfileScreen(
     onNavigateBack: () -> Unit,
     onMessageClick: (String) -> Unit, // userId
+    onPlaylistClick: (String) -> Unit, // playlistId
     viewModel: ExternalProfileViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -38,10 +43,10 @@ fun ExternalProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(state.profile?.username ?: "Profile") },
+                title = { Text(state.profile?.username ?: stringResource(R.string.tab_profile)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -53,7 +58,10 @@ fun ExternalProfileScreen(
             }
         } else if (state.error != null) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Error: ${state.error}", color = MaterialTheme.colorScheme.error)
+                Text(
+                    text = stringResource(R.string.error_with_message, state.error ?: ""),
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
         } else {
             val profile = state.profile
@@ -110,8 +118,8 @@ fun ExternalProfileScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
-                                StatItem(count = profile.followersCount, label = "Followers")
-                                StatItem(count = profile.followingCount, label = "Following")
+                                StatItem(count = profile.followersCount, label = stringResource(R.string.profile_followers))
+                                StatItem(count = profile.followingCount, label = stringResource(R.string.profile_following))
                             }
 
                             Spacer(modifier = Modifier.height(MelodifySpacing.lg))
@@ -132,7 +140,11 @@ fun ExternalProfileScreen(
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Spacer(modifier = Modifier.width(MelodifySpacing.xs))
-                                    Text(if (profile.isFollowing) "Unfollow" else "Follow")
+                                    Text(
+                                        stringResource(
+                                            if (profile.isFollowing) R.string.unfollow else R.string.follow,
+                                        ),
+                                    )
                                 }
 
                                 FilledTonalButton(
@@ -145,7 +157,7 @@ fun ExternalProfileScreen(
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Spacer(modifier = Modifier.width(MelodifySpacing.xs))
-                                    Text("Message")
+                                    Text(stringResource(R.string.profile_message_button))
                                 }
                             }
                         }
@@ -154,7 +166,7 @@ fun ExternalProfileScreen(
                     if (state.publicPlaylists.isNotEmpty()) {
                         item {
                             Text(
-                                text = "Public Playlists",
+                                text = stringResource(R.string.public_playlists),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(
@@ -165,16 +177,48 @@ fun ExternalProfileScreen(
                         }
 
                         items(state.publicPlaylists, key = { it.id }) { playlist ->
-                            Text(
-                                text = playlist.name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = MelodifySpacing.md, vertical = MelodifySpacing.sm)
+                            PublicPlaylistRow(
+                                playlist = playlist,
+                                onClick = { onPlaylistClick(playlist.id) },
                             )
-                            // We can use PlaylistCard here if we want later
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PublicPlaylistRow(
+    playlist: Playlist,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(horizontal = MelodifySpacing.md, vertical = MelodifySpacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.PlaylistPlay,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+        )
+        Spacer(modifier = Modifier.width(MelodifySpacing.md))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = playlist.name,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+            )
+            playlist.description?.takeIf { it.isNotBlank() }?.let { desc ->
+                Text(
+                    text = desc,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
     }

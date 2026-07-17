@@ -34,7 +34,7 @@ fun LikedSongsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Liked Songs") },
+                title = { Text(stringResource(R.string.home_quick_liked)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
@@ -45,7 +45,7 @@ fun LikedSongsScreen(
         floatingActionButton = {
             if (state.songs.isNotEmpty()) {
                 FloatingActionButton(onClick = { viewModel.playAll() }) {
-                    Icon(Icons.Default.PlayArrow, contentDescription = "Play All")
+                    Icon(Icons.Default.PlayArrow, contentDescription = stringResource(R.string.play_all))
                 }
             }
         },
@@ -105,7 +105,7 @@ fun LikedSongsScreen(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.Delete,
-                                            contentDescription = "Remove",
+                                            contentDescription = stringResource(R.string.cd_remove),
                                             tint = MaterialTheme.colorScheme.error
                                         )
                                     }

@@ -128,6 +128,7 @@ fun MelodifyApp(
                     sleepTimerMinutesLeft = playerState.sleepTimerMinutesLeft,
                     isShuffleOn = playerState.isShuffleOn,
                     repeatMode = playerState.repeatMode,
+                    audioSessionId = playerState.audioSessionId,
                     onCollapse = { playerController.setExpanded(false) },
                     onPlayPause = playerController::togglePlayPause,
                     onSkipNext = playerController::skipNext,
@@ -376,7 +377,10 @@ private fun MelodifyNavHost(
                 onNavigateBack = { navController.popBackStack() },
                 onMessageClick = {
                     navController.navigate(Screen.ChatConversation.createRoute(userId))
-                }
+                },
+                onPlaylistClick = { playlistId ->
+                    navController.navigate(Screen.PlaylistDetail.createRoute(playlistId))
+                },
             )
         }
         composable(Screen.UserSearch.route) {

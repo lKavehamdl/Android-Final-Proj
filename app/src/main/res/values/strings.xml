@@ -133,6 +133,7 @@
     ═══════════════════════════════════════════════════════════════════════ -->
     <string name="chat_title">Messages</string>
     <string name="chat_no_messages">No messages yet</string>
+    <string name="chat_say_hello">Say hello!</string>
     <string name="chat_type_hint">Type a message…</string>
     <string name="chat_send">Send</string>
     <string name="chat_typing">%s is typing…</string>
@@ -144,6 +145,19 @@
     <string name="chat_new_message">New message</string>
     <string name="empty_chats_title">No active chats</string>
     <string name="empty_chats_subtitle">Your conversations will appear here</string>
+    <string name="chat_typing_short">typing…</string>
+    <string name="chat_song_unavailable">Song unavailable</string>
+    <string name="share_sent_to">Sent to %s</string>
+    <string name="share_failed">Failed to send</string>
+
+    <!-- Social -->
+    <string name="user_search_title">Search Users</string>
+    <string name="user_search_hint">Search by username…</string>
+    <string name="user_search_no_results">No users found</string>
+    <string name="profile_message_button">Message</string>
+    <string name="error_with_message">Error: %s</string>
+    <string name="public_playlists">Public Playlists</string>
+    <string name="playlist_detail_empty">No songs in this playlist.</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Settings
@@ -229,6 +243,7 @@
     <string name="cd_play_pause">Play / Pause</string>
     <string name="cd_next_track">Next track</string>
     <string name="cd_previous_track">Previous track</string>
+    <string name="cd_remove">Remove</string>
 
     <!-- Notification channels -->
     <string name="notification_channel_playback">Music Playback</string>

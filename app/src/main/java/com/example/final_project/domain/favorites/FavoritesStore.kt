@@ -50,9 +50,6 @@ class FavoritesStore(
         }
     }
 
-    /**
-     * Optimistic toggle. Returns the new liked state, or an error resource.
-     */
     suspend fun toggle(songId: String): Resource<Boolean> {
         val wasLiked = songId in _likedIds.value
         val optimistic = !wasLiked
@@ -73,12 +70,10 @@ class FavoritesStore(
                 _likedIds.update { ids ->
                     if (nowLiked) ids + songId else ids - songId
                 }
-                // Refresh list so newly liked songs appear with full metadata.
                 appScope.launch { refresh() }
                 Resource.Success(nowLiked)
             }
             is Resource.Error -> {
-                // Revert optimistic update
                 _likedIds.update { ids ->
                     if (wasLiked) ids + songId else ids - songId
                 }

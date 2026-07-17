@@ -3,7 +3,6 @@ package com.example.final_project.ui.screens.chat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,9 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
+import com.example.final_project.R
 import com.example.final_project.domain.model.Message
 import com.example.final_project.domain.model.MessageStatus
 import com.example.final_project.domain.model.MessageType
@@ -42,12 +44,12 @@ fun ChatConversationScreen(
     viewModel: ChatConversationViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val pagingItems = viewModel.messages.collectAsLazyPagingItems()
     val listState = rememberLazyListState()
 
-    // Scroll to bottom on new message
-    LaunchedEffect(state.messages.size) {
-        if (state.messages.isNotEmpty()) {
-            listState.animateScrollToItem(state.messages.size - 1)
+    LaunchedEffect(pagingItems.itemCount) {
+        if (pagingItems.itemCount > 0) {
+            listState.animateScrollToItem(pagingItems.itemCount - 1)
         }
     }
 
@@ -80,7 +82,9 @@ fun ChatConversationScreen(
                         }
                         Spacer(modifier = Modifier.width(MelodifySpacing.sm))
                         Text(
-                            text = state.otherUser?.displayName ?: state.otherUser?.username ?: "Chat",
+                            text = state.otherUser?.displayName
+                                ?: state.otherUser?.username
+                                ?: stringResource(R.string.chat_title),
                             maxLines = 1,
                             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
@@ -88,7 +92,10 @@ fun ChatConversationScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                        )
                     }
                 }
             )
@@ -107,7 +114,7 @@ fun ChatConversationScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            if (state.messages.isEmpty()) {
+            if (pagingItems.itemCount == 0) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
@@ -118,7 +125,7 @@ fun ChatConversationScreen(
                         )
                         Spacer(modifier = Modifier.height(MelodifySpacing.md))
                         Text(
-                            "Say hello!",
+                            stringResource(R.string.chat_say_hello),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -132,7 +139,11 @@ fun ChatConversationScreen(
                         .padding(horizontal = MelodifySpacing.md),
                     contentPadding = PaddingValues(vertical = MelodifySpacing.md)
                 ) {
-                    items(state.messages, key = { it.id }) { message ->
+                    items(
+                        count = pagingItems.itemCount,
+                        key = { index -> pagingItems.peek(index)?.id ?: index },
+                    ) { index ->
+                        val message = pagingItems[index] ?: return@items
                         MessageBubble(
                             message = message,
                             isMine = message.senderId == state.currentUserId
@@ -152,7 +163,7 @@ fun ChatConversationScreen(
                     tonalElevation = 2.dp
                 ) {
                     Text(
-                        text = "typing...",
+                        text = stringResource(R.string.chat_typing_short),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(horizontal = MelodifySpacing.sm, vertical = 4.dp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -211,14 +222,19 @@ fun MessageBubble(message: Message, isMine: Boolean) {
                     
                     if (isMine) {
                         Spacer(modifier = Modifier.width(4.dp))
+                        val statusLabel = when (message.status) {
+                            MessageStatus.SENDING -> "🕒"
+                            MessageStatus.SENT -> "✓"
+                            MessageStatus.DELIVERED -> "✓✓"
+                            MessageStatus.READ -> "✓✓"
+                        }
                         Text(
-                            text = when(message.status.name.lowercase()) {
-                                "sending" -> "🕒"
-                                "sent" -> "✓"
-                                "read" -> "✓✓"
-                                else -> "✓"
+                            text = statusLabel,
+                            color = if (message.status == MessageStatus.READ) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                textColor.copy(alpha = 0.7f)
                             },
-                            color = if (message.status.name.lowercase() == "read") MaterialTheme.colorScheme.primary else textColor.copy(alpha = 0.7f),
                             style = MaterialTheme.typography.labelSmall
                         )
                     }
@@ -250,7 +266,7 @@ fun ChatInputBar(
                 value = inputText,
                 onValueChange = onInputTextChanged,
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Type a message...") },
+                placeholder = { Text(stringResource(R.string.chat_type_hint)) },
                 shape = RoundedCornerShape(24.dp),
                 maxLines = 4
             )
@@ -265,7 +281,10 @@ fun ChatInputBar(
                 if (isSending) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp))
                 } else {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Send")
+                    Icon(
+                        Icons.AutoMirrored.Filled.Send,
+                        contentDescription = stringResource(R.string.chat_send),
+                    )
                 }
             }
         }
@@ -333,6 +352,6 @@ fun SharedSongCard(
             }
         }
     } else {
-        Text("Song unavailable", color = textColor)
+        Text(stringResource(R.string.chat_song_unavailable), color = textColor)
     }
 }

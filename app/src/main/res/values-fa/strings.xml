@@ -130,6 +130,7 @@
     ═══════════════════════════════════════════════════════════════════════ -->
     <string name="chat_title">پیام‌ها</string>
     <string name="chat_no_messages">هنوز پیامی ندارید</string>
+    <string name="chat_say_hello">سلام بفرستید!</string>
     <string name="chat_type_hint">پیام بنویسید…</string>
     <string name="chat_send">ارسال</string>
     <string name="chat_typing">%s در حال نوشتن است…</string>
@@ -223,6 +224,7 @@
     <string name="cd_play_pause">پخش / توقف</string>
     <string name="cd_next_track">آهنگ بعدی</string>
     <string name="cd_previous_track">آهنگ قبلی</string>
+    <string name="cd_remove">حذف</string>
 
     <!-- کانال‌های نوتیفیکیشن -->
     <string name="notification_channel_playback">پخش موسیقی</string>
@@ -231,6 +233,23 @@
 
     <string name="playlists_section_world">موسیقی جهان</string>
     <string name="playlists_section_user">پلی‌لیست‌های من</string>
+
+    <!-- رشته‌های تکمیلی -->
+    <string name="upgrade_needed_message">برای دانلود آهنگ‌ها به پرمیوم ارتقا دهید</string>
+    <string name="coming_soon">به‌زودی</string>
+    <string name="empty_chats_title">هیچ گفتگوی فعالی نیست</string>
+    <string name="empty_chats_subtitle">گفتگوهای شما اینجا نمایش داده می‌شوند</string>
+    <string name="chat_typing_short">در حال نوشتن…</string>
+    <string name="chat_song_unavailable">آهنگ در دسترس نیست</string>
+    <string name="share_sent_to">برای %s ارسال شد</string>
+    <string name="share_failed">ارسال ناموفق بود</string>
+    <string name="user_search_title">جستجوی کاربران</string>
+    <string name="user_search_hint">جستجو با نام کاربری…</string>
+    <string name="user_search_no_results">کاربری یافت نشد</string>
+    <string name="profile_message_button">پیام</string>
+    <string name="error_with_message">خطا: %s</string>
+    <string name="public_playlists">پلی‌لیست‌های عمومی</string>
+    <string name="playlist_detail_empty">آهنگی در این پلی‌لیست نیست.</string>
 
     <!-- احراز هویت -->
     <string name="auth_subtitle_signin">برای ادامه وارد شوید</string>

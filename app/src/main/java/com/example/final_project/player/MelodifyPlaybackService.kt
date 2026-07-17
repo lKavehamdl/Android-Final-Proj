@@ -7,6 +7,7 @@ import androidx.media3.common.C
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.session.DefaultMediaNotificationProvider
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -58,6 +59,10 @@ class MelodifyPlaybackService : MediaSessionService() {
             .build()
 
         val exoPlayer = ExoPlayer.Builder(applicationContext)
+            .setMediaSourceFactory(
+                DefaultMediaSourceFactory(applicationContext)
+                    .setDataSourceFactory(cacheDataSourceFactory),
+            )
             .setAudioAttributes(audioAttributes, /* handleAudioFocus= */ true)
             .setHandleAudioBecomingNoisy(true)   // pause on headphone unplug
             .setPauseAtEndOfMediaItems(false)
