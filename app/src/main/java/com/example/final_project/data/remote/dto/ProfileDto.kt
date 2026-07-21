@@ -11,7 +11,8 @@ data class ProfileDto(
     @SerialName("avatar_url") val avatarUrl: String? = null,
     @SerialName("bio") val bio: String? = null,
     @SerialName("is_premium") val isPremium: Boolean = false,
-    @SerialName("created_at") val createdAt: String? = null
+    @SerialName("created_at") val createdAt: String? = null,
+    @SerialName("last_seen") val lastSeen: String? = null
 )
 
 @Serializable

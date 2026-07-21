@@ -55,6 +55,20 @@ class PlaylistRepositoryImpl(
         safeFlow { api.fetchPlaylistSongs(playlistId).map { it.toDomain() } }
             .flowOn(dispatchers.io)
 
+    override suspend fun getPlaylistById(playlistId: String): Resource<Playlist> =
+        withContext(dispatchers.io) {
+            try {
+                val dto = supabase.postgrest["playlists"]
+                    .select {
+                        filter { eq("id", playlistId) }
+                    }
+                    .decodeSingle<PlaylistDto>()
+                Resource.Success(dto.toDomain())
+            } catch (e: Exception) {
+                Resource.Error(message = e.message, throwable = e)
+            }
+        }
+
     override suspend fun createPlaylist(
         userId: String,
         name: String,
@@ -115,6 +129,33 @@ class PlaylistRepositoryImpl(
                         position = maxPos + 1,
                     ),
                 )
+                Resource.Success(Unit)
+            } catch (e: Exception) {
+                Resource.Error(message = e.message, throwable = e)
+            }
+        }
+
+    override suspend fun removeSongFromPlaylist(playlistId: String, songId: String): Resource<Unit> =
+        withContext(dispatchers.io) {
+            try {
+                supabase.postgrest["playlist_songs"].delete {
+                    filter {
+                        eq("playlist_id", playlistId)
+                        eq("song_id", songId)
+                    }
+                }
+                Resource.Success(Unit)
+            } catch (e: Exception) {
+                Resource.Error(message = e.message, throwable = e)
+            }
+        }
+
+    override suspend fun deletePlaylist(playlistId: String): Resource<Unit> =
+        withContext(dispatchers.io) {
+            try {
+                supabase.postgrest["playlists"].delete {
+                    filter { eq("id", playlistId) }
+                }
                 Resource.Success(Unit)
             } catch (e: Exception) {
                 Resource.Error(message = e.message, throwable = e)

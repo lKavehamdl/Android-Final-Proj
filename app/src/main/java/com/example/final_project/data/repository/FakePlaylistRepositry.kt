@@ -48,6 +48,14 @@ class FakePlaylistRepository(
         emit(Resource.Success(emptyList<Song>()))
     }.flowOn(dispatchers.io)
 
+    override suspend fun getPlaylistById(playlistId: String): Resource<Playlist> =
+        withContext(dispatchers.io) {
+            delay(200)
+            fakePlaylists.find { it.id == playlistId }
+                ?.let { Resource.Success(it) }
+                ?: Resource.Error(message = "Playlist not found")
+        }
+
     override suspend fun createPlaylist(
         userId: String,
         name: String,
@@ -82,6 +90,21 @@ class FakePlaylistRepository(
                 return@withContext Resource.Error(message = "Song is already in this playlist")
             }
             songs.add(songId)
+            Resource.Success(Unit)
+        }
+
+    override suspend fun removeSongFromPlaylist(playlistId: String, songId: String): Resource<Unit> =
+        withContext(dispatchers.io) {
+            delay(200)
+            playlistSongs[playlistId]?.remove(songId)
+            Resource.Success(Unit)
+        }
+
+    override suspend fun deletePlaylist(playlistId: String): Resource<Unit> =
+        withContext(dispatchers.io) {
+            delay(200)
+            fakePlaylists.removeAll { it.id == playlistId }
+            playlistSongs.remove(playlistId)
             Resource.Success(Unit)
         }
 }

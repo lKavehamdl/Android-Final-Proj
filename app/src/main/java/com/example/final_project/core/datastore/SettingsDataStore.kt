@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.final_project.core.constants.AppConstants
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import androidx.datastore.preferences.core.stringPreferencesKey
 
@@ -70,6 +71,32 @@ class SettingsDataStore(context: Context) {
         store.edit { prefs ->
             prefs[KEY_FONT_SCALE] = scale
         }
+    }
+
+    // ── Chat: last message time we notified for (per user) ──────────────────────
+
+    private fun lastNotifiedKey(userId: String) = stringPreferencesKey("last_notified_$userId")
+
+    suspend fun getLastNotifiedAt(userId: String): String? =
+        store.data.first()[lastNotifiedKey(userId)]
+
+    suspend fun setLastNotifiedAt(userId: String, iso: String) {
+        store.edit { prefs -> prefs[lastNotifiedKey(userId)] = iso }
+    }
+
+    // ── Social: last-seen follower set (per user), for follow/unfollow diffing ──
+
+    private fun followersSnapshotKey(userId: String) = stringPreferencesKey("followers_snapshot_$userId")
+
+    /** null = no snapshot stored yet (first run); empty set = known to have no followers. */
+    suspend fun getFollowersSnapshot(userId: String): Set<String>? =
+        store.data.first()[followersSnapshotKey(userId)]
+            ?.split(",")
+            ?.filter { it.isNotBlank() }
+            ?.toSet()
+
+    suspend fun setFollowersSnapshot(userId: String, ids: Set<String>) {
+        store.edit { prefs -> prefs[followersSnapshotKey(userId)] = ids.joinToString(",") }
     }
 }
 

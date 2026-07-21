@@ -46,6 +46,9 @@ class ChatConversationViewModel(
         val currentUserId = supabaseClient.auth.currentUserOrNull()?.id ?: ""
         _uiState.update { it.copy(currentUserId = currentUserId) }
 
+        // Suppress notifications for the chat we're currently viewing.
+        com.example.final_project.core.notification.ActiveChatHolder.setActive(otherUserId)
+
         loadProfile()
 
         viewModelScope.launch {
@@ -55,6 +58,15 @@ class ChatConversationViewModel(
         viewModelScope.launch {
             chatRepository.observeTypingStatus(otherUserId).collect { isTyping ->
                 _uiState.update { it.copy(isOtherUserTyping = isTyping) }
+            }
+        }
+
+        // Refresh the other user's profile periodically so their online / last-seen
+        // status stays current while the conversation is open.
+        viewModelScope.launch {
+            while (true) {
+                kotlinx.coroutines.delay(30_000)
+                loadProfile()
             }
         }
     }
@@ -69,6 +81,10 @@ class ChatConversationViewModel(
                 is Resource.Loading -> Unit
             }
         }
+    }
+
+    fun onDeleteMessage(message: Message) {
+        viewModelScope.launch { chatRepository.deleteMessage(message.id) }
     }
 
     fun onInputTextChanged(text: String) {
@@ -87,11 +103,19 @@ class ChatConversationViewModel(
         val text = _uiState.value.inputText.trim()
         if (text.isEmpty()) return
 
-        viewModelScope.launch {
-            _uiState.update { it.copy(isSending = true, inputText = "") }
-            chatRepository.setTypingStatus(receiverId = otherUserId, isTyping = false)
-            chatRepository.sendMessage(receiverId = otherUserId, content = text)
-            _uiState.update { it.copy(isSending = false) }
+        // Clear the box immediately; sendMessage inserts an optimistic local row
+        // so the bubble shows instantly. Network work runs off the critical path
+        // (no isSending spinner, no blocking on the typing-status broadcast).
+        _uiState.update { it.copy(inputText = "") }
+        viewModelScope.launch { chatRepository.setTypingStatus(receiverId = otherUserId, isTyping = false) }
+        viewModelScope.launch { chatRepository.sendMessage(receiverId = otherUserId, content = text) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        // Only clear if we're still the active chat (avoid clobbering a newer one).
+        if (com.example.final_project.core.notification.ActiveChatHolder.activeChatUserId.value == otherUserId) {
+            com.example.final_project.core.notification.ActiveChatHolder.setActive(null)
         }
     }
 }

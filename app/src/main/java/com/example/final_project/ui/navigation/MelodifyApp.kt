@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -20,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +41,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.final_project.core.datastore.FontScale
 import com.example.final_project.core.locale.AppLanguage
 import com.example.final_project.domain.repository.AuthRepository
+import com.example.final_project.domain.repository.ChatRepository
+import com.example.final_project.domain.repository.NotificationsRepository
+import com.example.final_project.domain.repository.SocialRepository
 import com.example.final_project.player.PlayerController
 import com.example.final_project.ui.components.MelodifyTopBar
 import com.example.final_project.ui.player.MiniPlayer
@@ -107,6 +112,37 @@ fun MelodifyApp(
         is SessionStatus.Authenticated -> Unit
     }
 
+    // Start the realtime message listener for the whole authenticated session.
+    // Incoming-message notifications are posted from inside ChatRepository's
+    // realtime handler (works regardless of which screen is showing).
+    val chatRepository: ChatRepository = koinInject()
+    val notificationsRepository: NotificationsRepository = koinInject()
+    val socialRepository: SocialRepository = koinInject()
+    val currentUserId = supabaseClient.auth.currentUserOrNull()?.id
+
+    LaunchedEffect(currentUserId) {
+        if (currentUserId == null) return@LaunchedEffect
+        chatRepository.startListeningForMessages()
+        notificationsRepository.startListening()
+    }
+
+    // Presence heartbeat: keep our own last_seen fresh while the app is open.
+    LaunchedEffect(currentUserId) {
+        if (currentUserId == null) return@LaunchedEffect
+        while (true) {
+            socialRepository.updateLastSeen()
+            kotlinx.coroutines.delay(45_000)
+        }
+    }
+
+    val unreadNotificationCount by remember(currentUserId) {
+        notificationsRepository.observeUnreadCount()
+    }.collectAsStateWithLifecycle(initialValue = 0)
+
+    val unreadChatCount by remember(currentUserId) {
+        chatRepository.observeUnreadCount()
+    }.collectAsStateWithLifecycle(initialValue = 0)
+
     CompositionLocalProvider(
         LocalShareSong provides { songId -> songToShareId = songId }
     ) {
@@ -129,6 +165,7 @@ fun MelodifyApp(
                     isShuffleOn = playerState.isShuffleOn,
                     repeatMode = playerState.repeatMode,
                     audioSessionId = playerState.audioSessionId,
+                    queue = playerState.queue,
                     onCollapse = { playerController.setExpanded(false) },
                     onPlayPause = playerController::togglePlayPause,
                     onSkipNext = playerController::skipNext,
@@ -138,6 +175,11 @@ fun MelodifyApp(
                     onSleepTimerSet = playerController::setSleepTimer,
                     onToggleShuffle = playerController::toggleShuffle,
                     onCycleRepeat = playerController::cycleRepeatMode,
+                    onJumpToQueueItem = playerController::jumpToQueueItem,
+                    onRemoveFromQueue = playerController::removeFromQueue,
+                    onMoveQueueItem = playerController::moveQueueItem,
+                    onPlaySong = { playerController.play(it) },
+                    onAddToQueue = playerController::addToQueue,
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this,
                 )
@@ -147,16 +189,20 @@ fun MelodifyApp(
                     topBar = {
                         val showAppTopBar = currentRoute in ROOT_TABS_WITH_APP_BAR
                         if (showAppTopBar) {
+                            val currentUserStore: com.example.final_project.domain.social.CurrentUserStore = koinInject()
+                            val currentUser by currentUserStore.profile.collectAsStateWithLifecycle()
                             MelodifyTopBar(
                                 onProfileClick = {
                                     navController.navigateToTab(Screen.Profile.route)
                                 },
                                 onNotificationsClick = {
-                                    navController.navigate(Screen.Notifications.route)
+                                    navController.navigate(Screen.Notifications.route) { launchSingleTop = true }
                                 },
                                 onSettingsClick = {
-                                    navController.navigate(Screen.Settings.route)
+                                    navController.navigate(Screen.Settings.route) { launchSingleTop = true }
                                 },
+                                profileImageUrl = currentUser?.avatarUrl,
+                                notificationCount = unreadNotificationCount,
                             )
                         }
                     },
@@ -176,10 +222,18 @@ fun MelodifyApp(
                                     animatedVisibilityScope = this@AnimatedContent,
                                 )
                             }
-                            MelodifyBottomBar(
-                                currentRoute = currentRoute,
-                                onNavigate = { route -> navController.navigateToTab(route) },
-                            )
+                            // Only show the tab bar on root tabs — showing it on
+                            // secondary screens (Settings, PlaylistDetail, …) let
+                            // users tab-switch away without leaving those screens
+                            // off the back stack, so a stray entry lingered until
+                            // an extra back-press cleared it.
+                            if (currentRoute in ROOT_TABS_WITH_APP_BAR) {
+                                MelodifyBottomBar(
+                                    currentRoute = currentRoute,
+                                    onNavigate = { route -> navController.navigateToTab(route) },
+                                    chatUnreadCount = unreadChatCount,
+                                )
+                            }
                         }
                     },
                 ) { innerPadding ->
@@ -217,17 +271,29 @@ private fun MelodifyBottomBar(
     currentRoute: String?,
     onNavigate: (String) -> Unit,
     modifier: Modifier = Modifier,
+    chatUnreadCount: Int = 0,
 ) {
     NavigationBar(modifier = modifier) {
         Screen.bottomNavItems.forEach { screen ->
+            val badgeCount = if (screen == Screen.ChatList) chatUnreadCount else 0
             NavigationBarItem(
                 selected = currentRoute == screen.route,
                 onClick = { onNavigate(screen.route) },
                 icon = {
-                    Icon(
-                        imageVector = screen.icon,
-                        contentDescription = stringResource(screen.titleRes),
-                    )
+                    androidx.compose.material3.BadgedBox(
+                        badge = {
+                            if (badgeCount > 0) {
+                                androidx.compose.material3.Badge {
+                                    Text(if (badgeCount > 99) "99+" else badgeCount.toString())
+                                }
+                            }
+                        },
+                    ) {
+                        Icon(
+                            imageVector = screen.icon,
+                            contentDescription = stringResource(screen.titleRes),
+                        )
+                    }
                 },
                 label = { Text(stringResource(screen.titleRes)) },
             )
@@ -247,17 +313,27 @@ private fun MelodifyNavHost(
     modifier: Modifier = Modifier,
 ) {
     val authRepository: AuthRepository = koinInject()
+    val chatRepository: ChatRepository = koinInject()
+    val notificationsRepository: NotificationsRepository = koinInject()
     val scope = rememberCoroutineScope()
-    
+
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
         modifier = modifier.fillMaxSize(),
+        // A quick, uniform cross-fade for every push/pop — replaces the default
+        // slide the user disliked, especially on back navigation.
+        enterTransition = { fadeIn(animationSpec = tween(160)) },
+        exitTransition = { fadeOut(animationSpec = tween(160)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(160)) },
+        popExitTransition = { fadeOut(animationSpec = tween(160)) },
     ) {
         composable(Screen.Home.route) {
             HomeScreen(
                 onOpenPlaylistsTab = {
-                    navController.navigateToTab(Screen.Playlists.route)
+                    // "My Playlists" quick action → the user's own playlists,
+                    // not the Playlists tab (which also lists world/local).
+                    navController.navigate(Screen.MyPlaylists.route)
                 },
                 onNavigateToLiked = {
                     navController.navigate(Screen.LikedSongs.route)
@@ -283,6 +359,14 @@ private fun MelodifyNavHost(
                 }
             )
         }
+        composable(Screen.MyPlaylists.route) {
+            com.example.final_project.ui.screens.playlists.MyPlaylistsScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onOpenPlaylist = { playlistId ->
+                    navController.navigate(Screen.PlaylistDetail.createRoute(playlistId))
+                },
+            )
+        }
         composable(
             route = Screen.PlaylistDetail.route,
             arguments = listOf(androidx.navigation.navArgument("playlistId") { type = androidx.navigation.NavType.StringType })
@@ -298,15 +382,6 @@ private fun MelodifyNavHost(
                 onNavigateToFollows = {
                     navController.navigate(Screen.Follows.route)
                 },
-                onNavigateToLiked = {
-                    navController.navigate(Screen.LikedSongs.route)
-                },
-                onNavigateToMessages = {
-                    navController.navigate(Screen.ChatList.route)
-                },
-                onNavigateToSettings = {
-                    navController.navigate(Screen.Settings.route)
-                },
             )
         }
         composable(Screen.Settings.route) {
@@ -319,7 +394,14 @@ private fun MelodifyNavHost(
                 onFontScaleChange = onFontScaleChange,
                 onBackClick = { navController.popBackStack() },
                 onLogoutClick = {
+                    // Reset the back stack to Home so re-login lands on Home, not
+                    // back on this Settings screen (the navController persists
+                    // across the auth-state change).
+                    navController.popBackStack(Screen.Home.route, inclusive = false)
                     scope.launch {
+                        // Wipe cached messages/notifications so the next account doesn't inherit them.
+                        chatRepository.clearLocalData()
+                        notificationsRepository.clearLocalData()
                         authRepository.signOut()
                     }
                 }
@@ -357,6 +439,12 @@ private fun MelodifyNavHost(
         composable(Screen.Notifications.route) {
             com.example.final_project.ui.screens.notifications.NotificationsScreen(
                 onNavigateBack = { navController.popBackStack() },
+                onOpenChat = { userId ->
+                    navController.navigate(Screen.ChatConversation.createRoute(userId))
+                },
+                onOpenProfile = { userId ->
+                    navController.navigate(Screen.ExternalProfile.createRoute(userId))
+                },
             )
         }
         composable(
@@ -365,7 +453,10 @@ private fun MelodifyNavHost(
         ) { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId") ?: return@composable
             com.example.final_project.ui.screens.chat.ChatConversationScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackStack() },
+                onOpenProfile = {
+                    navController.navigate(Screen.ExternalProfile.createRoute(userId))
+                },
             )
         }
         composable(
@@ -400,6 +491,7 @@ private val ROOT_TABS_WITH_APP_BAR = setOf(
     Screen.Downloads.route,
     Screen.Playlists.route,
     Screen.Profile.route,
+    Screen.ChatList.route,
 )
 
 private fun NavHostController.navigateToTab(route: String) {

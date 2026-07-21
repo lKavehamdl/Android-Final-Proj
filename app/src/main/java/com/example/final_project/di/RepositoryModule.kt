@@ -23,6 +23,8 @@ import com.example.final_project.domain.repository.AuthRepository
 import com.example.final_project.domain.repository.ChatRepository
 import com.example.final_project.data.repository.SocialRepositoryImpl
 import com.example.final_project.domain.repository.SocialRepository
+import com.example.final_project.data.repository.NotificationsRepositoryImpl
+import com.example.final_project.domain.repository.NotificationsRepository
 
 val repositoryModule = module {
     single<SongRepository> {
@@ -65,13 +67,28 @@ val repositoryModule = module {
             supabaseClient = get(),
             messagesDao = get(),
             dispatchers = get(),
-            appScope = get()
+            appScope = get(),
+            appContext = androidContext(),
+            socialRepository = get(),
+            settingsDataStore = get(),
+            notificationsRepository = get(),
         )
     }
 
     single<SocialRepository> {
         SocialRepositoryImpl(
             supabase = get()
+        )
+    }
+
+    single<NotificationsRepository> {
+        NotificationsRepositoryImpl(
+            supabaseClient = get(),
+            notificationsDao = get(),
+            socialRepository = get(),
+            settingsDataStore = get(),
+            dispatchers = get(),
+            appScope = get(),
         )
     }
 }

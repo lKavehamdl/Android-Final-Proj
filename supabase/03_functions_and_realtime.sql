@@ -286,3 +286,12 @@ GRANT SELECT ON public.v_songs_with_stats TO anon, authenticated;
 -- =============================================================================
 
 ALTER PUBLICATION supabase_realtime ADD TABLE public.messages;
+
+-- =============================================================================
+-- SECTION 9: Enable Realtime for the follows table
+-- Powers live "started following you" / "unfollowed you" in-app notifications.
+-- The app also reconciles the follower set on launch, so this is a liveness
+-- enhancement rather than a hard requirement.
+-- =============================================================================
+
+ALTER PUBLICATION supabase_realtime ADD TABLE public.follows;

@@ -27,6 +27,7 @@ sealed class Screen(
     data object RecentlyPlayed : Screen("recently_played", R.string.home_quick_recent, Icons.Filled.Person)
     data object Follows : Screen("follows", R.string.following_title, Icons.Filled.Person)
     data object TopArtists : Screen("top_artists", R.string.artists_title, Icons.Filled.Person)
+    data object MyPlaylists : Screen("my_playlists", R.string.playlists_section_user, Icons.AutoMirrored.Filled.PlaylistPlay)
     data object PlaylistDetail : Screen("playlist_detail/{playlistId}", R.string.tab_playlists, Icons.AutoMirrored.Filled.PlaylistPlay) {
         fun createRoute(playlistId: String) = "playlist_detail/$playlistId"
     }
@@ -47,7 +48,7 @@ sealed class Screen(
         // would run Screen's <clinit> while the subclass INSTANCE is still null,
         // permanently capturing nulls in the list and crashing the bottom bar (NPE).
         val bottomNavItems: List<Screen> by lazy {
-            listOf(Home, Search, Downloads, Playlists, Profile)
+            listOf(Home, Search, Downloads, Playlists, ChatList)
         }
     }
 }

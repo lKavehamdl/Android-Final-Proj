@@ -88,6 +88,54 @@ class SongRepositoryImpl(
         }
     }
 
+    override suspend fun getRecommendations(seedSong: Song, limit: Int): Resource<List<Song>> {
+        return try {
+            // Insertion-ordered + de-duplicated: genre matches first, then same
+            // artist, then trending as a backfill so the list is never empty.
+            val picks = LinkedHashMap<String, Song>()
+
+            if (!seedSong.genre.isNullOrBlank()) {
+                supabase.postgrest["songs"]
+                    .select {
+                        filter {
+                            eq("genre", seedSong.genre)
+                            neq("id", seedSong.id)
+                        }
+                        order("play_count", io.github.jan.supabase.postgrest.query.Order.DESCENDING)
+                        limit(limit.toLong())
+                    }
+                    .decodeList<SongDto>()
+                    .toDomain()
+                    .forEach { picks[it.id] = it }
+            }
+
+            if (picks.size < limit) {
+                supabase.postgrest["songs"]
+                    .select {
+                        filter {
+                            eq("artist_name", seedSong.artistName)
+                            neq("id", seedSong.id)
+                        }
+                        limit(limit.toLong())
+                    }
+                    .decodeList<SongDto>()
+                    .toDomain()
+                    .forEach { picks.putIfAbsent(it.id, it) }
+            }
+
+            if (picks.size < limit) {
+                runCatching { api.fetchTrendingSongs(limit).toDomain() }
+                    .getOrDefault(emptyList())
+                    .filter { it.id != seedSong.id }
+                    .forEach { picks.putIfAbsent(it.id, it) }
+            }
+
+            Resource.Success(picks.values.take(limit))
+        } catch (e: Exception) {
+            Resource.Error(message = e.message, throwable = e)
+        }
+    }
+
     override suspend fun incrementPlayCount(songId: String) {
         // Fire-and-forget: swallow exceptions so playback is never interrupted.
         runCatching { api.incrementPlayCount(songId) }

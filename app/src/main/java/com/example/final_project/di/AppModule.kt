@@ -47,11 +47,12 @@ val appModule = module {
             playerController = get(),
             settingsDataStore = get(),
             downloadsRepository = get(),
+            songRepository = get(),
         )
     }
     viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { PlaylistsViewModel(get(), get(), get(), get()) }
-    viewModel { PlaylistDetailViewModel(get(), get(), get()) }
+    viewModel { PlaylistDetailViewModel(get(), get(), get(), get()) }
     single {
         com.example.final_project.domain.favorites.FavoritesStore(
             songRepository = get(),
@@ -59,10 +60,17 @@ val appModule = module {
             appScope = get(),
         )
     }
+    single {
+        com.example.final_project.domain.social.CurrentUserStore(
+            socialRepository = get(),
+            supabase = get(),
+            appScope = get(),
+        )
+    }
     viewModel { LikedSongsViewModel(get(), get()) }
     viewModel { RecentlyPlayedViewModel(get(), get()) }
     viewModel { com.example.final_project.ui.screens.home.artists.TopArtistsViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get(), get(), androidContext()) }
     viewModel { FollowsViewModel(get()) }
     viewModel { DownloadsViewModel(get()) }
     
@@ -71,4 +79,9 @@ val appModule = module {
     viewModel { ChatListViewModel(get(), get(), get()) }
     viewModel { ChatConversationViewModel(get(), get(), get(), get()) }
     viewModel { AuthViewModel(authRepository = get()) }
+    viewModel {
+        com.example.final_project.ui.screens.notifications.NotificationsViewModel(
+            notificationsRepository = get(),
+        )
+    }
 }

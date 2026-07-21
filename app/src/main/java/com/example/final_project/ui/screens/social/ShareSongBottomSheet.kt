@@ -95,7 +95,7 @@ fun ShareSongBottomSheet(
                             leadingContent = {
                                 if (user.avatarUrl != null) {
                                     AsyncImage(
-                                        model = user.avatarUrl,
+                                        model = com.example.final_project.ui.components.avatarModel(user.avatarUrl),
                                         contentDescription = null,
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier

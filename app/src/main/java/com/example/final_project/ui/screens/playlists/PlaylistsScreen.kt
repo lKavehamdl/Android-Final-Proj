@@ -58,6 +58,10 @@ fun PlaylistsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
+    // Reload on each appearance so a tab ViewModel retained across an account
+    // switch doesn't keep showing the previous user's playlists.
+    LaunchedEffect(Unit) { viewModel.onEvent(PlaylistsUiEvent.Load) }
+
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
@@ -130,7 +134,7 @@ fun PlaylistsScreen(
 }
 
 @Composable
-private fun CreatePlaylistDialog(
+internal fun CreatePlaylistDialog(
     isCreating: Boolean,
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit,
@@ -181,6 +185,12 @@ private fun PlaylistsContent(
         horizontalArrangement = Arrangement.spacedBy(MelodifySpacing.md),
         verticalArrangement = Arrangement.spacedBy(MelodifySpacing.md),
     ) {
+        // My Playlists first (the user's own), then browsable World/Local.
+        playlistSection(
+            titleRes = R.string.playlists_section_user,
+            playlists = state.userPlaylists,
+            onPlaylistClick = onPlaylistClick,
+        )
         playlistSection(
             titleRes = R.string.playlists_section_world,
             playlists = state.worldPlaylists,
@@ -189,11 +199,6 @@ private fun PlaylistsContent(
         playlistSection(
             titleRes = R.string.playlists_section_local,
             playlists = state.localPlaylists,
-            onPlaylistClick = onPlaylistClick,
-        )
-        playlistSection(
-            titleRes = R.string.playlists_section_user,
-            playlists = state.userPlaylists,
             onPlaylistClick = onPlaylistClick,
         )
     }
@@ -216,7 +221,7 @@ private fun androidx.compose.foundation.lazy.grid.LazyGridScope.playlistSection(
 }
 
 @Composable
-private fun PlaylistCard(
+internal fun PlaylistCard(
     playlist: Playlist,
     onClick: () -> Unit,
 ) {
@@ -248,7 +253,9 @@ private fun PlaylistCard(
         Text(
             text = playlist.name,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
+            // Always white — it sits on a dark image scrim in both themes, so
+            // onPrimary (a dark blue in dark mode) was invisible.
+            color = androidx.compose.ui.graphics.Color.White,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier

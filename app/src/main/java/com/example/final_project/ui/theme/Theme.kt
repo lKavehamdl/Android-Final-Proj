@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import com.example.final_project.core.datastore.FontScale
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
@@ -101,6 +103,10 @@ fun FinalProjectTheme(
 
     CompositionLocalProvider(
         LocalThemeMode provides themeMode,
+        // Keep the visual layout LTR even in Persian — only the text/letters
+        // should read RTL (handled per-paragraph by BiDi), not mirror the whole
+        // UI (media controls, rows, etc.).
+        LocalLayoutDirection provides LayoutDirection.Ltr,
         LocalDensity provides Density(
             density = density.density,
             fontScale = density.fontScale * fontScale.multiplier,

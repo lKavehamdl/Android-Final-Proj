@@ -43,15 +43,10 @@ fun ChatListScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.chat_title)) },
-                actions = {
-                    IconButton(onClick = onSearchClick) {
-                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.tab_search))
-                    }
-                }
-            )
+        floatingActionButton = {
+            FloatingActionButton(onClick = onSearchClick) {
+                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.user_search_title))
+            }
         }
     ) { innerPadding ->
         if (state.isLoading) {
@@ -118,7 +113,7 @@ fun ConversationRow(item: ConversationItem, onClick: () -> Unit) {
     ) {
         if (item.otherUser.avatarUrl != null) {
             AsyncImage(
-                model = item.otherUser.avatarUrl,
+                model = com.example.final_project.ui.components.avatarModel(item.otherUser.avatarUrl),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

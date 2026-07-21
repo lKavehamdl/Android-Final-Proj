@@ -220,6 +220,71 @@ class PlayerController(
         }
     }
 
+    // ── Queue management ────────────────────────────────────────────────────────
+
+    /** Appends [song] to the end of the play queue. */
+    fun addToQueue(song: Song) {
+        val ctrl = controller ?: return
+        scope.launch {
+            val item = toMediaItem(song)
+            withContext(Dispatchers.Main) { ctrl.addMediaItem(item) }
+            currentQueue = currentQueue + song
+            _state.update { it.copy(queue = currentQueue) }
+        }
+    }
+
+    /** Inserts [song] right after the currently-playing track. */
+    fun playNext(song: Song) {
+        val ctrl = controller ?: return
+        scope.launch {
+            val item = toMediaItem(song)
+            val insertIndex = (ctrl.currentMediaItemIndex + 1).coerceIn(0, currentQueue.size)
+            withContext(Dispatchers.Main) { ctrl.addMediaItem(insertIndex, item) }
+            currentQueue = currentQueue.toMutableList().apply { add(insertIndex, song) }
+            _state.update { it.copy(queue = currentQueue) }
+        }
+    }
+
+    /** Removes the queue item at [index] (media-item order). */
+    fun removeFromQueue(index: Int) {
+        val ctrl = controller ?: return
+        if (index !in currentQueue.indices) return
+        // Don't yank the track out from under playback; ignore removing the current one.
+        if (index == ctrl.currentMediaItemIndex) return
+        ctrl.removeMediaItem(index)
+        currentQueue = currentQueue.toMutableList().apply { removeAt(index) }
+        _state.update { it.copy(queue = currentQueue) }
+    }
+
+    /** Moves the queue item from [from] to [to] (media-item order). */
+    fun moveQueueItem(from: Int, to: Int) {
+        val ctrl = controller ?: return
+        if (from !in currentQueue.indices || to !in currentQueue.indices || from == to) return
+        ctrl.moveMediaItem(from, to)
+        currentQueue = currentQueue.toMutableList().apply { add(to, removeAt(from)) }
+        _state.update { it.copy(queue = currentQueue) }
+    }
+
+    /**
+     * Plays the queued item at [index] now without discarding the songs before it:
+     * the tapped track is moved to right after the current one and started, so the
+     * rest of the queue is preserved.
+     */
+    fun jumpToQueueItem(index: Int) {
+        val ctrl = controller ?: return
+        if (index !in currentQueue.indices) return
+        val cur = ctrl.currentMediaItemIndex
+        if (index == cur) return
+        val target = (cur + 1).coerceIn(0, currentQueue.lastIndex)
+        if (index != target) {
+            ctrl.moveMediaItem(index, target)
+            currentQueue = currentQueue.toMutableList().apply { add(target, removeAt(index)) }
+        }
+        ctrl.seekToDefaultPosition(target)
+        ctrl.play()
+        _state.update { it.copy(queue = currentQueue) }
+    }
+
     private suspend fun toMediaItem(song: Song): MediaItem {
         val localPath = downloadsRepository?.getLocalPath(song.id)
         val uri = if (localPath != null && java.io.File(localPath).exists()) {
@@ -294,9 +359,31 @@ class PlayerController(
     }
 
     fun toggleShuffle() {
+        val ctrl = controller ?: run {
+            _state.update { it.copy(isShuffleOn = !it.isShuffleOn) }
+            return
+        }
         val newShuffle = !_state.value.isShuffleOn
-        controller?.shuffleModeEnabled = newShuffle
-        _state.update { it.copy(isShuffleOn = newShuffle) }
+        ctrl.shuffleModeEnabled = newShuffle
+
+        // Physically reshuffle the up-next songs so the visible queue changes too
+        // (ExoPlayer's shuffle mode alone only reorders playback, not the list).
+        val cur = ctrl.currentMediaItemIndex
+        if (newShuffle && cur in currentQueue.indices && cur < currentQueue.lastIndex) {
+            val head = currentQueue.subList(0, cur + 1).toList()
+            val tail = currentQueue.subList(cur + 1, currentQueue.size).toList().shuffled()
+            scope.launch {
+                val items = tail.map { toMediaItem(it) }
+                withContext(Dispatchers.Main) {
+                    ctrl.removeMediaItems(cur + 1, currentQueue.size)
+                    ctrl.addMediaItems(items)
+                }
+                currentQueue = head + tail
+                _state.update { it.copy(isShuffleOn = newShuffle, queue = currentQueue) }
+            }
+        } else {
+            _state.update { it.copy(isShuffleOn = newShuffle) }
+        }
     }
 
     fun cycleRepeatMode() {

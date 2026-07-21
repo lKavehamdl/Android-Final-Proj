@@ -127,6 +127,13 @@ private fun HomeContent(
         }
         item {
             SongSection(
+                titleRes = R.string.home_section_recommended,
+                songs = state.recommended,
+                onSongClick = onSongClick,
+            )
+        }
+        item {
+            SongSection(
                 titleRes = R.string.home_section_trending,
                 songs = state.trending,
                 onSongClick = onSongClick,

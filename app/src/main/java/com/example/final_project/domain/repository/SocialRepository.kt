@@ -36,4 +36,19 @@ interface SocialRepository {
      * Get the logged-in user's ID
      */
     fun getCurrentUserId(): String?
+
+    /**
+     * Updates the signed-in user's `last_seen` timestamp to now (presence heartbeat).
+     */
+    suspend fun updateLastSeen()
+
+    /**
+     * Update the current user's own profile. Only non-null params are changed.
+     * @return Error if [username] is already taken by someone else.
+     */
+    suspend fun updateProfile(
+        displayName: String? = null,
+        username: String? = null,
+        avatarUrl: String? = null,
+    ): Resource<UserProfile>
 }

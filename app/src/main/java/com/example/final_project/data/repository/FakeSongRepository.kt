@@ -61,6 +61,17 @@ class FakeSongRepository(
         return if (song != null) Resource.Success(song) else Resource.Error(message = "Song not found")
     }
 
+    override suspend fun getRecommendations(seedSong: Song, limit: Int): Resource<List<Song>> {
+        delay(FAKE_NETWORK_DELAY_MS)
+        val related = FAKE_SONGS.filter {
+            it.id != seedSong.id && (it.genre == seedSong.genre || it.artistName == seedSong.artistName)
+        }
+        val recs = (related + FAKE_SONGS.filter { it.id != seedSong.id })
+            .distinctBy { it.id }
+            .take(limit)
+        return Resource.Success(recs)
+    }
+
     override suspend fun incrementPlayCount(songId: String) {
         delay(100)
     }
