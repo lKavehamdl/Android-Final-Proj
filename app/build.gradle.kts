@@ -86,6 +86,9 @@ dependencies {
 
     // ── Network — Ktor (required by Supabase SDK) ─────────────────────────────
     implementation(libs.ktor.client.android)
+    // OkHttp engine: the Android engine (HttpURLConnection) has no WebSocket
+    // support, which Supabase Realtime needs — used only for the Supabase client.
+    implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.logging)

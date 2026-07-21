@@ -11,8 +11,6 @@ import com.example.final_project.domain.repository.SocialRepository
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Count
-import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -22,6 +20,18 @@ class SocialRepositoryImpl(
 
     override fun getCurrentUserId(): String? {
         return supabase.auth.currentUserOrNull()?.id
+    }
+
+    override suspend fun updateLastSeen() = withContext(Dispatchers.IO) {
+        try {
+            val me = getCurrentUserId() ?: return@withContext
+            supabase.postgrest["profiles"]
+                .update({ set("last_seen", java.time.Instant.now().toString()) }) {
+                    filter { eq("id", me) }
+                }
+        } catch (e: Exception) {
+            // Non-fatal: presence is best-effort (e.g. column not migrated yet).
+        }
     }
 
     override suspend fun searchUsers(query: String): Resource<List<UserProfile>> = withContext(Dispatchers.IO) {
@@ -57,21 +67,17 @@ class SocialRepositoryImpl(
                     }
                 }.decodeSingle<ProfileDto>()
 
+            // Count by decoding the rows rather than relying on the Content-Range
+            // count header (which was returning null → 0 followers/following).
             val followersCount = supabase.postgrest["follows"]
-                .select(columns = Columns.raw("follower_id")) {
-                    count(Count.EXACT)
-                    filter {
-                        eq("following_id", userId)
-                    }
-                }.countOrNull()?.toInt() ?: 0
+                .select { filter { eq("following_id", userId) } }
+                .decodeList<FollowDto>()
+                .size
 
             val followingCount = supabase.postgrest["follows"]
-                .select(columns = Columns.raw("following_id")) {
-                    count(Count.EXACT)
-                    filter {
-                        eq("follower_id", userId)
-                    }
-                }.countOrNull()?.toInt() ?: 0
+                .select { filter { eq("follower_id", userId) } }
+                .decodeList<FollowDto>()
+                .size
 
             val currentUserId = getCurrentUserId()
             var isFollowing = false
@@ -167,6 +173,51 @@ class SocialRepositoryImpl(
         }
     }
 
+    override suspend fun updateProfile(
+        displayName: String?,
+        username: String?,
+        avatarUrl: String?,
+    ): Resource<UserProfile> = withContext(Dispatchers.IO) {
+        try {
+            val currentUserId = getCurrentUserId()
+                ?: return@withContext Resource.Error("Not logged in", Exception("Not logged in"))
+
+            if (username != null) {
+                val taken = supabase.postgrest["profiles"]
+                    .select {
+                        filter {
+                            ilike("username", username)
+                            neq("id", currentUserId)
+                        }
+                    }.decodeList<ProfileDto>()
+                if (taken.isNotEmpty()) {
+                    return@withContext Resource.Error("Username is already taken")
+                }
+            }
+
+            if (displayName == null && username == null && avatarUrl == null) {
+                return@withContext getUserProfile(currentUserId)
+            }
+
+            // Set columns individually (rather than a @Serializable DTO with
+            // nullable defaults) so unspecified fields aren't nulled out.
+            val updated = supabase.postgrest["profiles"]
+                .update({
+                    displayName?.let { set("display_name", it) }
+                    username?.let { set("username", it) }
+                    avatarUrl?.let { set("avatar_url", it) }
+                }) {
+                    filter { eq("id", currentUserId) }
+                    select()
+                }
+                .decodeSingle<ProfileDto>()
+
+            Resource.Success(mapToUserProfile(updated, false, 0, 0))
+        } catch (e: Exception) {
+            Resource.Error(e.message, e)
+        }
+    }
+
     private fun mapToUserProfile(dto: ProfileDto, isFollowing: Boolean, followers: Int, following: Int): UserProfile {
         return UserProfile(
             id = dto.id,
@@ -177,7 +228,8 @@ class SocialRepositoryImpl(
             isPremium = dto.isPremium,
             followersCount = followers,
             followingCount = following,
-            isFollowing = isFollowing
+            isFollowing = isFollowing,
+            lastSeen = dto.lastSeen,
         )
     }
 }

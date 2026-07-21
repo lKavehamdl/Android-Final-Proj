@@ -49,16 +49,35 @@ interface MessagesDao {
     )
     suspend fun markMessagesAsRead(currentUserId: String, otherUserId: String): Int
 
+    // Latest message per conversation partner. Uses createdAt (MAX(id) was wrong —
+    // id is a UUID string, so its max is lexicographic, not the newest message).
     @Query(
         """
-        SELECT * FROM messages 
-        WHERE id IN (
-            SELECT MAX(id) FROM messages
-            WHERE senderId = :currentUserId OR receiverId = :currentUserId
-            GROUP BY CASE WHEN senderId = :currentUserId THEN receiverId ELSE senderId END
-        )
-        ORDER BY createdAt DESC
+        SELECT * FROM messages m
+        WHERE (m.senderId = :currentUserId OR m.receiverId = :currentUserId)
+          AND NOT EXISTS (
+            SELECT 1 FROM messages m2
+            WHERE (m2.senderId = :currentUserId OR m2.receiverId = :currentUserId)
+              AND (CASE WHEN m2.senderId = :currentUserId THEN m2.receiverId ELSE m2.senderId END)
+                = (CASE WHEN m.senderId = :currentUserId THEN m.receiverId ELSE m.senderId END)
+              AND m2.createdAt > m.createdAt
+          )
+        ORDER BY m.createdAt DESC
         """,
     )
     fun getRecentConversations(currentUserId: String): Flow<List<MessageEntity>>
+
+    @Query(
+        """
+        SELECT COUNT(*) FROM messages
+        WHERE receiverId = :currentUserId AND senderId != :currentUserId AND status != 'read'
+        """,
+    )
+    fun getUnreadCount(currentUserId: String): Flow<Int>
+
+    @Query("DELETE FROM messages WHERE id = :id")
+    suspend fun deleteById(id: String): Int
+
+    @Query("DELETE FROM messages")
+    suspend fun clearAll(): Int
 }

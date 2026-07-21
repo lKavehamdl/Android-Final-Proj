@@ -37,6 +37,13 @@ interface SongRepository {
     /** Fetch a single song by its UUID. */
     suspend fun getSongById(id: String): Resource<Song>
 
+    /**
+     * Songs recommended off a [seedSong] — same genre and/or artist, most popular
+     * first, excluding the seed. Falls back to trending when there's little overlap.
+     * Powers the "Recommended" list and the autoplay radio in the player.
+     */
+    suspend fun getRecommendations(seedSong: Song, limit: Int = 20): Resource<List<Song>>
+
     /** Increment server-side play_count. Fire-and-forget — errors are swallowed. */
     suspend fun incrementPlayCount(songId: String)
 

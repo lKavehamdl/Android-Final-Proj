@@ -46,16 +46,9 @@ fun TopArtistsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.artists_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back),
-                        )
-                    }
-                },
+            com.example.final_project.ui.components.MelodifyBackTopBar(
+                title = stringResource(R.string.artists_title),
+                onBack = onNavigateBack,
             )
         },
         modifier = modifier,

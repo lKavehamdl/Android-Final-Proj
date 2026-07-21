@@ -86,6 +86,13 @@
     <string name="playlist_picker_title">افزودن به پلی‌لیست</string>
     <string name="playlist_picker_empty">ابتدا یک پلی‌لیست بسازید</string>
     <string name="playlists_songs_count">%d آهنگ</string>
+    <string name="playlist_add_song_title">افزودن آهنگ</string>
+    <string name="playlist_add_song_action">افزودن آهنگ</string>
+    <string name="playlist_remove_song">حذف از پلی‌لیست</string>
+    <string name="playlist_song_removed">از پلی‌لیست حذف شد</string>
+    <string name="playlist_delete">حذف پلی‌لیست</string>
+    <string name="playlist_delete_confirm">این پلی‌لیست حذف شود؟ این کار قابل بازگشت نیست.</string>
+    <string name="playlist_deleted">پلی‌لیست حذف شد</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          صفحه پروفایل
@@ -98,7 +105,9 @@
     <string name="profile_followers">دنبال‌کنندگان</string>
     <string name="profile_following">دنبال می‌کنند</string>
     <string name="profile_liked_songs">آهنگ‌های پسندیده</string>
+    <string name="profile_liked_playlist">پلی‌لیست پسندیده</string>
     <string name="profile_change_avatar">تغییر عکس</string>
+    <string name="profile_edit_username">ویرایش نام کاربری</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          پلیر موسیقی

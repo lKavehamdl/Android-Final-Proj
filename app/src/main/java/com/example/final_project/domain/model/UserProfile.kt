@@ -9,5 +9,6 @@ data class UserProfile(
     val isPremium: Boolean,
     val followersCount: Int = 0,
     val followingCount: Int = 0,
-    val isFollowing: Boolean = false // Specific to the currently logged-in user viewing this profile
+    val isFollowing: Boolean = false, // Specific to the currently logged-in user viewing this profile
+    val lastSeen: String? = null, // ISO timestamp of the user's last activity; null if unknown
 )

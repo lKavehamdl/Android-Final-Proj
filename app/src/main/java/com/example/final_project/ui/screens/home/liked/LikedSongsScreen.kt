@@ -33,13 +33,9 @@ fun LikedSongsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.home_quick_liked)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
-                    }
-                }
+            com.example.final_project.ui.components.MelodifyBackTopBar(
+                title = stringResource(R.string.home_quick_liked),
+                onBack = onNavigateBack,
             )
         },
         floatingActionButton = {
@@ -85,38 +81,12 @@ fun LikedSongsScreen(
                             items = state.songs,
                             key = { it.id }
                         ) { song ->
-                            SwipeToDismissBox(
-                                state = rememberSwipeToDismissBoxState(
-                                    confirmValueChange = { dismissValue ->
-                                        if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
-                                            viewModel.onUnlike(song.id)
-                                            true
-                                        } else {
-                                            false
-                                        }
-                                    }
-                                ),
-                                backgroundContent = {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(horizontal = MelodifySpacing.md),
-                                        contentAlignment = Alignment.CenterEnd
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Delete,
-                                            contentDescription = stringResource(R.string.cd_remove),
-                                            tint = MaterialTheme.colorScheme.error
-                                        )
-                                    }
-                                },
-                                enableDismissFromStartToEnd = false
-                            ) {
-                                SongRow(
-                                    song = song,
-                                    onClick = { viewModel.playSong(song) }
-                                )
-                            }
+                            com.example.final_project.ui.components.RemovableSongRow(
+                                song = song,
+                                onClick = { viewModel.playSong(it) },
+                                removeLabel = stringResource(R.string.cd_remove),
+                                onRemove = { viewModel.onUnlike(it.id) },
+                            )
                         }
                     }
                 }

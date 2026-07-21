@@ -37,13 +37,9 @@ fun UserSearchScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.user_search_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
-                    }
-                }
+            com.example.final_project.ui.components.MelodifyBackTopBar(
+                title = stringResource(R.string.user_search_title),
+                onBack = onNavigateBack,
             )
         }
     ) { innerPadding ->
@@ -107,7 +103,7 @@ fun UserRow(user: UserProfile, onClick: () -> Unit) {
     ) {
         if (user.avatarUrl != null) {
             AsyncImage(
-                model = user.avatarUrl,
+                model = com.example.final_project.ui.components.avatarModel(user.avatarUrl),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

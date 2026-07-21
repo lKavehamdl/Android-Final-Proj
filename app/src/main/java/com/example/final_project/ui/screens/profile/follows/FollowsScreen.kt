@@ -39,13 +39,9 @@ fun FollowsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.profile_following)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
-                    }
-                }
+            com.example.final_project.ui.components.MelodifyBackTopBar(
+                title = stringResource(R.string.profile_following),
+                onBack = onNavigateBack,
             )
         },
         modifier = modifier
@@ -110,7 +106,7 @@ private fun FollowItem(
     ) {
         if (user.avatarUrl != null) {
             AsyncImage(
-                model = user.avatarUrl,
+                model = com.example.final_project.ui.components.avatarModel(user.avatarUrl),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

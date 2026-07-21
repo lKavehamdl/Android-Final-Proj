@@ -15,6 +15,7 @@ import io.github.jan.supabase.realtime.Realtime
 import io.github.jan.supabase.storage.Storage
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -48,6 +49,9 @@ val networkModule = module {
             supabaseUrl = supabaseUrl,
             supabaseKey = AppConstants.SUPABASE_ANON_KEY,
         ) {
+            // The Android engine (HttpURLConnection) can't do WebSockets, which
+            // Realtime needs — OkHttp can.
+            httpEngine = OkHttp.create()
             install(Auth) {
                 sessionManager = SettingsSessionManager(settings = authSettings)
                 autoLoadFromStorage = true

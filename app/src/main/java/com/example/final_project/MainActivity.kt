@@ -30,15 +30,31 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val state by mainViewModel.state.collectAsStateWithLifecycle()
 
+            // Request both permissions in one call — launching two separate
+            // RequestPermission contracts back-to-back makes Android drop the
+            // second ("Can request only one set of permissions at a time"),
+            // which was leaving POST_NOTIFICATIONS ungranted → no message alerts.
             val permissionLauncher = rememberLauncherForActivityResult(
-                ActivityResultContracts.RequestPermission(),
-            ) { /* Media3 will show notifications once granted */ }
+                ActivityResultContracts.RequestMultiplePermissions(),
+            ) { /* notifications + visualizer both degrade gracefully if denied */ }
 
             LaunchedEffect(Unit) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                    !NotificationHelper.hasPostNotificationsPermission(this@MainActivity)
-                ) {
-                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                val needed = buildList {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                        !NotificationHelper.hasPostNotificationsPermission(this@MainActivity)
+                    ) {
+                        add(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                    if (androidx.core.content.ContextCompat.checkSelfPermission(
+                            this@MainActivity,
+                            Manifest.permission.RECORD_AUDIO,
+                        ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                    ) {
+                        add(Manifest.permission.RECORD_AUDIO)
+                    }
+                }
+                if (needed.isNotEmpty()) {
+                    permissionLauncher.launch(needed.toTypedArray())
                 }
             }
 

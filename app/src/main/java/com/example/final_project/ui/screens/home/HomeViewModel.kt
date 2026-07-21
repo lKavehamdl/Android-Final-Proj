@@ -15,6 +15,7 @@ import com.example.final_project.domain.usecase.GetTrendingSongsUseCase
 import com.example.final_project.player.PlayerController
 import com.example.final_project.core.datastore.SettingsDataStore
 import com.example.final_project.domain.repository.DownloadsRepository
+import com.example.final_project.domain.repository.SongRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 data class HomeUiState(
     val isLoading: Boolean = false,
     val carousel: List<Song> = emptyList(),
+    val recommended: List<Song> = emptyList(),
     val trending: List<Song> = emptyList(),
     val newReleases: List<Song> = emptyList(),
     val globalPlaylists: List<Song> = emptyList(),
@@ -63,6 +65,7 @@ class HomeViewModel(
     private val playerController: PlayerController,
     private val settingsDataStore: SettingsDataStore,
     private val downloadsRepository: DownloadsRepository,
+    private val songRepository: SongRepository,
 ) : BaseViewModel<HomeUiState, HomeUiEvent, HomeUiEffect>(HomeUiState()) {
 
     init {
@@ -168,9 +171,26 @@ class HomeViewModel(
                             errorMessage = null,
                         )
                     }
+
+                    // Seed recommendations off the last thing they played, falling
+                    // back to the top trending song so the row is populated on a
+                    // fresh account too.
+                    loadRecommended(fallbackSeed = trending.firstOrNull() ?: all.firstOrNull())
                 }
             } catch (e: Exception) {
                 setState { copy(isLoading = false, errorMessage = e.message) }
+            }
+        }
+    }
+
+    /** Loads "Recommended for you" from the user's most recently played song. */
+    private fun loadRecommended(fallbackSeed: Song?) {
+        viewModelScope.launch {
+            val recent = (songRepository.getRecentlyPlayed().first { it !is Resource.Loading } as? Resource.Success)?.data
+            val seed = recent?.firstOrNull() ?: fallbackSeed ?: return@launch
+            when (val res = songRepository.getRecommendations(seed, 12)) {
+                is Resource.Success -> setState { copy(recommended = res.data) }
+                else -> Unit
             }
         }
     }

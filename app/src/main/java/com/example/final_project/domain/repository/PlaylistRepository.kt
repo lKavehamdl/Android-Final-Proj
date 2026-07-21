@@ -15,6 +15,9 @@ interface PlaylistRepository {
     /** Get songs for a specific playlist. */
     fun getPlaylistSongs(playlistId: String): Flow<Resource<List<Song>>>
 
+    /** Fetch a single playlist's metadata (name, owner, etc). */
+    suspend fun getPlaylistById(playlistId: String): Resource<Playlist>
+
     /** Create a new playlist owned by [userId]. */
     suspend fun createPlaylist(
         userId: String,
@@ -25,4 +28,10 @@ interface PlaylistRepository {
 
     /** Add [songId] to [playlistId]. Returns error if duplicate. */
     suspend fun addSongToPlaylist(playlistId: String, songId: String): Resource<Unit>
+
+    /** Remove [songId] from [playlistId]. */
+    suspend fun removeSongFromPlaylist(playlistId: String, songId: String): Resource<Unit>
+
+    /** Delete [playlistId]. Only the owner may delete their own playlist. */
+    suspend fun deletePlaylist(playlistId: String): Resource<Unit>
 }

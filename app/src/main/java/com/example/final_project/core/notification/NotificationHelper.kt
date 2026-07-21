@@ -3,10 +3,15 @@ package com.example.final_project.core.notification
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.example.final_project.MainActivity
 import com.example.final_project.R
 
 /**
@@ -41,7 +46,7 @@ object NotificationHelper {
             NotificationChannel(
                 CHANNEL_SOCIAL,
                 context.getString(R.string.notification_channel_social),
-                NotificationManager.IMPORTANCE_DEFAULT,
+                NotificationManager.IMPORTANCE_HIGH,
             ),
         )
         manager.createNotificationChannels(channels)
@@ -53,5 +58,32 @@ object NotificationHelper {
             context,
             Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    /** Posts a "new message" notification for an incoming chat message. */
+    fun showMessageNotification(context: Context, senderName: String, messagePreview: String, notificationId: Int) {
+        if (!hasPostNotificationsPermission(context)) return
+
+        val openIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            notificationId,
+            openIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_SOCIAL)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(senderName)
+            .setContentText(messagePreview)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .build()
+
+        NotificationManagerCompat.from(context).notify(notificationId, notification)
     }
 }

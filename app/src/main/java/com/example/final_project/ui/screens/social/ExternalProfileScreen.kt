@@ -42,13 +42,9 @@ fun ExternalProfileScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(state.profile?.username ?: stringResource(R.string.tab_profile)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
-                    }
-                }
+            com.example.final_project.ui.components.MelodifyBackTopBar(
+                title = state.profile?.username ?: stringResource(R.string.tab_profile),
+                onBack = onNavigateBack,
             )
         }
     ) { innerPadding ->
@@ -82,7 +78,7 @@ fun ExternalProfileScreen(
                             // Avatar
                             if (profile.avatarUrl != null) {
                                 AsyncImage(
-                                    model = profile.avatarUrl,
+                                    model = com.example.final_project.ui.components.avatarModel(profile.avatarUrl),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier

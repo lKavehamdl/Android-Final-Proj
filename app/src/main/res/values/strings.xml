@@ -89,6 +89,13 @@
     <string name="playlist_picker_title">Add to Playlist</string>
     <string name="playlist_picker_empty">Create a playlist first</string>
     <string name="playlists_songs_count">%d songs</string>
+    <string name="playlist_add_song_title">Add a song</string>
+    <string name="playlist_add_song_action">Add song</string>
+    <string name="playlist_remove_song">Remove from playlist</string>
+    <string name="playlist_song_removed">Removed from playlist</string>
+    <string name="playlist_delete">Delete playlist</string>
+    <string name="playlist_delete_confirm">Delete this playlist? This can\'t be undone.</string>
+    <string name="playlist_deleted">Playlist deleted</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Profile Screen
@@ -101,7 +108,9 @@
     <string name="profile_followers">Followers</string>
     <string name="profile_following">Following</string>
     <string name="profile_liked_songs">Liked Songs</string>
+    <string name="profile_liked_playlist">Liked Playlist</string>
     <string name="profile_change_avatar">Change Photo</string>
+    <string name="profile_edit_username">Edit username</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Media Player
@@ -127,6 +136,15 @@
     <string name="player_now_playing">Now Playing</string>
     <string name="player_queue">Queue</string>
     <string name="player_add_to_playlist">Add to Playlist</string>
+    <string name="player_now_playing_label">Now playing</string>
+    <string name="player_up_next">Up next</string>
+    <string name="player_recommended">Recommended for you</string>
+    <string name="player_add_to_queue">Add to queue</string>
+    <string name="player_play_next">Play next</string>
+    <string name="player_remove_from_queue">Remove from queue</string>
+    <string name="player_queue_empty">Nothing up next</string>
+    <string name="player_added_to_queue">Added to queue</string>
+    <string name="player_reorder">Reorder</string>
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          Chat / Direct Messages
@@ -147,6 +165,17 @@
     <string name="empty_chats_subtitle">Your conversations will appear here</string>
     <string name="chat_typing_short">typing…</string>
     <string name="chat_song_unavailable">Song unavailable</string>
+    <string name="chat_date_today">Today</string>
+    <string name="chat_date_yesterday">Yesterday</string>
+    <string name="chat_online">online</string>
+    <string name="chat_last_seen">last seen %1$s</string>
+    <string name="chat_copy">Copy</string>
+    <string name="chat_message_copied">Message copied</string>
+    <string name="notif_clear_all">Clear all</string>
+    <string name="time_just_now">just now</string>
+    <string name="time_minutes_ago">%1$dm ago</string>
+    <string name="time_hours_ago">%1$dh ago</string>
+    <string name="time_days_ago">%1$dd ago</string>
     <string name="share_sent_to">Sent to %s</string>
     <string name="share_failed">Failed to send</string>
 
@@ -177,6 +206,10 @@
     <string name="notifications_title">Notifications</string>
     <string name="notifications_empty_title">No notifications yet</string>
     <string name="notifications_empty_subtitle">Activity from friends and downloads will appear here</string>
+    <string name="notification_message">%1$s sent you a message</string>
+    <string name="notification_follow">%1$s started following you</string>
+    <string name="notification_unfollow">%1$s unfollowed you</string>
+    <string name="cd_unread_notifications">Unread notifications</string>
     <string name="settings_logout">Log Out</string>
     <string name="settings_logout_confirm">Are you sure you want to log out?</string>
     <string name="settings_about">About Telify</string>
